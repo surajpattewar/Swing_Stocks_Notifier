@@ -19,12 +19,42 @@ Edit the scoring rules in `screener.py` freely — swap in your own indicators
 or thresholds.
 
 ## Local setup
+## 🚀 Installation
+
+This project uses [uv](https://github.com/astral-sh/uv), an extremely fast Python package and project manager. Follow these steps to get the project running locally on your machine.
+
+### Prerequisites
+
+First, ensure you have `uv` installed. If you don't have it yet, install it via the official script:
+
 ```bash
-git clone <your-repo-url>
-cd swing_trader
-pip install -r requirements.txt
-cp .env.example .env   # then fill in your tokens
-python main.py
+# On macOS/Linux
+curl -LsSf https://astral-sh/uv/install.sh | sh
+
+# On Windows (PowerShell)
+powershell -c "irm https://astral-sh/uv/install.ps1 | iex"
+````
+1. Clone the Repository
+```bash
+git clone [https://github.com/surajpattewar/Swing_Stocks_Notifier.git](https://github.com/surajpattewar/Swing_Stocks_Notifier.git)
+cd Swing_Stocks_Notifier
+```
+
+2. Create the Virtual Environment & Install Dependencies
+uv will automatically read your pyproject.toml and uv.lock files, set up the correct Python version, create a .venv folder, and install all required packages instantly.
+```bash
+uv sync
+```
+
+3. Configure Your Environment Variables
+The project requires API configurations to send notifications. Copy the template and add your private credentials:
+```bash
+cp .env.example .env
+```
+
+4. Running the Screener
+```bash
+uv run main.py
 ```
 
 ## Getting a Telegram bot token (free, 2 minutes)
