@@ -2,8 +2,8 @@ name: Daily Swing Trade Screener
 
 on:
   schedule:
-    # 10:15 UTC = 3:45 PM IST, Mon-Fri (NSE closes 3:30 PM IST)
-    - cron: "15 10 * * 1-5"
+    # 11:30 UTC = 5:00 PM IST, Mon-Fri (Updated to your preferred 5 PM IST time)
+    - cron: "30 11 * * 1-5"
   workflow_dispatch: {}   # lets you trigger it manually from the Actions tab too
 
 jobs:
@@ -12,12 +12,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v5
+      # Install uv and setup Python automatically based on your pyproject.toml
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
         with:
-          python-version: "3.12"
+          version: "latest"
+          enable-cache: true # Speeds up subsequent runs drastically
 
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        # uv sync reads your uv.lock and pyproject.toml to install everything perfectly
+        run: uv sync --frozen
 
       - name: Run screener
         env:
@@ -27,5 +31,6 @@ jobs:
           TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
           TWILIO_WHATSAPP_FROM: ${{ secrets.TWILIO_WHATSAPP_FROM }}
           TWILIO_WHATSAPP_TO: ${{ secrets.TWILIO_WHATSAPP_TO }}
-          SEND_WHATSAPP: "true"   # set to "true" if you've configured Twilio secrets
-        run: python main.py
+          SEND_WHATSAPP: "true"
+        # uv run executes the script within the managed virtual environment
+        run: uv run main.py
