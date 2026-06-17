@@ -1,6 +1,7 @@
 """
 One-shot run: build universe -> screen -> send alerts.
 This is what gets executed daily (by cron / GitHub Actions / a scheduler).
+Author : Suraj Pattewar
 """
 import logging
 import sys
