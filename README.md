@@ -36,7 +36,7 @@ powershell -c "irm https://astral-sh/uv/install.ps1 | iex"
 ````
 1. Clone the Repository
 ```bash
-git clone [https://github.com/surajpattewar/Swing_Stocks_Notifier.git](https://github.com/surajpattewar/Swing_Stocks_Notifier.git)
+git clone https://github.com/surajpattewar/Swing_Stocks_Notifier.git
 cd Swing_Stocks_Notifier
 ```
 
