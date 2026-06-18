@@ -2,8 +2,9 @@ name: Daily Swing Trade Screener
 
 on:
   schedule:
-    # 11:30 UTC = 5:00 PM IST, Mon-Fri (Updated to your preferred 5 PM IST time)
-    - cron: "30 11 * * 1-5"
+    # 10:30 UTC = 04:00 PM IST, Mon-Fri (Update to your preferred 5 PM IST time)
+    - cron: "30 10 * * 1-5"
+
   workflow_dispatch: {}   # lets you trigger it manually from the Actions tab too
 
 jobs:
@@ -12,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Install uv and setup Python automatically based on your pyproject.toml
+      # Install uv and setup Python automatically based on pyproject.toml
       - name: Setup uv
         uses: astral-sh/setup-uv@v5
         with:
@@ -20,7 +21,7 @@ jobs:
           enable-cache: true # Speeds up subsequent runs drastically
 
       - name: Install dependencies
-        # uv sync reads your uv.lock and pyproject.toml to install everything perfectly
+        # uv sync reads uv.lock and pyproject.toml to install everything perfectly
         run: uv sync --frozen
 
       - name: Run screener
