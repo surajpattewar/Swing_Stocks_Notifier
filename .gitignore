@@ -15,3 +15,6 @@ ENV/
 
 # Local configuration (Contains private keys!)
 .env
+
+# local test notebooks
+*.ipynb
