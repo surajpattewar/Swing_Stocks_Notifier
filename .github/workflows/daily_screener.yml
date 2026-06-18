@@ -25,12 +25,18 @@ jobs:
 
       - name: Run screener
         env:
+          SEND_WHATSAPP: ${{ vars.SEND_WHATSAPP }}
+          MIN_SCORE: ${{ vars.MIN_SCORE }}
+          MAX_STOCKS_TO_SCAN: ${{ vars.MAX_STOCKS_TO_SCAN }}
+          TOP_N_ALERTS: ${{ vars.TOP_N_ALERTS }}
+          SEND_TELEGRAM: ${{ vars.SEND_TELEGRAM }}
+
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TWILIO_ACCOUNT_SID: ${{ secrets.TWILIO_ACCOUNT_SID }}
           TWILIO_AUTH_TOKEN: ${{ secrets.TWILIO_AUTH_TOKEN }}
           TWILIO_WHATSAPP_FROM: ${{ secrets.TWILIO_WHATSAPP_FROM }}
           TWILIO_WHATSAPP_TO: ${{ secrets.TWILIO_WHATSAPP_TO }}
-          SEND_WHATSAPP: "true"
+
         # uv run executes the script within the managed virtual environment
         run: uv run main.py

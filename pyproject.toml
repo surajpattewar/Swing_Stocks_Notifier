@@ -1,7 +1,7 @@
 [project]
 name = "swing-stocks-notifier"
 version = "0.1.0"
-description = "Add your description here"
+description = "First version of automatic stocks screener"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
