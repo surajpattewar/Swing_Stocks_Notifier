@@ -40,7 +40,7 @@ class Candidate:
         sym = self.symbol.replace(".NS", "")
         reasons_str = ", ".join(self.reasons)
         return (
-            f"• {sym}  (score {self.score}/5)\n"
+            f"• {sym}  (score {self.score}/7)\n"
             f"   CMP: ₹{self.close:.2f} | RSI: {self.rsi:.1f}\n"
             f"   SL: ₹{self.stop_loss:.2f} | Target: ₹{self.target:.2f}\n"
             f"   Signals: {reasons_str}"
@@ -56,10 +56,18 @@ def fetch_history(symbol: str, period: str, interval: str) -> pd.DataFrame:
         raise ValueError(f"Not enough data for {symbol}")
     return df
 
+def fetch_book_value(symbol: str):
+    stock_info = {}
+    stock = yf.Ticker(symbol).info
+    stock_info["book_value"] = stock.get("bookValue", "N/A")
+    stock_info["price_to_book"] = stock.get("priceToBook", "N/A")
+    stock_info["current_price"] = stock.get("currentPrice", "N/A")
+    return stock_info
 
 def _add_indicators(df: pd.DataFrame) -> pd.DataFrame:
     df = df.copy()
     df["sma50"] = ta.trend.sma_indicator(df["Close"], window=50)
+    df["sma100"] = ta.trend.sma_indicator(df["Close"], window=100)
     df["rsi14"] = ta.momentum.rsi(df["Close"], window=14)
     macd = ta.trend.MACD(df["Close"])
     df["macd"] = macd.macd()
@@ -114,6 +122,23 @@ def evaluate(symbol: str, df: pd.DataFrame) -> Candidate:
         score += 1
         reasons.append("Near 20-day high")
 
+    # 6. Current price is less than Book value
+    stock_info = fetch_book_value(symbol)
+    if last["Close"] <= stock_info["book_value"]:
+        score += 1
+        reasons.append("Current price less than book value")
+
+    # 7. SMA50 crossed SMA100 within last 5 days
+    spread = df["sma50"] - df["sma100"]
+
+    sma_cross = (
+        (spread.iloc[-6:-1] <= 0).any() and
+        spread.iloc[-1] > 0
+    )
+
+    if sma_cross:
+        score += 1
+        reasons.append("Recent SMA50/SMA100 bullish crossover")
     stop_loss = round(float(last["low20"]), 2)
     risk = max(float(last["Close"]) - stop_loss, 0.01)
     target = round(float(last["Close"]) + 2 * risk, 2)  # simple 1:2 risk-reward

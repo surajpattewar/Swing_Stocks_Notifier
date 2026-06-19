@@ -13,6 +13,8 @@ logger = logging.getLogger(__name__)
 
 NSE_EQUITY_LIST_URL = "https://nsearchives.nseindia.com/content/equities/EQUITY_L.csv"
 NIFTY_500_LIST_URL = "https://nsearchives.nseindia.com/content/indices/ind_nifty500list.csv"
+NIFTY_200_LIST_URL = "https://nsearchives.nseindia.com/content/indices/ind_nifty200list.csv"
+NIFTY_100_LIST_URL = "https://nsearchives.nseindia.com/content/indices/ind_nifty100list.csv"
 
 # Fallback: ~100 liquid, large/mid-cap NSE stocks. Edit this list freely to
 # match your own watchlist/universe.
@@ -34,7 +36,7 @@ def _format(symbol: str) -> str:
     return f"{symbol.strip().upper()}.NS"
 
 
-def get_stock_universe(max_stocks: int = 200, url = NIFTY_500_LIST_URL) -> list:
+def get_stock_universe(max_stocks: int = 200, url = NIFTY_100_LIST_URL) -> list:
     """
     Returns a list of yfinance-formatted NSE symbols, e.g. ['RELIANCE.NS', ...].
     """

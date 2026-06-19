@@ -4,6 +4,7 @@ WhatsApp uses Twilio's API — works instantly in Twilio's free sandbox for test
 sending to arbitrary numbers in production requires WhatsApp Business approval.
 """
 import logging
+from datetime import datetime
 
 import requests
 
@@ -61,11 +62,10 @@ def format_alert_message(candidates: list, top_n: int) -> str:
     if not candidates:
         return "📊 Swing Trade Screener\n\nNo qualifying setups found today."
 
-    lines = [f"📊 Swing Trade Screener — {len(candidates)} candidate(s) found\nBy Suraj Pattewar"]
+    lines = [f"📊 Swing Trade Screener — {len(candidates)} candidate(s) found on {datetime.today().date()} \nBy Suraj Pattewar"]
     for cand in candidates[:top_n]:
         lines.append(cand.to_line())
     lines.append(
-        "\n⚠️ Auto-generated technical screen, not financial advice. "
-        "Verify fundamentals/news and size positions per your own risk rules."
+        "\n⚠️ Auto-generated results, not financial advice. "
     )
     return "\n\n".join(lines)
