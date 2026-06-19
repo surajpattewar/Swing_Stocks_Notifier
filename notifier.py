@@ -60,12 +60,12 @@ def send_whatsapp_twilio(account_sid: str, auth_token: str, from_whatsapp: str,
 
 def format_alert_message(candidates: list, top_n: int) -> str:
     if not candidates:
-        return "📊 Swing Trade Screener\n\nNo qualifying setups found today."
+        return "Swing Trade Screener\n\nNo qualifying setups found today."
 
-    lines = [f"📊 Swing Trade Screener — {len(candidates)} candidate(s) found on {datetime.today().date()} \nBy Suraj Pattewar"]
+    lines = [f"Swing Trade Screener — {len(candidates)} candidate(s) found on {datetime.today().date()} \nBy Suraj Pattewar"]
     for cand in candidates[:top_n]:
         lines.append(cand.to_line())
     lines.append(
-        "\n⚠️ Auto-generated results, not financial advice. "
+        "\nAuto-generated results, not financial advice. "
     )
     return "\n\n".join(lines)
