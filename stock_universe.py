@@ -36,11 +36,13 @@ def _format(symbol: str) -> str:
     return f"{symbol.strip().upper()}.NS"
 
 
-def get_stock_universe(max_stocks: int = 200, url = NIFTY_100_LIST_URL) -> list:
+def get_stock_universe(max_stocks: int = 200, url: str=None, no_of_stocks:int=100) -> list:
     """
     Returns a list of yfinance-formatted NSE symbols, e.g. ['RELIANCE.NS', ...].
     """
     try:
+        if not url:
+            url = f"https://nsearchives.nseindia.com/content/indices/ind_nifty{no_of_stocks}list.csv"
         headers = {"User-Agent": "Mozilla/5.0"}
         resp = requests.get(url, headers=headers, timeout=10)
         resp.raise_for_status()

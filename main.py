@@ -19,16 +19,17 @@ logger = logging.getLogger(__name__)
 
 
 def main():
-    logger.info("Building stock universe...")
-    symbols = get_stock_universe(max_stocks=config.MAX_STOCKS_TO_SCAN)
-    logger.info("Scanning %d stocks...", len(symbols))
+    for no_of_stocks in [100, 200, 500]:
+        logger.info(f"Scanning Nifty {no_of_stocks} stocks...")
 
-    candidates = run_screener(
-        symbols=symbols,
-        period=config.HISTORY_PERIOD,
-        interval=config.HISTORY_INTERVAL,
-        min_score=config.MIN_SCORE,
-    )
+        candidates = run_screener(
+            symbols=get_stock_universe(max_stocks=config.MAX_STOCKS_TO_SCAN, no_of_stocks=no_of_stocks),
+            period=config.HISTORY_PERIOD,
+            interval=config.HISTORY_INTERVAL,
+            min_score=config.MIN_SCORE,
+        )
+        if candidates:
+            break
     logger.info("Found %d stocks meeting min_score=%d", len(candidates), config.MIN_SCORE)
 
     message = format_alert_message(candidates, config.TOP_N_ALERTS)

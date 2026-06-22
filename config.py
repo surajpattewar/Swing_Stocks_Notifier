@@ -37,5 +37,16 @@ class Config:
     SEND_TELEGRAM = _get_bool("SEND_TELEGRAM", False)
     SEND_WHATSAPP = _get_bool("SEND_WHATSAPP", False)
 
+    # DuckDB persistence
+    DUCKDB_PATH = os.getenv("DUCKDB_PATH", "data/duckdb/screener_data.duckdb")
+    SAVE_TO_DUCKDB = _get_bool("SAVE_TO_DUCKDB", True)
+
+    # Backtesting
+    BACKTEST_MONTHS = int(os.getenv("BACKTEST_MONTHS", "4"))          # how far back to test
+    BACKTEST_MAX_HOLDING_DAYS = int(os.getenv("BACKTEST_MAX_HOLDING_DAYS", "15"))  # trading days per signal
+    BACKTEST_MIN_SCORE = int(os.getenv("BACKTEST_MIN_SCORE", str(MIN_SCORE)))
+    BACKTEST_MAX_STOCKS = int(os.getenv("BACKTEST_MAX_STOCKS", "100"))
+    BACKTEST_MAX_WORKERS = int(os.getenv("BACKTEST_MAX_WORKERS", "6"))
+
 
 config = Config()

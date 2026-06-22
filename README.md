@@ -102,3 +102,33 @@ simplest — no cost, no maintenance.
 Technical screens can and will produce false signals. Markets carry risk of
 loss. This tool does not constitute investment advice; verify independently
 and size positions according to your own risk tolerance.
+
+## Local-only backtesting
+
+Backtests read daily OHLCV bars only from the `stock_prices` table in DuckDB;
+they do not call yfinance or fetch a live symbol universe. Populate the table
+with `uv run data_ingestion.py`, then run:
+
+```bash
+uv run run_backtest.py --db-path data/duckdb/screener_data.duckdb
+```
+
+`Ticker.history()` returns market bars such as OHLC, volume, dividends, and
+stock splits. Book value and beta are separate fundamental/profile fields
+available from `Ticker.info` (when Yahoo provides them), not extra history
+columns. They are intentionally excluded from backtests unless historically
+dated values are stored locally, because using today's values for past signals
+would introduce look-ahead bias.
+
+## Backtest dashboard
+
+After saving at least one backtest run, launch the Streamlit dashboard:
+
+```bash
+uv run streamlit run dashboard.py
+```
+
+Use the sidebar to select a DuckDB file, backtest run, symbols, outcomes,
+scores, and signal dates. The dashboard shows accuracy metrics, cumulative
+signal returns, outcome and score breakdowns, symbol performance, and the
+underlying trades as a downloadable CSV.
