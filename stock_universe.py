@@ -49,7 +49,6 @@ def get_stock_universe(max_stocks: int = 200, url: str=None, no_of_stocks:int=10
         df = pd.read_csv(io.StringIO(resp.text))
         df.columns = df.columns.str.upper().str.strip()
         symbols = df["SYMBOL"].dropna().astype(str).tolist()
-        symbols.append("^NSEI")
         if not symbols:
             raise ValueError("Empty symbol list from NSE")
         logger.info("Fetched %d symbols from live NSE list", len(symbols))
@@ -57,5 +56,6 @@ def get_stock_universe(max_stocks: int = 200, url: str=None, no_of_stocks:int=10
         logger.warning("Live NSE list fetch failed (%s); using fallback list", e)
         symbols = FALLBACK_SYMBOLS
 
-    symbols = symbols[:max_stocks]
-    return [_format(s) for s in symbols]
+    symbols = [_format(s) for s in symbols[:max_stocks]]
+    symbols.append("^NSEI")
+    return symbols

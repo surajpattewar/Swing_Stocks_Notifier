@@ -31,6 +31,7 @@ class Candidate:
     symbol: str
     score: int
     beta: float
+    adx: float
     reasons: list = field(default_factory=list)
     close: float = 0.0
     rsi: float = 0.0
@@ -41,7 +42,7 @@ class Candidate:
         sym = self.symbol.replace(".NS", "")
         reasons_str = ", ".join(self.reasons)
         return (
-            f"• {sym}  (score {self.score}/7, beta {self.beta})\n"
+            f"• {sym}  (score {self.score}/7, β {self.beta}, adx {round(self.adx,2)})\n"
             f"   CMP: ₹{self.close:.2f} | RSI: {self.rsi:.1f}\n"
             f"   SL: ₹{self.stop_loss:.2f} | Target: ₹{self.target:.2f}\n"
             f"   Signals: {reasons_str}"
@@ -52,7 +53,7 @@ def fetch_history(symbol: str, period: str, interval: str) -> pd.DataFrame:
     df_history = yf.Ticker(symbol).history(period=period, interval=interval, auto_adjust=True)
     df_today = yf.Ticker(symbol).history(period="1d", interval="1d", auto_adjust=True)
     df = pd.concat([df_history[:-1], df_today])
-
+    df = df[~df.index.duplicated(keep="last")]
     if df is None or df.empty or len(df) < 60:
         raise ValueError(f"Not enough data for {symbol}")
     return df
@@ -72,6 +73,7 @@ def _add_indicators(df: pd.DataFrame) -> pd.DataFrame:
     df["vol_avg20"] = df["Volume"].rolling(20).mean()
     df["high20"] = df["Close"].rolling(20).max()
     df["low20"] = df["Close"].rolling(20).min()
+    df["adx"] = ta.trend.ADXIndicator(df["High"], df["Low"], df["Close"]).adx()
     return df.dropna()
 
 
@@ -119,11 +121,16 @@ def evaluate(symbol: str, df: pd.DataFrame) -> Candidate:
         score += 1
         reasons.append("Near 20-day high")
 
+    # 6 strong Trend filter
+    if last["adx"] > 25:
+        score += 1
+        reasons.append("ADX greater than 25")
+
     # 6. Current price is less than Book value
     stock_info = fetch_stock_info(symbol)
-    if last["Close"] <= stock_info["bookValue"]:
-        score += 1
-        reasons.append("Current price less than book value")
+    # if last["Close"] <= stock_info["bookValue"]:
+    #     score += 1
+    #     reasons.append("Current price less than book value")
 
     # 7. SMA50 crossed SMA100 within last 5 days
     spread = df["sma50"] - df["sma100"]
@@ -144,6 +151,7 @@ def evaluate(symbol: str, df: pd.DataFrame) -> Candidate:
         symbol=symbol,
         score=score,
         beta=stock_info["beta"],
+        adx=last["adx"],
         reasons=reasons,
         close=round(float(last["Close"]), 2),
         rsi=round(float(last["rsi14"]), 1),
@@ -154,15 +162,19 @@ def evaluate(symbol: str, df: pd.DataFrame) -> Candidate:
 
 def run_screener(symbols: list, period: str, interval: str, min_score: int) -> list:
     candidates = []
+    logger.info(f"input {len(symbols)} {symbols}")
     for symbol in symbols:
         try:
+            logger.info(f"Fetching history for {symbol}")
             df = fetch_history(symbol, period, interval)
+            logger.info(f"evaluating {symbol}")
             cand = evaluate(symbol, df)
+            logger.info(f"{symbol} : score: {cand.score}")
             if cand.score >= min_score:
                 candidates.append(cand)
         except Exception as e:
-            logger.debug("Skipping %s: %s", symbol, e)
+            logger.warning("Skipping %s: %s", symbol, e)
             continue
 
-    candidates.sort(key=lambda c: (c.score, c.beta), reverse=True)
+    candidates.sort(key=lambda c: (c.score, c.beta, c.adx), reverse=True)
     return candidates
