@@ -19,7 +19,8 @@ logger = logging.getLogger(__name__)
 
 
 def main():
-    for no_of_stocks in [100, 200, 500]:
+    # for no_of_stocks in [100, 200, 500]:
+    for no_of_stocks in [100]:
         logger.info(f"Scanning Nifty {no_of_stocks} stocks...")
 
         candidates = run_screener(
