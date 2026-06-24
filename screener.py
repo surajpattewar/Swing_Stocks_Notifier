@@ -32,17 +32,29 @@ class Candidate:
     score: int
     beta: float
     adx: float
+    setup_type: str = "momentum"
     reasons: list = field(default_factory=list)
     close: float = 0.0
     rsi: float = 0.0
     stop_loss: float = 0.0
     target: float = 0.0
 
+    # def to_line(self) -> str:
+    #     sym = self.symbol.replace(".NS", "")
+    #     reasons_str = ", ".join(self.reasons)
+    #     return (
+    #         f"• {sym}  (score {self.score}/7, β {self.beta}, adx {round(self.adx,2)})\n"
+    #         f"   CMP: ₹{self.close:.2f} | RSI: {self.rsi:.1f}\n"
+    #         f"   SL: ₹{self.stop_loss:.2f} | Target: ₹{self.target:.2f}\n"
+    #         f"   Signals: {reasons_str}"
+    #     )
+
     def to_line(self) -> str:
         sym = self.symbol.replace(".NS", "")
         reasons_str = ", ".join(self.reasons)
+        tag = "Pullback" if self.setup_type == "pullback_sma50" else "🚀 Momentum"
         return (
-            f"• {sym}  (score {self.score}/7, β {self.beta}, adx {round(self.adx,2)})\n"
+            f"• {sym} [{tag}]  (score {self.score}, β {self.beta}, adx {round(self.adx, 2)})\n"
             f"   CMP: ₹{self.close:.2f} | RSI: {self.rsi:.1f}\n"
             f"   SL: ₹{self.stop_loss:.2f} | Target: ₹{self.target:.2f}\n"
             f"   Signals: {reasons_str}"
@@ -70,14 +82,58 @@ def _add_indicators(df: pd.DataFrame) -> pd.DataFrame:
     macd = ta.trend.MACD(df["Close"])
     df["macd"] = macd.macd()
     df["macd_signal"] = macd.macd_signal()
-    df["vol_avg20"] = df["Volume"].rolling(20).mean()
-    df["high20"] = df["Close"].rolling(20).max()
+    df["vol_avg20"] = df["Volume"].shift(1).rolling(20).mean()
+    df["high20"] = df["Close"].shift(1).rolling(20).max()
     df["low20"] = df["Close"].rolling(20).min()
     df["adx"] = ta.trend.ADXIndicator(df["High"], df["Low"], df["Close"]).adx()
+    atr = ta.volatility.AverageTrueRange(high=df["High"], low=df["Low"], close=df["Close"],
+                                         window=14,
+                                         )
+    df["atr"] = atr.average_true_range()
     return df.dropna()
 
+def _sessions_since_crossover(spread: pd.Series, lookback: int) -> int | None:
+    """
+    spread = sma50 - sma100. Returns how many sessions ago spread crossed
+    from <=0 to >0, if that happened within `lookback` sessions. Else None.
+    """
+    window = spread.iloc[-(lookback + 1):]
+    for i in range(len(window) - 1, 0, -1):
+        if window.iloc[i - 1] <= 0 < window.iloc[i]:
+            return len(window) - 1 - i
+    return None
 
-def evaluate(symbol: str, df: pd.DataFrame) -> Candidate:
+
+def detect_pullback_to_sma50(df: pd.DataFrame, cross_lookback: int = 20,
+                              touch_tolerance_pct: float = 0.015) -> tuple[bool, str]:
+    """
+    Golden-cross pullback entry:
+      1. SMA50 crossed above SMA100 within the last `cross_lookback` sessions
+      2. SMA50 is still rising (trend intact)
+      3. Price has pulled back to within touch_tolerance_pct of SMA50 (low touched it)
+      4. Today shows a bounce: close > SMA50, close > open, RSI ticking up
+    """
+    spread = df["sma50"] - df["sma100"]
+    cross_ago = _sessions_since_crossover(spread, cross_lookback)
+    if cross_ago is None:
+        return False, ""
+
+    last = df.iloc[-1]
+    prev = df.iloc[-2]
+
+    sma50_rising = last["sma50"] > df.iloc[-6]["sma50"]
+    if not sma50_rising:
+        return False, ""
+
+    touched_sma50 = last["Low"] <= last["sma50"] * (1 + touch_tolerance_pct)
+    bounced = last["Close"] > last["sma50"] and last["Close"] > last["Open"]
+    rsi_turning_up = last["rsi14"] > prev["rsi14"]
+
+    if touched_sma50 and bounced and rsi_turning_up:
+        return True, f"Pullback to SMA50 ({cross_ago}d after golden cross)"
+    return False, ""
+
+def evaluate(symbol: str, df: pd.DataFrame, stock_info) -> Candidate:
     df = _add_indicators(df)
     if len(df) < 10:
         raise ValueError("Not enough indicator history")
@@ -126,12 +182,6 @@ def evaluate(symbol: str, df: pd.DataFrame) -> Candidate:
         score += 1
         reasons.append("ADX greater than 25")
 
-    # 6. Current price is less than Book value
-    stock_info = fetch_stock_info(symbol)
-    # if last["Close"] <= stock_info["bookValue"]:
-    #     score += 1
-    #     reasons.append("Current price less than book value")
-
     # 7. SMA50 crossed SMA100 within last 5 days
     spread = df["sma50"] - df["sma100"]
 
@@ -143,14 +193,37 @@ def evaluate(symbol: str, df: pd.DataFrame) -> Candidate:
     if sma_cross:
         score += 1
         reasons.append("Recent SMA50/SMA100 bullish crossover")
-    stop_loss = round(float(last["low20"]), 2)
-    risk = max(float(last["Close"]) - stop_loss, 0.01)
-    target = round(float(last["Close"]) + 2 * risk, 2)  # simple 1:2 risk-reward
+
+    # Pullback findout
+    is_pullback, pullback_reason = detect_pullback_to_sma50(df)
+    setup_type = "momentum"
+    if is_pullback:
+        score += 2  # weight it higher — it's a more specific, confirmed setup
+        reasons.append(pullback_reason)
+        setup_type = "pullback_sma50"
+
+    last_close = float(last["Close"])
+    if setup_type == "pullback_sma50":
+        # structural stop: just under the SMA50 itself (the level being defended),
+        # with a small ATR buffer for noise
+        stop_loss = round(min(float(last["Low"]), float(last["sma50"])) - 0.5 * float(last["atr"]), 2)
+    else:
+        # generic volatility stop for momentum/breakout setups
+        stop_loss = round(last_close - 1.5 * float(last["atr"]), 2)
+
+    risk = max(last_close - stop_loss, 0.01)
+    target = round(last_close + 2 * risk, 2)
+
+    # # stop_loss = round(float(last["low20"]), 2)
+    # stop_loss = round(float(last["Close"] - 1.5 * last["atr"]), 2)
+    # risk = max(float(last["Close"]) - stop_loss, 0.01)
+    # target = round(float(last["Close"]) + 2 * risk, 2)  # simple 1:2 risk-reward
 
     return Candidate(
         symbol=symbol,
+        setup_type = setup_type,
         score=score,
-        beta=stock_info["beta"],
+        beta=stock_info.get("beta") or 0.0,
         adx=last["adx"],
         reasons=reasons,
         close=round(float(last["Close"]), 2),
@@ -168,7 +241,8 @@ def run_screener(symbols: list, period: str, interval: str, min_score: int) -> l
             logger.info(f"Fetching history for {symbol}")
             df = fetch_history(symbol, period, interval)
             logger.info(f"evaluating {symbol}")
-            cand = evaluate(symbol, df)
+            stock_info = fetch_stock_info(symbol)
+            cand = evaluate(symbol, df, stock_info)
             logger.info(f"{symbol} : score: {cand.score}")
             if cand.score >= min_score:
                 candidates.append(cand)
