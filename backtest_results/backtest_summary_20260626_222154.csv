@@ -1,0 +1,64 @@
+combination,total_signals,closed_signals,target_hits,stop_loss_hits,timeouts,win_rate_target_vs_stop_pct,win_rate_overall_pct,avg_return_pct,profit_factor
+breakout_proximity + sma_cross,11,11,6,4,1,60.0,63.6,2.03,2.9
+uptrend_sma50 + breakout_proximity + sma_cross,11,11,6,4,1,60.0,63.6,2.03,2.9
+rsi_momentum + volume_spike + breakout_proximity,26,26,8,12,6,40.0,50.0,1.13,1.87
+volume_spike + sma_cross,2,2,1,1,0,50.0,50.0,1.37,1.82
+rsi_momentum + volume_spike + adx_strong_trend,22,22,5,9,8,35.7,50.0,0.9,1.66
+rsi_momentum + macd_crossover + volume_spike,12,12,5,6,1,45.5,41.7,1.07,1.61
+rsi_momentum + volume_spike,71,71,21,34,16,38.2,46.5,0.89,1.58
+uptrend_sma50 + rsi_momentum,357,357,108,180,69,37.5,45.4,0.58,1.39
+rsi_momentum + macd_crossover + breakout_proximity,25,25,8,13,4,38.1,48.0,0.59,1.38
+Single: uptrend_sma50,517,517,150,268,99,35.9,44.1,0.43,1.28
+Single: rsi_momentum,727,727,196,371,160,34.6,43.7,0.43,1.26
+Score >= 3,423,423,115,217,91,34.6,43.7,0.37,1.24
+uptrend_sma50 + adx_strong_trend,241,241,66,125,50,34.6,43.2,0.33,1.22
+uptrend_sma50 + breakout_proximity + adx_strong_trend,115,115,38,62,15,38.0,42.6,0.32,1.21
+uptrend_sma50 + rsi_momentum + macd_crossover,37,37,10,22,5,31.2,40.5,0.33,1.19
+Single: adx_strong_trend,534,534,126,277,131,31.3,43.4,0.3,1.18
+rsi_momentum + adx_strong_trend,253,253,54,129,70,29.5,41.9,0.29,1.18
+uptrend_sma50 + sma_cross,27,27,6,15,6,28.6,44.4,0.3,1.18
+rsi_momentum + breakout_proximity,182,182,46,95,41,32.6,43.4,0.27,1.17
+macd_crossover + breakout_proximity,46,46,12,25,9,32.4,45.7,0.23,1.14
+uptrend_sma50 + breakout_proximity,224,224,67,120,37,35.8,41.1,0.17,1.11
+Single: breakout_proximity,330,330,86,177,67,32.7,41.8,0.17,1.11
+uptrend_sma50 + rsi_momentum + breakout_proximity,85,85,27,45,13,37.5,40.0,0.16,1.1
+breakout_proximity + adx_strong_trend,133,133,39,73,21,34.8,41.4,0.14,1.09
+uptrend_sma50 + macd_crossover,58,58,14,34,10,29.2,41.4,0.15,1.09
+uptrend_sma50 + rsi_momentum + adx_strong_trend,133,133,31,71,31,30.4,39.8,0.1,1.06
+uptrend_sma50 + rsi_momentum + sma_cross,19,19,3,11,5,21.4,42.1,0.06,1.04
+uptrend_sma50 + rsi_momentum + volume_spike,32,32,8,19,5,29.6,37.5,0.01,1.01
+breakout_proximity + adx_strong_trend + sma_cross,6,6,2,4,0,33.3,33.3,-0.02,0.99
+Single: macd_crossover,130,130,29,74,27,28.2,40.0,-0.05,0.98
+rsi_momentum + macd_crossover,88,88,20,51,17,28.2,37.5,-0.04,0.98
+Single: volume_spike,152,152,33,88,31,27.3,37.5,-0.04,0.98
+uptrend_sma50 + macd_crossover + breakout_proximity,35,35,9,21,5,30.0,40.0,-0.06,0.97
+volume_spike + breakout_proximity,52,52,12,33,7,26.7,34.6,-0.08,0.95
+volume_spike + adx_strong_trend,58,58,10,32,16,23.8,37.9,-0.14,0.93
+Single: sma_cross,35,35,7,22,6,24.1,37.1,-0.2,0.89
+macd_crossover + volume_spike + adx_strong_trend,9,9,2,6,1,25.0,22.2,-0.27,0.87
+rsi_momentum + macd_crossover + adx_strong_trend,28,28,5,16,7,23.8,35.7,-0.26,0.87
+Score >= 4,104,104,25,66,13,27.5,33.7,-0.32,0.83
+macd_crossover + adx_strong_trend,54,54,11,32,11,25.6,37.0,-0.35,0.83
+macd_crossover + breakout_proximity + adx_strong_trend,13,13,3,8,2,27.3,38.5,-0.28,0.82
+rsi_momentum + sma_cross,22,22,3,14,5,17.6,36.4,-0.36,0.81
+macd_crossover + volume_spike,22,22,5,15,2,25.0,27.3,-0.51,0.76
+uptrend_sma50 + volume_spike,57,57,12,39,6,23.5,29.8,-0.51,0.73
+uptrend_sma50 + volume_spike + breakout_proximity,37,37,8,26,3,23.5,27.0,-0.55,0.71
+uptrend_sma50 + macd_crossover + adx_strong_trend,14,14,3,10,1,23.1,28.6,-0.69,0.63
+uptrend_sma50 + volume_spike + adx_strong_trend,21,21,3,15,3,16.7,28.6,-0.72,0.61
+uptrend_sma50 + macd_crossover + volume_spike,13,13,2,10,1,16.7,23.1,-1.03,0.54
+uptrend_sma50 + adx_strong_trend + sma_cross,11,11,2,9,0,18.2,18.2,-1.22,0.47
+macd_crossover + volume_spike + breakout_proximity,13,13,2,10,1,16.7,23.1,-1.2,0.46
+Score >= 5,16,16,2,13,1,13.3,18.8,-1.24,0.44
+adx_strong_trend + sma_cross,12,12,2,10,0,16.7,16.7,-1.36,0.42
+sma_cross + pullback_sma50,4,4,0,3,1,0.0,25.0,-1.25,0.41
+rsi_momentum + breakout_proximity + adx_strong_trend,40,40,4,28,8,12.5,25.0,-1.36,0.35
+volume_spike + breakout_proximity + adx_strong_trend,17,17,2,14,1,12.5,17.6,-1.4,0.35
+Single: pullback_sma50,6,6,0,5,1,0.0,16.7,-1.79,0.25
+uptrend_sma50 + pullback_sma50,6,6,0,5,1,0.0,16.7,-1.79,0.25
+rsi_momentum + pullback_sma50,6,6,0,5,1,0.0,16.7,-1.79,0.25
+uptrend_sma50 + rsi_momentum + pullback_sma50,6,6,0,5,1,0.0,16.7,-1.79,0.25
+macd_crossover + sma_cross,1,1,0,1,0,0.0,0.0,-3.35,0.0
+adx_strong_trend + pullback_sma50,1,1,0,1,0,0.0,0.0,-2.34,0.0
+rsi_momentum + adx_strong_trend + sma_cross,5,5,0,5,0,0.0,0.0,-2.66,0.0
+Score >= 6,1,1,0,1,0,0.0,0.0,-2.34,0.0
