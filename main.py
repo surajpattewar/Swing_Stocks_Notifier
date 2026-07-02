@@ -19,6 +19,12 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 def trigger_technical_screener():
+    from db_tracker import init_db, save_daily_results, update_open_positions, track_daily_progress
+    import datetime
+
+    # Initialize tracker database
+    init_db()
+
     # for no_of_stocks in [100, 200, 500]:
     for no_of_stocks in [100]:
         logger.info(f"Scanning Nifty {no_of_stocks} stocks...")
@@ -33,7 +39,26 @@ def trigger_technical_screener():
             break
     logger.info("Found %d stocks meeting min_score=%d", len(candidates), config.MIN_SCORE)
 
-    message = format_alert_message(candidates, config.TOP_N_ALERTS)
+    # Run BTST Screener
+    btst_candidates = []
+    try:
+        from btst_screener import run_btst_screener
+        btst_candidates = run_btst_screener(send_alerts=False)
+    except Exception as e:
+        logger.error("Failed to run BTST screener: %s", e)
+
+    date_str = str(datetime.date.today())
+    
+    # Sort by score and adx descending and cap to TOP_N_ALERTS (e.g. 5-7)
+    candidates.sort(key=lambda c: (c.score, c.adx), reverse=True)
+    candidates = candidates[:config.TOP_N_ALERTS]
+
+    # Save today's candidates, open positions, and track progress daywise
+    save_daily_results(date_str, candidates)
+    update_open_positions(date_str, candidates)
+    track_daily_progress(date_str)
+
+    message = format_alert_message(candidates, config.TOP_N_ALERTS, btst_candidates=btst_candidates)
     print("\n" + message + "\n")
 
     if config.SEND_TELEGRAM:
@@ -83,7 +108,7 @@ def trigger_fundamental_screener():
 
 def main():
     trigger_technical_screener()
-    trigger_fundamental_screener()
+    # trigger_fundamental_screener()
 
 if __name__ == "__main__":
     sys.exit(main())
