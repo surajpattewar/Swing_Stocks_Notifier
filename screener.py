@@ -38,6 +38,7 @@ class Candidate:
     rsi: float = 0.0
     stop_loss: float = 0.0
     target: float = 0.0
+    signals: dict = field(default_factory=dict)
 
     # def to_line(self) -> str:
     #     sym = self.symbol.replace(".NS", "")
@@ -202,6 +203,26 @@ def evaluate(symbol: str, df: pd.DataFrame, stock_info) -> Candidate:
         reasons.append(pullback_reason)
         setup_type = "pullback_sma50"
 
+    # 8. Open-Low Same (OLS) Breakout
+    prev_close = float(df.iloc[-2]["Close"])
+    ols_breakout = last["Close"] > last["Open"] and last["Close"] > prev_close and (last["Open"] - last["Low"]) / last["Open"] <= 0.002
+    if ols_breakout:
+        score += 1
+        reasons.append("Open-Low Same (conviction buy)")
+
+    # 9. Strong RSI Momentum Zone
+    strong_rsi = 65 < last["rsi14"] <= 80
+    if strong_rsi:
+        score += 1
+        reasons.append("Strong RSI momentum")
+
+    # 10. Bounce off rising SMA100 support
+    sma100_rising = last["sma100"] > df.iloc[-6]["sma100"]
+    sma100_support = last["Low"] <= last["sma100"] * 1.015 and last["Close"] > last["sma100"] and sma100_rising
+    if sma100_support:
+        score += 1
+        reasons.append("Pullback to SMA100 support")
+
     last_close = float(last["Close"])
     if setup_type == "pullback_sma50":
         # structural stop: just under the SMA50 itself (the level being defended),
@@ -214,10 +235,19 @@ def evaluate(symbol: str, df: pd.DataFrame, stock_info) -> Candidate:
     risk = max(last_close - stop_loss, 0.01)
     target = round(last_close + 2 * risk, 2)
 
-    # # stop_loss = round(float(last["low20"]), 2)
-    # stop_loss = round(float(last["Close"] - 1.5 * last["atr"]), 2)
-    # risk = max(float(last["Close"]) - stop_loss, 0.01)
-    # target = round(float(last["Close"]) + 2 * risk, 2)  # simple 1:2 risk-reward
+    signals = {
+        "uptrend_sma50": bool(last["Close"] > last["sma50"] and sma50_rising),
+        "rsi_momentum": bool(healthy_zone or oversold_bounce),
+        "macd_crossover": bool(crossed),
+        "volume_spike": bool(last["Volume"] > 1.5 * last["vol_avg20"]),
+        "breakout_proximity": bool(last["Close"] >= 0.99 * last["high20"]),
+        "adx_strong_trend": bool(last["adx"] > 25),
+        "sma_cross": bool(sma_cross),
+        "pullback_sma50": bool(is_pullback),
+        "ols_breakout": bool(ols_breakout),
+        "strong_rsi": bool(strong_rsi),
+        "sma100_support": bool(sma100_support),
+    }
 
     return Candidate(
         symbol=symbol,
@@ -230,6 +260,7 @@ def evaluate(symbol: str, df: pd.DataFrame, stock_info) -> Candidate:
         rsi=round(float(last["rsi14"]), 1),
         stop_loss=stop_loss,
         target=target,
+        signals=signals,
     )
 
 
