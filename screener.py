@@ -530,3 +530,4 @@ def run_screener(symbols: list, period: str, interval: str, min_score: int) -> l
 
     candidates.sort(key=lambda c: (c.score, c.beta, c.adx), reverse=True)
     return candidates
+    
