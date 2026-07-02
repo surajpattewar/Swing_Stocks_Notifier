@@ -58,14 +58,48 @@ def send_whatsapp_twilio(account_sid: str, auth_token: str, from_whatsapp: str,
     return ok
 
 
-def format_alert_message(candidates: list, top_n: int, message: str="Swing Trade Screener") -> str:
-    if not candidates:
+def format_alert_message(candidates: list, top_n: int, message: str="Swing Trade Screener", btst_candidates: list=None) -> str:
+    if not candidates and not btst_candidates:
         return f"{message}\n\nNo qualifying setups found today {datetime.today().date()}."
 
-    lines = [f"{message} — {len(candidates)} candidate(s) found on {datetime.today().date()} \nBy Suraj Pattewar"]
+    breakouts = []
+    pullbacks = []
+    others = []
+    
     for cand in candidates[:top_n]:
-        lines.append(cand.to_line())
-    lines.append(
-        "\nAuto-generated results, not financial advice. "
-    )
-    return "\n\n".join(lines)
+        if cand.setup_type in ["momentum_breakout", "momentum"]:
+            breakouts.append(cand)
+        elif cand.setup_type in ["pullback_sma50", "rsi2_pullback"]:
+            pullbacks.append(cand)
+        else:
+            others.append(cand)
+            
+    total_count = len(candidates) + (len(btst_candidates) if btst_candidates else 0)
+    lines = [f"{message} — {total_count} candidate(s) found on {datetime.today().date()} \nBy Suraj Pattewar\n"]
+    
+    if btst_candidates:
+        lines.append("⚡ BTST SETUP SIGNALS:")
+        for cand in btst_candidates[:top_n]:
+            lines.append(cand.to_line())
+        lines.append("")
+
+    if breakouts:
+        lines.append("🚀 MOMENTUM BREAKOUT SIGNALS:")
+        for cand in breakouts:
+            lines.append(cand.to_line())
+        lines.append("")
+        
+    if pullbacks:
+        lines.append("📉 OVERSOLD PULLBACK SIGNALS:")
+        for cand in pullbacks:
+            lines.append(cand.to_line())
+        lines.append("")
+        
+    if others:
+        lines.append("📈 OTHER TECHNICAL SIGNALS:")
+        for cand in others:
+            lines.append(cand.to_line())
+        lines.append("")
+
+    lines.append("Auto-generated results, not financial advice. ")
+    return "\n".join(lines)

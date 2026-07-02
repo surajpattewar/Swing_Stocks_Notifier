@@ -57,5 +57,5 @@ def get_stock_universe(max_stocks: int = 200, url: str=None, no_of_stocks:int=10
         symbols = FALLBACK_SYMBOLS
 
     symbols = [_format(s) for s in symbols[:max_stocks]]
-    symbols.append("^NSEI")
+    # symbols.append("^NSEI")
     return symbols

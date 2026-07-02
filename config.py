@@ -29,8 +29,10 @@ class Config:
 
     # Screener tuning
     MIN_SCORE = int(os.getenv("MIN_SCORE", "3"))               # 0-5, higher = stricter
+    RISK_REWARD_RATIO = float(os.getenv("RISK_REWARD_RATIO", "1.5"))
+    ATR_MULTIPLIER = float(os.getenv("ATR_MULTIPLIER", "2.0"))
     MAX_STOCKS_TO_SCAN = int(os.getenv("MAX_STOCKS_TO_SCAN", "500"))
-    TOP_N_ALERTS = int(os.getenv("TOP_N_ALERTS", "15"))
+    TOP_N_ALERTS = int(os.getenv("TOP_N_ALERTS", "7"))
     HISTORY_PERIOD = os.getenv("HISTORY_PERIOD", "9mo")
     HISTORY_INTERVAL = os.getenv("HISTORY_INTERVAL", "1d")
 
@@ -40,6 +42,11 @@ class Config:
     # DuckDB persistence
     DUCKDB_PATH = os.getenv("DUCKDB_PATH", "data/duckdb/screener_data.duckdb")
     SAVE_TO_DUCKDB = _get_bool("SAVE_TO_DUCKDB", True)
+
+    # Google Sheets persistence
+    GOOGLE_SHEET_NAME = os.getenv("GOOGLE_SHEET_NAME", "Swing Stocks Tracker")
+    GOOGLE_SHEETS_CREDENTIALS_PATH = os.getenv("GOOGLE_SHEETS_CREDENTIALS_PATH", "google_credentials.json")
+    GOOGLE_SHEETS_CREDENTIALS_JSON = os.getenv("GOOGLE_SHEETS_CREDENTIALS_JSON", "")
 
     # Backtesting
     BACKTEST_MONTHS = int(os.getenv("BACKTEST_MONTHS", "4"))          # how far back to test

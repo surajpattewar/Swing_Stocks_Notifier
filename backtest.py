@@ -45,9 +45,9 @@ from screener import evaluate, Candidate
 
 logger = logging.getLogger(__name__)
 
-# How many calendar days of prior history the indicators need (SMA100 is the
+# How many calendar days of prior history the indicators need (SMA200 is the
 # longest lookback in screener.py) before the first evaluable day. Padded.
-INDICATOR_WARMUP_CALENDAR_DAYS = 160
+INDICATOR_WARMUP_CALENDAR_DAYS = 330
 
 
 def get_local_symbols(db_path: str = None, max_stocks: int = None) -> list[str]:
@@ -178,7 +178,7 @@ def simulate_outcome(df: pd.DataFrame, signal_date, entry_price: float,
 
 
 def walk_forward_signals(symbol: str, df: pd.DataFrame, backtest_start, backtest_end,
-                          min_score: int, max_holding_days: int) -> list:
+                          min_score: int, max_holding_days: int, index_df: pd.DataFrame = None) -> list:
     """
     For every trading day in [backtest_start, backtest_end] that has enough
     prior history, re-score the stock as of that day (no look-ahead) and,
@@ -191,10 +191,10 @@ def walk_forward_signals(symbol: str, df: pd.DataFrame, backtest_start, backtest
 
     for signal_date in eval_dates:
         df_slice = df.loc[:signal_date]
-        if len(df_slice) < 110:   # not enough warm-up for SMA100 etc.
+        if len(df_slice) < 220:   # need at least 200 warm-up for SMA200
             continue
         try:
-            cand: Candidate = evaluate(symbol, df_slice, skip_fundamental=True)
+            cand: Candidate = evaluate(symbol, df_slice, skip_fundamental=True, index_df=index_df)
         except Exception as e:
             logger.debug("Eval failed for %s on %s: %s", symbol, signal_date.date(), e)
             continue
@@ -207,7 +207,7 @@ def walk_forward_signals(symbol: str, df: pd.DataFrame, backtest_start, backtest
             stop_loss=cand.stop_loss, target=cand.target,
             max_holding_days=max_holding_days,
         )
-        results.append({
+        row = {
             "symbol": symbol,
             "signal_date": signal_date.date(),
             "score": cand.score,
@@ -217,7 +217,12 @@ def walk_forward_signals(symbol: str, df: pd.DataFrame, backtest_start, backtest
             "stop_loss": cand.stop_loss,
             "target": cand.target,
             **outcome,
-        })
+        }
+        # Inject individual pointer flags dynamically
+        for sig_name, sig_val in cand.signals.items():
+            row[f"pointer_{sig_name}"] = sig_val
+            
+        results.append(row)
     return results
 
 
@@ -232,6 +237,28 @@ def run_backtest(symbols: list, backtest_months: int = 4, min_score: int = 3,
     end = get_latest_price_date(db_path, symbols)
     start = end - timedelta(days=int(backtest_months * 31))
 
+    # Fetch index data from DuckDB for relative strength calculations
+    has_ns = any(sym.endswith(".NS") for sym in symbols)
+    index_df = None
+    if has_ns:
+        try:
+            with duckdb.connect(db_path, read_only=True) as con:
+                index_raw = con.execute(
+                    """
+                    SELECT CAST(timezone('Asia/Kolkata', date) AS DATE) AS Date,
+                           close AS Close
+                    FROM stock_prices
+                    WHERE symbol = 'NSEI'
+                    ORDER BY date
+                    """
+                ).fetchdf()
+                if not index_raw.empty:
+                    index_raw["Date"] = pd.to_datetime(index_raw["Date"])
+                    index_df = index_raw.set_index("Date")
+                    logger.info("Loaded NSEI index data from DuckDB for backtest relative strength")
+        except Exception as e:
+            logger.warning("Failed to load NSEI index from DuckDB: %s", e)
+
     all_results = []
 
     def _process(symbol):
@@ -240,7 +267,7 @@ def run_backtest(symbols: list, backtest_months: int = 4, min_score: int = 3,
                 symbol, backtest_months, max_holding_days,
                 db_path=db_path, as_of_date=end,
             )
-            return walk_forward_signals(symbol, df, start, end, min_score, max_holding_days)
+            return walk_forward_signals(symbol, df, start, end, min_score, max_holding_days, index_df=index_df)
         except Exception as e:
             logger.warning("Backtest skipped %s: %s", symbol, e)
             return []

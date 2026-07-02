@@ -97,7 +97,8 @@ def ingest_history(symbols, db_path: str = None, period: str = "12mo"):
             if df_temp.empty:
                 logger.warning("No data returned for %s, skipping", symbol)
                 continue
-            df_temp["symbol"] = symbol
+            db_symbol = "NSEI" if symbol == "^NSEI" else symbol
+            df_temp["symbol"] = db_symbol
             all_dfs.append(df_temp)
         except Exception as e:
             logger.warning("Failed to fetch %s: %s", symbol, e)
@@ -135,27 +136,28 @@ def ingest_deltas(symbols, db_path: str = None):
         all_dfs = []
         for symbol in symbols:
             try:
+                db_symbol = "NSEI" if symbol == "^NSEI" else symbol
                 last_date_row = con.execute(
-                    "SELECT max(date) FROM stock_prices WHERE symbol = ?", [symbol]
+                    "SELECT max(date) FROM stock_prices WHERE symbol = ?", [db_symbol]
                 ).fetchone()
                 last_date = last_date_row[0] if last_date_row else None
 
                 if last_date is None:
-                    logger.info("%s has no rows yet, doing a full 12mo fetch", symbol)
+                    logger.info("%s has no rows yet, doing a full 12mo fetch", db_symbol)
                     df_history = yf.Ticker(symbol).history(period="12mo", interval="1d", auto_adjust=True)
                 else:
                     # yfinance's `start` is inclusive, so re-fetching last_date's own
                     # bar is harmless (ON CONFLICT upserts it) and guards against a
                     # partial/stale last row from an interrupted prior run.
                     start_str = pd.Timestamp(last_date).strftime("%Y-%m-%d")
-                    logger.info("%s last stored date is %s, fetching deltas since then", symbol, start_str)
+                    logger.info("%s last stored date is %s, fetching deltas since then", db_symbol, start_str)
                     df_history = yf.Ticker(symbol).history(start=start_str, interval="1d", auto_adjust=True)
 
                 if df_history.empty:
-                    logger.info("No new rows for %s", symbol)
+                    logger.info("No new rows for %s", db_symbol)
                     continue
 
-                df_history["symbol"] = symbol
+                df_history["symbol"] = db_symbol
                 all_dfs.append(df_history)
             except Exception as e:
                 logger.warning("Failed to fetch deltas for %s: %s", symbol, e)

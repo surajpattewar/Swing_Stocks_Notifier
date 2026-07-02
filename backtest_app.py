@@ -4,6 +4,7 @@ import re
 import glob
 import time
 import itertools
+import json
 from datetime import datetime, timedelta
 import pandas as pd
 import numpy as np
@@ -172,11 +173,12 @@ def render_results_view(signals_df, summary_df, run_label=""):
     st.markdown("<br>", unsafe_allow_html=True)
     
     # Create Tab layout for reports
-    rep_tab1, rep_tab2, rep_tab3, rep_tab4 = st.tabs([
+    rep_tab1, rep_tab2, rep_tab3, rep_tab4, rep_tab5 = st.tabs([
         "🎯 Individual Indicator Stats", 
         "🧩 Stacking & Combinations", 
         "📈 Return Charts & Analysis",
-        "📋 Detailed Trades Log"
+        "📋 Detailed Trades Log",
+        "🤖 Learned ML Rules"
     ])
     
     with rep_tab1:
@@ -316,6 +318,99 @@ def render_results_view(signals_df, summary_df, run_label=""):
             mime="text/csv"
         )
 
+    with rep_tab5:
+        st.subheader("Machine Learning Strategy Optimization")
+        st.markdown("This tab utilizes `scikit-learn` algorithms (Random Forest and Decision Trees) to analyze historical signal combinations and discover the most predictive setups.")
+        
+        # Load or generate optimization report
+        report = None
+        if "last_optimized_report" in st.session_state and run_label.startswith("Live Run"):
+            report = st.session_state["last_optimized_report"]
+        else:
+            # Try to load it from disk using timestamp
+            ts_match = re.search(r"\d{8}_\d{6}", run_label)
+            if ts_match:
+                ts = ts_match.group(0)
+                json_path = f"backtest_results/backtest_optimized_{ts}.json"
+                if os.path.exists(json_path):
+                    try:
+                        with open(json_path, "r") as f:
+                            report = json.load(f)
+                    except Exception:
+                        pass
+                        
+            # If not loaded, run optimization on-the-fly!
+            if report is None:
+                try:
+                    from optimize_strategy import run_optimization
+                    timestamp = ts_match.group(0) if ts_match else datetime.now().strftime("%Y%m%d_%H%M%S")
+                    signals_file = f"backtest_results/backtest_signals_{timestamp}.csv"
+                    if not os.path.exists(signals_file):
+                        os.makedirs("backtest_results", exist_ok=True)
+                        signals_df.to_csv(signals_file, index=False)
+                    
+                    report = run_optimization(signals_file, min_samples_leaf=15, max_rules=5)
+                    json_path = f"backtest_results/backtest_optimized_{timestamp}.json"
+                    with open(json_path, "w") as f:
+                        json.dump(report, f, indent=2)
+                except Exception as ex:
+                    st.info(f"Could not generate ML report: {ex}")
+                    
+        if report:
+            # 1. Baseline vs Optimized
+            col_b1, col_b2, col_b3 = st.columns(3)
+            with col_b1:
+                st.markdown(f'<div class="metric-card"><div class="metric-val">{report["baseline"]["total_trades"]}</div><div class="metric-lbl">Trades Analyzed</div></div>', unsafe_allow_html=True)
+            with col_b2:
+                st.markdown(f'<div class="metric-card"><div class="metric-val">{report["baseline"]["win_rate_pct"]}%</div><div class="metric-lbl">Baseline Win Rate</div></div>', unsafe_allow_html=True)
+            with col_b3:
+                best_win_rate = report["extracted_rules"][0]["win_rate_pct"] if report["extracted_rules"] else report["baseline"]["win_rate_pct"]
+                st.markdown(f'<div class="metric-card"><div class="metric-val" style="color: #2ea043;">{best_win_rate}%</div><div class="metric-lbl">Max Optimized Win Rate</div></div>', unsafe_allow_html=True)
+                
+            st.markdown("<br>", unsafe_allow_html=True)
+            
+            # 2. Split: Feature Importance Chart & Score Thresholds
+            col_chart1, col_chart2 = st.columns(2)
+            with col_chart1:
+                st.markdown("#### Feature Importance (Random Forest)")
+                fi_df = pd.DataFrame(report["feature_importances"])
+                st.bar_chart(fi_df.set_index("feature")["importance"])
+                
+            with col_chart2:
+                st.markdown("#### Score Threshold Optimization")
+                st.dataframe(
+                    pd.DataFrame(report["score_thresholds"]),
+                    use_container_width=True,
+                    hide_index=True,
+                    column_config={
+                        "score_threshold": st.column_config.NumberColumn("Min Score Threshold"),
+                        "samples": st.column_config.NumberColumn("Total Signals"),
+                        "win_rate_pct": st.column_config.NumberColumn("Win Rate", format="%.1f%%"),
+                        "avg_return_pct": st.column_config.NumberColumn("Avg Return", format="%+.2f%%"),
+                        "profit_factor": st.column_config.NumberColumn("Profit Factor", format="%.2f")
+                    }
+                )
+                
+            # 3. Decision Tree Rules
+            st.markdown("#### Extracted Decision Tree Trading Rules")
+            if not report["extracted_rules"]:
+                st.info("No specific indicator rules exceeded the baseline win rate. Keep screening with a higher Min Score.")
+            else:
+                for idx, r in enumerate(report["extracted_rules"], 1):
+                    # Style rule
+                    rule_text = r["rule"].replace(" = True", " is **True**").replace(" = False", " is **False**").replace(" AND ", "  \n&nbsp;&nbsp;&nbsp;&nbsp;**AND** ")
+                    st.markdown(f"""
+                    <div style="background-color: #161b22; padding: 1rem; border-left: 4px solid #2ea043; border-radius: 4px; margin-bottom: 0.8rem;">
+                        <span style="font-size: 1.1rem; font-weight: bold; color: #58a6ff;">Rule Combination {idx}</span><br>
+                        <p style="margin: 0.5rem 0; color: #c9d1d9;">If {rule_text}</p>
+                        <span style="font-size: 0.9rem; color: #8b949e;">
+                            📈 Win Rate: <b>{r['win_rate_pct']}%</b> | Total Trades: {r['samples']} | Wins: {r['wins']} | Losses: {r['losses']}
+                        </span>
+                    </div>
+                    """, unsafe_allow_html=True)
+        else:
+            st.info("No optimization report available. Try running a backtest on a larger set of symbols.")
+
 # App Title & Layout
 st.title("Swing Screener Backtest Console 📊")
 st.markdown("Trigger multi-pointer walk-forward backtests on custom universes, customize screener criteria, and explore historic performance profiles in detail.")
@@ -350,13 +445,15 @@ with tab_run:
             st.info("Will use the pre-defined fallback list of 50 highly liquid stocks.")
             
         st.markdown("#### Backtest Period & Criteria")
-        col_p1, col_p2, col_p3 = st.columns(3)
+        col_p1, col_p2, col_p3, col_p4 = st.columns(4)
         with col_p1:
             years_to_test = st.slider("Backtest Period (Years)", min_value=0.5, max_value=10.0, value=5.0, step=0.5)
         with col_p2:
             min_score = st.slider("Minimum Score", min_value=1, max_value=6, value=1, help="Min score to capture a trade. Select 1 to test performance of all individual indicator triggers.")
         with col_p3:
             max_hold = st.slider("Max holding period (trading days)", min_value=5, max_value=30, value=15)
+        with col_p4:
+            top_n_per_day = st.slider("Max signals/day", min_value=1, max_value=10, value=10, help="Limit daily signals to top N (sorted by score & adx).")
             
         max_workers = st.slider("Parallel workers (download speed)", min_value=1, max_value=20, value=10)
         
@@ -427,7 +524,7 @@ with tab_run:
                 # Fetch data
                 end_date = datetime.now().date()
                 start_date = end_date - timedelta(days=int(years_to_test * 365))
-                warmup_start_date = start_date - timedelta(days=200)
+                warmup_start_date = start_date - timedelta(days=300)
                 
                 start_str = warmup_start_date.strftime("%Y-%m-%d")
                 end_str = end_date.strftime("%Y-%m-%d")
@@ -487,15 +584,31 @@ with tab_run:
                     progress_bar.progress(0.6)
                     st.write("Executing walk-forward logic (evaluating daily screeners)...")
                     
+                    # Pre-download/align benchmark index data to avoid multi-threaded web requests
+                    index_data = {}
+                    st.write("Downloading benchmark history (^NSEI)...")
+                    for idx_sym in ["^NSEI"]:
+                        try:
+                            ticker = yf.Ticker(idx_sym)
+                            df_idx = ticker.history(start=warmup_start_date.strftime("%Y-%m-%d"), end=end_date.strftime("%Y-%m-%d"), interval="1d", auto_adjust=True)
+                            if not df_idx.empty:
+                                if df_idx.index.tz is not None:
+                                    df_idx.index = df_idx.index.tz_localize(None)
+                                index_data[idx_sym] = df_idx
+                        except Exception as e:
+                            st.warning(f"Failed to fetch benchmark {idx_sym}: {e}")
+
                     all_signals = []
                     
                     with ThreadPoolExecutor(max_workers=max_workers) as executor:
                         futures = {}
                         for sym, df in stock_data.items():
                             beta = betas[sym]
+                            bench_sym = "^NSEI"
+                            idx_df = index_data.get(bench_sym)
                             futures[executor.submit(
                                 backtest_yfinance.process_symbol, 
-                                sym, df, beta, start_date, end_date, min_score, max_hold
+                                sym, df, beta, start_date, end_date, min_score, max_hold, idx_df
                             )] = sym
                             
                         processed_cnt = 0
@@ -520,6 +633,10 @@ with tab_run:
                         st.info("The screener produced 0 trade signals with the current criteria.")
                     else:
                         st.write("Analyzing pointer combinations and compiling summary metrics...")
+                        # Limit to top N signals per day (sorted by score descending, then adx descending)
+                        signals_df = signals_df.sort_values(by=["signal_date", "score", "adx"], ascending=[True, False, False])
+                        signals_df = signals_df.groupby("signal_date").head(top_n_per_day).reset_index(drop=True)
+                        
                         signals_df = signals_df.sort_values(by=["signal_date", "symbol"]).reset_index(drop=True)
                         
                         # Generate permutation file
@@ -533,6 +650,18 @@ with tab_run:
                         
                         signals_df.to_csv(signals_file, index=False)
                         analysis_df.to_csv(summary_file, index=False)
+                        
+                        # Run strategy optimizer dynamically
+                        st.write("Running machine learning strategy optimizer...")
+                        try:
+                            from optimize_strategy import run_optimization
+                            report = run_optimization(signals_file, min_samples_leaf=15, max_rules=5)
+                            optimized_rules_file = os.path.join("backtest_results", f"backtest_optimized_{timestamp}.json")
+                            with open(optimized_rules_file, "w") as f:
+                                json.dump(report, f, indent=2)
+                            st.session_state["last_optimized_report"] = report
+                        except Exception as opt_ex:
+                            st.warning(f"Strategy optimization failed: {opt_ex}")
                         
                         if save_cache:
                             st.write("Updating local cache file...")
