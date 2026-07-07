@@ -28,7 +28,7 @@ jobs:
         env:
           ENCODED_JSON: ${{ secrets.GOOGLE_SHEETS_SECRET }}
         run: |
-          echo "$ENCODED_JSON" | base64 -d > carbide-parser-320603-da9517d36691.json
+          echo "$ENCODED_JSON" | base64 -d > google_sheet_credentials.json
 
       - name: Run screener
         env:
@@ -50,6 +50,6 @@ jobs:
           HISTORY_PERIOD: ${{ vars.HISTORY_PERIOD }}
           HISTORY_INTERVAL: ${{ vars.HISTORY_INTERVAL }}
 
-          GOOGLE_SHEETS_CREDENTIALS_PATH: "carbide-parser-320603-da9517d36691.json" 
+          # GOOGLE_SHEETS_CREDENTIALS_PATH: "carbide-parser-320603-da9517d36691.json" 
         # uv run executes the script within the managed virtual environment
         run: uv run main.py

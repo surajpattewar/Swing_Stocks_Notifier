@@ -202,18 +202,32 @@ def walk_forward_signals(symbol: str, df: pd.DataFrame, backtest_start, backtest
         if cand.score < min_score:
             continue
 
+        # Bug 2 fix: use NEXT day's open as entry price (realistic: screener runs after close,
+        # you enter at next day's open, not at today's close which is impossible to fill).
+        future_bars = df.loc[df.index > signal_date]
+        if future_bars.empty:
+            continue
+
+        next_open = float(future_bars.iloc[0]["Open"])
+        # If next-day opens massively gapped above target, skip — unfillable trade
         capped_target = min(float(cand.target), float(cand.close) * 1.045)
+        if next_open >= capped_target:
+            continue  # gapped past target, no realistic entry
+
         outcome = simulate_outcome(
-            df, signal_date=signal_date, entry_price=cand.close,
+            df, signal_date=future_bars.index[0] - pd.Timedelta(seconds=1),
+            entry_price=next_open,
             stop_loss=cand.stop_loss, target=capped_target,
             max_holding_days=max_holding_days,
         )
         row = {
             "symbol": symbol,
             "signal_date": signal_date.date(),
+            "entry_date": future_bars.index[0].date(),
             "score": cand.score,
             "reasons": "; ".join(cand.reasons),
-            "entry_price": cand.close,
+            "entry_price": round(next_open, 2),
+            "signal_close": cand.close,
             "rsi": cand.rsi,
             "stop_loss": cand.stop_loss,
             "target": capped_target,
@@ -222,7 +236,7 @@ def walk_forward_signals(symbol: str, df: pd.DataFrame, backtest_start, backtest
         # Inject individual pointer flags dynamically
         for sig_name, sig_val in cand.signals.items():
             row[f"pointer_{sig_name}"] = sig_val
-            
+
         results.append(row)
     return results
 
