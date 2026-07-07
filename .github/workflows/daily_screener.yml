@@ -26,7 +26,7 @@ jobs:
 
       - name: Recreate JSON file
         env:
-          ENCODED_JSON: ${{ secrets.MYGOOGLE_SHEETS_CREDENTIALS_JSON_JSON_SECRET }}
+          ENCODED_JSON: ${{ secrets.GOOGLE_SHEETS_CREDENTIALS_JSON }}
         run: |
           echo "$ENCODED_JSON" | base64 -d > carbide-parser-320603-da9517d36691.json
 
