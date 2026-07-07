@@ -227,18 +227,20 @@ def update_open_positions(date_str, candidates):
                 status = df_open.at[idx, "status"]
                 if status == "OPEN":
                     # Update active stock target & SL
+                    c_target = min(float(cand.target), float(cand.close) * 1.045)
                     df_open.at[idx, "current_sl"] = str(cand.stop_loss)
-                    df_open.at[idx, "current_target"] = str(cand.target)
+                    df_open.at[idx, "current_target"] = str(c_target)
                     df_open.at[idx, "updated_at"] = datetime.now().isoformat()
                     logger.info(f"Updated SL/Target for active symbol {symbol} in Google Sheets.")
                 else:
                     # Stock is CLOSED, reset it to OPEN for a new trade setup
+                    c_target = min(float(cand.target), float(cand.close) * 1.045)
                     df_open.at[idx, "entry_date"] = str(date_str)
                     df_open.at[idx, "entry_price"] = str(cand.close)
                     df_open.at[idx, "entry_sl"] = str(cand.stop_loss)
-                    df_open.at[idx, "entry_target"] = str(cand.target)
+                    df_open.at[idx, "entry_target"] = str(c_target)
                     df_open.at[idx, "current_sl"] = str(cand.stop_loss)
-                    df_open.at[idx, "current_target"] = str(cand.target)
+                    df_open.at[idx, "current_target"] = str(c_target)
                     df_open.at[idx, "setup_type"] = str(cand.setup_type)
                     df_open.at[idx, "status"] = "OPEN"
                     df_open.at[idx, "current_price"] = str(cand.close)
@@ -258,14 +260,15 @@ def update_open_positions(date_str, candidates):
                             df_prog.at[p_idx, "updated_at"] = datetime.now().isoformat()
             else:
                 # Insert a new record
+                c_target = min(float(cand.target), float(cand.close) * 1.045)
                 new_pos = {
                     "symbol": symbol,
                     "entry_date": str(date_str),
                     "entry_price": str(cand.close),
                     "entry_sl": str(cand.stop_loss),
-                    "entry_target": str(cand.target),
+                    "entry_target": str(c_target),
                     "current_sl": str(cand.stop_loss),
-                    "current_target": str(cand.target),
+                    "current_target": str(c_target),
                     "setup_type": str(cand.setup_type),
                     "status": "OPEN",
                     "current_price": str(cand.close),
@@ -439,3 +442,22 @@ def track_daily_progress(date_str):
         _save_df_to_sheet(df_prog, "position_progress")
     except Exception as e:
         logger.error(f"Error tracking progress: {e}")
+
+def clear_sheets():
+    """Clear all worksheets in the Google Sheet (keeping only headers) for a clean run."""
+    try:
+        sh = get_spreadsheet()
+        for name in ["daily_results", "open_positions", "position_progress"]:
+            try:
+                ws = sh.worksheet(name)
+                # Read headers (first row)
+                headers = ws.row_values(1)
+                ws.clear()
+                if headers:
+                    ws.update(values=[headers], range_name='A1')
+                logger.info(f"Cleared worksheet '{name}' in Google Sheets.")
+            except Exception as ex:
+                logger.warning(f"Could not clear worksheet '{name}': {ex}")
+    except Exception as e:
+        logger.error(f"Error clearing Google Sheets: {e}")
+        raise e

@@ -16,6 +16,11 @@ def main():
     # Initialize the target database (Google Sheets)
     init_db()
     
+    # Clear previous sheets before starting a clean run
+    from db_tracker import clear_sheets
+    print("Clearing all previous data in Google Sheets...")
+    clear_sheets()
+    
     # Ingest the latest price updates from yfinance before backfilling
     from data_ingestion import ingest_deltas
     from stock_universe import get_stock_universe
@@ -32,14 +37,14 @@ def main():
         
     con_duck = duckdb.connect(duck_db_path, read_only=True)
     
-    # Get the latest 15 available days (approx 3 weeks) in Nifty index
+    # Get the latest 22 available days (approx 1 month) in Nifty index
     dates_raw = con_duck.execute(
         """
         SELECT DISTINCT CAST(timezone('Asia/Kolkata', date) AS DATE) AS d 
         FROM stock_prices 
         WHERE symbol = 'NSEI' 
         ORDER BY d DESC 
-        LIMIT 15
+        LIMIT 22
         """
     ).fetchall()
     

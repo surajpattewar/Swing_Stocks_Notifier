@@ -8,6 +8,7 @@ import logging
 
 import pandas as pd
 import requests
+from config import config
 
 logger = logging.getLogger(__name__)
 
@@ -57,5 +58,6 @@ def get_stock_universe(max_stocks: int = 200, url: str=None, no_of_stocks:int=10
         symbols = FALLBACK_SYMBOLS
 
     symbols = [_format(s) for s in symbols[:max_stocks]]
+    symbols.extend(config.ADDITIONAL_SYMBOLS)
     # symbols.append("^NSEI")
     return symbols

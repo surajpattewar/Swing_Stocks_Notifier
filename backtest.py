@@ -202,9 +202,10 @@ def walk_forward_signals(symbol: str, df: pd.DataFrame, backtest_start, backtest
         if cand.score < min_score:
             continue
 
+        capped_target = min(float(cand.target), float(cand.close) * 1.045)
         outcome = simulate_outcome(
             df, signal_date=signal_date, entry_price=cand.close,
-            stop_loss=cand.stop_loss, target=cand.target,
+            stop_loss=cand.stop_loss, target=capped_target,
             max_holding_days=max_holding_days,
         )
         row = {
@@ -215,7 +216,7 @@ def walk_forward_signals(symbol: str, df: pd.DataFrame, backtest_start, backtest
             "entry_price": cand.close,
             "rsi": cand.rsi,
             "stop_loss": cand.stop_loss,
-            "target": cand.target,
+            "target": capped_target,
             **outcome,
         }
         # Inject individual pointer flags dynamically

@@ -24,6 +24,12 @@ jobs:
         # uv sync reads uv.lock and pyproject.toml to install everything perfectly
         run: uv sync --frozen
 
+      - name: Recreate JSON file
+        env:
+          ENCODED_JSON: ${{ secrets.MYGOOGLE_SHEETS_CREDENTIALS_JSON_JSON_SECRET }}
+        run: |
+          echo "$ENCODED_JSON" | base64 -d > carbide-parser-320603-da9517d36691.json
+
       - name: Run screener
         env:
           SEND_WHATSAPP: ${{ vars.SEND_WHATSAPP }}
@@ -39,5 +45,11 @@ jobs:
           TWILIO_WHATSAPP_FROM: ${{ secrets.TWILIO_WHATSAPP_FROM }}
           TWILIO_WHATSAPP_TO: ${{ secrets.TWILIO_WHATSAPP_TO }}
 
+          RISK_REWARD_RATIO: ${{ vars.RISK_REWARD_RATIO }}
+          ATR_MULTIPLIER: ${{ vars.ATR_MULTIPLIER }}
+          HISTORY_PERIOD: ${{ vars.HISTORY_PERIOD }}
+          HISTORY_INTERVAL: ${{ vars.HISTORY_INTERVAL }}
+
+          GOOGLE_SHEETS_CREDENTIALS_PATH: "carbide-parser-320603-da9517d36691.json" 
         # uv run executes the script within the managed virtual environment
         run: uv run main.py

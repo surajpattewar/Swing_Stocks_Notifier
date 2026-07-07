@@ -55,5 +55,6 @@ class Config:
     BACKTEST_MAX_STOCKS = int(os.getenv("BACKTEST_MAX_STOCKS", "100"))
     BACKTEST_MAX_WORKERS = int(os.getenv("BACKTEST_MAX_WORKERS", "6"))
 
+    ADDITIONAL_SYMBOLS = (os.getenv("ADDITIONAL_SYMBOLS","")).split("|")
 
 config = Config()
