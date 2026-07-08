@@ -137,10 +137,11 @@ cols[3].metric("Strategy Win Rate", f"{summary['win_rate']:.1f}%")
 cols[4].metric("Average Return / Trade", f"{summary['avg_return']:+.2f}%")
 
 # 2. Main Sections Tabs
-tab1, tab2, tab3 = st.tabs([
+tab1, tab2, tab3, tab4 = st.tabs([
     "📂 Active Positions & 15-Day Progress",
     "📅 Daily Screener Archive",
-    "📜 Closed Trade History"
+    "📜 Closed Trade History",
+    "📊 Performance & Analytics"
 ])
 
 with tab1:
@@ -210,4 +211,97 @@ with tab3:
                 "close_price": st.column_config.NumberColumn("Exit (₹)", format="₹%.2f"),
                 "return_pct": st.column_config.NumberColumn("Return (%)", format="%+.2f%%"),
             }
+        )
+
+with tab4:
+    st.subheader("📊 Screener Performance & Analytics")
+    df_closed = load_closed_positions()
+    if df_closed.empty:
+        st.info("No closed trade records found to calculate performance metrics. Close some trades first!")
+    else:
+        # Calculate statistics
+        total_trades = len(df_closed)
+        wins_df = df_closed[df_closed["return_pct"] > 0]
+        losses_df = df_closed[df_closed["return_pct"] <= 0]
+        win_rate = (len(wins_df) / total_trades) * 100
+        avg_return = df_closed["return_pct"].mean()
+        
+        gross_profits = wins_df["return_pct"].sum()
+        gross_losses = abs(losses_df["return_pct"].sum())
+        profit_factor = gross_profits / gross_losses if gross_losses > 0 else (gross_profits if gross_profits > 0 else 1.0)
+        
+        best_trade = df_closed["return_pct"].max()
+        best_trade_symbol = df_closed.loc[df_closed["return_pct"].idxmax(), "symbol"]
+        
+        worst_trade = df_closed["return_pct"].min()
+        worst_trade_symbol = df_closed.loc[df_closed["return_pct"].idxmin(), "symbol"]
+        
+        # Metric Columns
+        cols_summary = st.columns(4)
+        cols_summary[0].metric("Strategy Win Rate", f"{win_rate:.1f}%", f"Wins: {len(wins_df)} / Losses: {len(losses_df)}")
+        cols_summary[1].metric("Average Return / Trade", f"{avg_return:+.2f}%")
+        cols_summary[2].metric("Profit Factor", f"{profit_factor:.2f}", help="Gross profits divided by gross losses")
+        cols_summary[3].metric("Total Closed Trades", f"{total_trades}")
+        
+        cols_extremes = st.columns(2)
+        cols_extremes[0].metric("Best Trade Setup", f"{best_trade:+.2f}% ({best_trade_symbol})")
+        cols_extremes[1].metric("Worst Trade Setup", f"{worst_trade:+.2f}% ({worst_trade_symbol})")
+        
+        st.divider()
+        
+        # Cumulative performance
+        df_daily_returns = df_closed.groupby("close_date")["return_pct"].sum().reset_index()
+        df_daily_returns = df_daily_returns.sort_values(by="close_date", ascending=True)
+        df_daily_returns["cumulative_return"] = df_daily_returns["return_pct"].cumsum()
+        
+        st.subheader("📈 Cumulative Return Timeline")
+        st.caption("Visualizes growth curve of return percentage over time across exit dates.")
+        st.line_chart(
+            df_daily_returns.set_index("close_date")[["cumulative_return"]],
+            use_container_width=True
+        )
+        
+        st.divider()
+        
+        # Performance by Setup Type
+        st.subheader("⚙️ Performance by Setup Type")
+        setup_stats = []
+        for setup, group in df_closed.groupby("setup_type"):
+            g_total = len(group)
+            g_wins = (group["return_pct"] > 0).sum()
+            g_win_rate = (g_wins / g_total) * 100
+            g_avg_ret = group["return_pct"].mean()
+            setup_stats.append({
+                "Setup Type": setup,
+                "Trades Count": g_total,
+                "Win Rate (%)": round(g_win_rate, 1),
+                "Avg Return (%)": round(g_avg_ret, 2)
+            })
+        df_setup_stats = pd.DataFrame(setup_stats)
+        
+        col_setup1, col_setup2 = st.columns([2, 3])
+        with col_setup1:
+            st.caption("Setup type stats details:")
+            st.dataframe(df_setup_stats, hide_index=True, use_container_width=True)
+        with col_setup2:
+            st.caption("Average return per setup category:")
+            st.bar_chart(
+                df_setup_stats.set_index("Setup Type")[["Avg Return (%)"]],
+                use_container_width=True
+            )
+            
+        st.divider()
+        
+        # Win / Loss Distribution Brackets
+        st.subheader("📊 Return Distribution Brackets")
+        bins = [-float('inf'), -5, 0, 3, 5, float('inf')]
+        labels = ["Stop Loss (< -5%)", "Mild Loss (-5% to 0%)", "Mild Gain (0% to +3%)", "Good Gain (+3% to +5%)", "Home Run (> +5%)"]
+        
+        df_closed["return_bracket"] = pd.cut(df_closed["return_pct"], bins=bins, labels=labels)
+        bracket_counts = df_closed["return_bracket"].value_counts().reindex(labels).fillna(0).reset_index()
+        bracket_counts.columns = ["Return Bracket", "Number of Trades"]
+        
+        st.bar_chart(
+            bracket_counts.set_index("Return Bracket")[["Number of Trades"]],
+            use_container_width=True
         )

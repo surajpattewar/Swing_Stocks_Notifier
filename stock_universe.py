@@ -59,5 +59,7 @@ def get_stock_universe(max_stocks: int = 200, url: str=None, no_of_stocks:int=10
 
     symbols = [_format(s) for s in symbols[:max_stocks]]
     symbols.extend(config.ADDITIONAL_SYMBOLS)
+    symbols = list(dict.fromkeys(symbols))
+    
     # symbols.append("^NSEI")
     return symbols

@@ -383,13 +383,21 @@ def track_daily_progress(date_str):
                 df_prog = pd.concat([df_prog, pd.DataFrame([new_prog])], ignore_index=True)
                 p_idx = df_prog.index[-1]
                 
-            # Determine target column (first empty dayX column)
-            day_num = 1
+            # Determine target column: either a column already logged for this date, or the first empty column
+            day_num = None
             for i in range(1, 16):
                 val = df_prog.at[p_idx, f"day{i}"]
-                if val is None or str(val).strip() == "":
-                    break
-                day_num += 1
+                if val is not None and str(val).strip() != "":
+                    # If this column has already been logged for today's date
+                    if str(val).startswith(date_str + ":"):
+                        day_num = i
+                        break
+                else:
+                    if day_num is None:
+                        day_num = i
+
+            if day_num is None:
+                day_num = 16  # Force a timeout/overflow check
                 
             if day_num > 15:
                 # Timeout, close position
@@ -410,18 +418,19 @@ def track_daily_progress(date_str):
             df_open.at[idx, "current_price"] = str(today_close)
             df_open.at[idx, "current_return"] = pct_str
             
-            outcome_str = pct_str
+            # Format outcomes as "Date: Return" to avoid duplicates on reruns
+            outcome_str = f"{date_str}: {pct_str}"
             closed = False
             close_price = today_close
             
             if today_close >= current_target:
-                outcome_str = f"{pct_str} (Target Hit)"
+                outcome_str = f"{date_str}: {pct_str} (Target Hit)"
                 closed = True
             elif today_close <= current_sl:
-                outcome_str = f"{pct_str} (SL Hit)"
+                outcome_str = f"{date_str}: {pct_str} (SL Hit)"
                 closed = True
             elif day_num == 15:
-                outcome_str = f"{pct_str} (Timeout)"
+                outcome_str = f"{date_str}: {pct_str} (Timeout)"
                 closed = True
                 
             # Update position progress dayN column
