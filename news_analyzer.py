@@ -28,46 +28,40 @@ BEARISH_KEYWORDS = {
 
 _NSE_CALENDAR_CACHE = None
 
-def get_nse_corporate_events() -> pd.DataFrame:
-    """
-    Fetches the full corporate filings event calendar from NSE India.
-    Supports reading from a local CSV file fallback (e.g. event-calendar.csv)
-    to bypass Cloudflare blocks/firewalls when running offline.
-    """
-    global _NSE_CALENDAR_CACHE
-    if _NSE_CALENDAR_CACHE is not None:
-        return _NSE_CALENDAR_CACHE
-        
-    import os
-    import glob
-    
-    # ─── Layer 1: Check local CSV files in the workspace ─────────────────────
-    local_patterns = ["*event-calendar*.csv", "*corporate_events*.csv", "*nse_events*.csv", "event-calendar.csv"]
-    local_files = []
-    for pattern in local_patterns:
-        local_files.extend(glob.glob(pattern))
-        
-    # Also check parent directory or subdirectories just in case
-    local_files = list(set(local_files))  # remove duplicates
-    
-    for filepath in sorted(local_files):
-        try:
-            df = pd.read_csv(filepath)
-            # If the index has a name (e.g. SYMBOL), reset it so it becomes a column
-            if df.index.name is not None:
-                df = df.reset_index()
-            # Clean and normalize columns to uppercase
-            df.columns = [c.strip().upper() for c in df.columns]
-            
-            if "SYMBOL" in df.columns and "DATE" in df.columns:
-                df["SYMBOL"] = df["SYMBOL"].astype(str).str.strip()
-                _NSE_CALENDAR_CACHE = df
-                logger.info(f"Successfully loaded NSE corporate filings from local file: {filepath}")
-                return df
-        except Exception as e:
-            logger.warning(f"Found event CSV file {filepath} but failed to parse: {e}")
+def clean_event_calendar_csv(csv_text: str) -> str:
+    if not csv_text:
+        return csv_text
 
-    # ─── Layer 2: Online API fetch fallback ──────────────────────────────────
+    # 1. Remove BOM if present
+    if csv_text.startswith('\ufeff'):
+        csv_text = csv_text[1:]
+
+    # 2. Normalize line endings
+    csv_text = csv_text.replace('\r\n', '\n')
+
+    # 3. Clean the headers
+    # Corrupt headers look like: "SYMBOL \n","COMPANY \n","PURPOSE \n","DETAILS \n","DATE \n"\n
+    import re
+    pattern = r'^"SYMBOL\s*\n?","COMPANY\s*\n?","PURPOSE\s*\n?","DETAILS\s*\n?","DATE\s*\n?"\n?'
+    clean_headers = '"SYMBOL","COMPANY","PURPOSE","DETAILS","DATE"\n'
+    
+    cleaned_text = re.sub(pattern, clean_headers, csv_text, flags=re.IGNORECASE)
+    
+    # Fallback if regex did not match (e.g. slight formatting changes)
+    if cleaned_text == csv_text:
+        first_newline_idx = csv_text.find('\n', 200)
+        if first_newline_idx != -1:
+            header_part = csv_text[:first_newline_idx]
+            rest_part = csv_text[first_newline_idx:]
+            
+            header_part = header_part.replace('\n', '').replace('\r', '')
+            if "SYMBOL" in header_part.upper() and "DATE" in header_part.upper():
+                cleaned_text = '"SYMBOL","COMPANY","PURPOSE","DETAILS","DATE"' + rest_part
+
+    return cleaned_text
+
+def download_event_calendar_online() -> str:
+    import os
     url = "https://www.nseindia.com/api/event-calendar?index=equities&csv=true"
     headers = {
         "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
@@ -76,30 +70,163 @@ def get_nse_corporate_events() -> pd.DataFrame:
         "Referer": "https://www.nseindia.com/companies-listing/corporate-filings-event-calendar",
         "Connection": "keep-alive"
     }
-    
-    session = requests.Session()
+
+    # Method 1: Try curl_cffi (impersonate browser to bypass WAF/Cloudflare)
     try:
-        # Visit NSE India homepage first to establish session cookies
+        from curl_cffi import requests as requests_cffi
+        logger.info("Attempting online event calendar fetch using curl_cffi...")
+        session = requests_cffi.Session()
+        # Visit homepage to establish session cookies
+        session.get("https://www.nseindia.com", headers=headers, impersonate="chrome120", timeout=15)
+        resp = session.get(url, headers=headers, impersonate="chrome120", timeout=15)
+        if resp.status_code == 200 and resp.text:
+            if "SYMBOL" in resp.text.upper():
+                logger.info("Successfully fetched calendar via curl_cffi.")
+                return resp.text
+    except Exception as e:
+        logger.warning(f"curl_cffi fetch failed: {e}")
+
+    # Method 2: Try standard requests session with homepage cookie initialization
+    try:
+        import requests
+        logger.info("Attempting online event calendar fetch using standard requests...")
+        session = requests.Session()
         session.get("https://www.nseindia.com", headers=headers, timeout=10)
         resp = session.get(url, headers=headers, timeout=10)
-        resp.raise_for_status()
-        
-        # Read the CSV response text
-        from io import StringIO
-        df = pd.read_csv(StringIO(resp.text))
-        
-        # Strip and normalize columns to uppercase
-        df.columns = [c.strip().upper() for c in df.columns]
-        if "SYMBOL" in df.columns:
-            df["SYMBOL"] = df["SYMBOL"].astype(str).str.strip()
-            
-        _NSE_CALENDAR_CACHE = df
-        logger.info("Successfully fetched and cached NSE Corporate filings calendar online.")
-        return df
+        if resp.status_code == 200 and resp.text:
+            if "SYMBOL" in resp.text.upper():
+                logger.info("Successfully fetched calendar via standard requests.")
+                return resp.text
     except Exception as e:
-        logger.warning(f"Failed to fetch corporate filings calendar from NSE India: {e}. Fallbacks will be used.")
-        _NSE_CALENDAR_CACHE = pd.DataFrame()
+        logger.warning(f"Standard requests fetch failed: {e}")
+
+    # Method 3: Try subprocess curl mimicking a real browser
+    try:
+        import subprocess
+        import shutil
+        if shutil.which("curl"):
+            logger.info("Attempting online event calendar fetch using subprocess curl...")
+            cookie_jar = "nse_cookies.txt"
+            # 1. Fetch homepage to get cookies
+            subprocess.run([
+                "curl", "-s", "-L", "-o", "/dev/null",
+                "-c", cookie_jar,
+                "-H", f"User-Agent: {headers['User-Agent']}",
+                "-H", f"Referer: {headers['Referer']}",
+                "https://www.nseindia.com"
+            ], timeout=10)
+            # 2. Fetch the event calendar API using those cookies
+            cmd = [
+                "curl", "-s", "-L",
+                "-b", cookie_jar,
+                "-H", f"User-Agent: {headers['User-Agent']}",
+                "-H", f"Referer: {headers['Referer']}",
+                url
+            ]
+            res = subprocess.run(cmd, capture_output=True, text=True, timeout=15)
+            # Clean up cookie jar
+            if os.path.exists(cookie_jar):
+                try:
+                    os.remove(cookie_jar)
+                except Exception:
+                    pass
+            if res.returncode == 0 and res.stdout:
+                if "SYMBOL" in res.stdout.upper():
+                    logger.info("Successfully fetched calendar via subprocess curl.")
+                    return res.stdout
+    except Exception as e:
+        logger.warning(f"Subprocess curl fetch failed: {e}")
+
+    raise ValueError("All online download methods failed.")
+
+def get_nse_corporate_events() -> pd.DataFrame:
+    """
+    Fetches the full corporate filings event calendar from NSE India.
+    Attempts to download the latest calendar online using multiple fallback methods
+    (curl_cffi, standard requests, subprocess curl). Saves the downloaded file locally
+    to event-calendar.csv as a cache, and falls back to loading this local CSV file
+    if online fetching fails.
+    """
+    global _NSE_CALENDAR_CACHE
+    if _NSE_CALENDAR_CACHE is not None:
         return _NSE_CALENDAR_CACHE
+
+    import os
+    import glob
+    from io import StringIO
+
+    local_path = "event-calendar.csv"
+
+    # 1. Attempt online fetch first
+    csv_text = None
+    try:
+        csv_text = download_event_calendar_online()
+    except Exception as ex:
+        logger.warning(f"Online event calendar download failed: {ex}. Using local fallbacks...")
+
+    if csv_text:
+        try:
+            # Clean headers before parsing or saving
+            csv_text = clean_event_calendar_csv(csv_text)
+            df = pd.read_csv(StringIO(csv_text))
+            df.columns = [c.strip().upper() for c in df.columns]
+            if "SYMBOL" in df.columns and "DATE" in df.columns:
+                df["SYMBOL"] = df["SYMBOL"].astype(str).str.strip()
+                _NSE_CALENDAR_CACHE = df
+                
+                # Save clean CSV to local file cache
+                try:
+                    with open(local_path, "w", encoding="utf-8") as f:
+                        f.write(csv_text)
+                    logger.info(f"Successfully cached clean event calendar locally to {local_path}")
+                except Exception as save_err:
+                    logger.warning(f"Failed to cache event calendar locally: {save_err}")
+                
+                return df
+        except Exception as parse_err:
+            logger.warning(f"Failed to parse online downloaded event calendar CSV: {parse_err}")
+
+    # 2. Fallback to Local Files
+    logger.info("Searching for local event calendar files...")
+    local_patterns = ["*event-calendar*.csv", "*corporate_events*.csv", "*nse_events*.csv", local_path]
+    local_files = []
+    for pattern in local_patterns:
+        local_files.extend(glob.glob(pattern))
+    
+    local_files = list(set(local_files))
+    
+    for filepath in sorted(local_files):
+        try:
+            with open(filepath, "r", encoding="utf-8-sig") as f:
+                content = f.read()
+            cleaned_content = clean_event_calendar_csv(content)
+            
+            df = pd.read_csv(StringIO(cleaned_content))
+            if df.index.name is not None:
+                df = df.reset_index()
+            df.columns = [c.strip().upper() for c in df.columns]
+            
+            if "SYMBOL" in df.columns and "DATE" in df.columns:
+                df["SYMBOL"] = df["SYMBOL"].astype(str).str.strip()
+                _NSE_CALENDAR_CACHE = df
+                logger.info(f"Successfully loaded NSE corporate filings from local file: {filepath}")
+                
+                # Proactively clean corrupt file on disk
+                if cleaned_content != content:
+                    try:
+                        with open(filepath, "w", encoding="utf-8") as f:
+                            f.write(cleaned_content)
+                        logger.info(f"Proactively fixed and saved clean version of: {filepath}")
+                    except Exception as fix_err:
+                        logger.warning(f"Failed to save clean version to {filepath}: {fix_err}")
+                        
+                return df
+        except Exception as e:
+            logger.warning(f"Found local event CSV file {filepath} but failed to parse: {e}")
+
+    logger.error("No online or local event calendar available.")
+    _NSE_CALENDAR_CACHE = pd.DataFrame()
+    return _NSE_CALENDAR_CACHE
 
 def analyze_stock_news(symbol: str) -> dict:
     """
