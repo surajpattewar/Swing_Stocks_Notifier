@@ -50,6 +50,6 @@ jobs:
           HISTORY_PERIOD: ${{ vars.HISTORY_PERIOD }}
           HISTORY_INTERVAL: ${{ vars.HISTORY_INTERVAL }}
 
-          # GOOGLE_SHEETS_CREDENTIALS_PATH: "carbide-parser-320603-da9517d36691.json" 
+          GOOGLE_SHEETS_CREDENTIALS_PATH: ${{ vars.GOOGLE_SHEETS_CREDENTIALS_PATH }}
         # uv run executes the script within the managed virtual environment
         run: uv run main.py
