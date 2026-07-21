@@ -23,6 +23,19 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+import json
+
+# Load custom stock weights if available
+MODEL_FILE = os.path.join(workspace_dir, "models", "btst_stock_weights.json")
+CUSTOM_WEIGHTS = {}
+if os.path.exists(MODEL_FILE):
+    try:
+        with open(MODEL_FILE, "r") as f:
+            CUSTOM_WEIGHTS = json.load(f)
+        logger.info(f"Loaded custom BTST parameters for {len(CUSTOM_WEIGHTS)} stocks.")
+    except Exception as e:
+        logger.error(f"Failed to load custom weights from {MODEL_FILE}: {e}")
+
 class BTSTCandidate:
     def __init__(self, symbol, close, change_pct, volume_vs_avg, rsi, stop_loss, target, reasons):
         self.symbol = symbol
@@ -71,47 +84,65 @@ def evaluate_btst(symbol, df, index_df=None) -> BTSTCandidate:
 
     last = df.iloc[-1]
     
+    # Load parameters (custom or default)
+    params = CUSTOM_WEIGHTS.get(symbol, {
+        "near_high_pct": 0.002,
+        "vol_ratio_limit": 1.5,
+        "min_return": 2.0,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "sma50"
+    })
+    nh_pct = params.get("near_high_pct", 0.002)
+    vr_limit = params.get("vol_ratio_limit", 1.5)
+    min_ret = params.get("min_return", 2.0)
+    rsi_min = params.get("rsi_min", 60)
+    rsi_max = params.get("rsi_max", 78)
+    idx_filter = params.get("index_filter", "sma50")
+    
     # 1. Price is above 20 & 50 SMAs (uptrend)
     uptrend = last["Close"] > last["sma20"] and last["Close"] > last["sma50"]
     if not uptrend:
         return None
 
-    # 2. Closes near the high of the day (within 0.7%)
-    near_high = last["Close"] >= 0.993 * last["High"]
+    # 2. Closes near the high of the day (within nh_pct)
+    near_high = last["Close"] >= (1.0 - nh_pct) * last["High"]
     if not near_high:
         return None
 
-    # 3. Volume spike (at least 2.0x of 20-day average)
+    # 3. Volume spike (at least vr_limit of 20-day average)
     vol_ratio = last["Volume"] / last["vol_avg20"]
-    vol_spike = vol_ratio >= 2.0
+    vol_spike = vol_ratio >= vr_limit
     if not vol_spike:
         return None
 
-    # 4. Today is a strong green candle (Close > Open and return > 1.5%)
+    # 4. Today is a strong green candle (Close > Open and return >= min_ret%)
     today_ret = (last["Close"] - last["Open"]) / last["Open"] * 100
-    strong_candle = last["Close"] > last["Open"] and today_ret >= 1.5
+    strong_candle = last["Close"] > last["Open"] and today_ret >= min_ret
     if not strong_candle:
         return None
 
-    # 5. RSI in momentum zone (between 55 and 78)
-    rsi_momentum = 55 <= last["rsi14"] <= 78
+    # 5. RSI in momentum zone (between rsi_min and rsi_max)
+    rsi_momentum = rsi_min <= last["rsi14"] <= rsi_max
     if not rsi_momentum:
         return None
 
     # Optional Index and Relative Strength Filter
     reasons = [
         "Uptrend (above SMA20 & SMA50)",
-        f"Close near high ({round((last['High'] - last['Close']) / last['Close'] * 100, 2)}% off high)",
-        f"Volume spike ({round(vol_ratio, 2)}x avg)",
-        "Strong green candle",
-        f"RSI in momentum zone ({round(last['rsi14'], 1)})"
+        f"Close near high ({round((last['High'] - last['Close']) / last['Close'] * 100, 2)}% off high, limit {round(nh_pct*100, 2)}%)",
+        f"Volume spike ({round(vol_ratio, 2)}x avg, limit {vr_limit}x)",
+        f"Strong green candle (return {round(today_ret, 2)}%, limit {min_ret}%)",
+        f"RSI in momentum zone ({round(last['rsi14'], 1)}, range {rsi_min}-{rsi_max})"
     ]
+    if symbol in CUSTOM_WEIGHTS:
+        reasons.append("Matched custom stock-specific parameters")
 
     last_date = df.index[-1]
     
     # Index trend filter
     index_ok = True
-    if index_df is not None and not index_df.empty:
+    if idx_filter == "sma50" and index_df is not None and not index_df.empty:
         idx_slice = index_df.loc[index_df.index <= last_date]
         if not idx_slice.empty and len(idx_slice) >= 50:
             idx_close = idx_slice["Close"]
@@ -151,8 +182,8 @@ def evaluate_btst(symbol, df, index_df=None) -> BTSTCandidate:
 def run_btst_screener(send_alerts=False):
     logger.info("Starting daily BTST screener...")
     
-    # Get 100 stock universe
-    symbols = get_stock_universe(max_stocks=100)
+    # Get 200 stock universe
+    symbols = get_stock_universe(max_stocks=200, no_of_stocks=200)
     logger.info("Scanning %d symbols for BTST...", len(symbols))
     
     # Load Nifty index data as benchmark
@@ -166,7 +197,7 @@ def run_btst_screener(send_alerts=False):
     
     for symbol in symbols:
         try:
-            df = fetch_history(symbol, "6mo", "1d")
+            df = fetch_history(symbol, config.HISTORY_PERIOD, config.HISTORY_INTERVAL)
             cand = evaluate_btst(symbol, df, index_df=index_df)
             if cand:
                 candidates.append(cand)

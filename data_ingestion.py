@@ -90,14 +90,20 @@ def ingest_history(symbols, db_path: str = None, period: str = "12mo"):
     all_dfs = []
     for symbol in symbols:
         try:
-            logger.info("Fetching %s history for %s", period, symbol)
-            df_history = yf.Ticker(symbol).history(period=period, interval="1d", auto_adjust=True)
-            df_today = yf.Ticker(symbol).history(period="1d", interval="1d", auto_adjust=True)
+            fetch_symbol = "NIFTYBEES.NS" if symbol in ("^NSEI", "NSEI") else symbol
+            logger.info("Fetching %s history for %s (using %s)", period, symbol, fetch_symbol)
+            df_history = yf.Ticker(fetch_symbol).history(period=period, interval="1d", auto_adjust=True)
+            df_today = yf.Ticker(fetch_symbol).history(period="1d", interval="1d", auto_adjust=True)
             df_temp = pd.concat([df_history[:-1], df_today])
             if df_temp.empty:
                 logger.warning("No data returned for %s, skipping", symbol)
                 continue
-            db_symbol = "NSEI" if symbol == "^NSEI" else symbol
+            db_symbol = "NSEI" if symbol in ("^NSEI", "NSEI") else symbol
+            if db_symbol == "NSEI":
+                # Scale NiftyBees ETF price by 100 to match Nifty index approximately
+                for col in ["Open", "High", "Low", "Close"]:
+                    if col in df_temp.columns:
+                        df_temp[col] = df_temp[col] * 100
             df_temp["symbol"] = db_symbol
             all_dfs.append(df_temp)
         except Exception as e:
@@ -136,26 +142,33 @@ def ingest_deltas(symbols, db_path: str = None):
         all_dfs = []
         for symbol in symbols:
             try:
-                db_symbol = "NSEI" if symbol == "^NSEI" else symbol
+                db_symbol = "NSEI" if symbol in ("^NSEI", "NSEI") else symbol
                 last_date_row = con.execute(
                     "SELECT max(date) FROM stock_prices WHERE symbol = ?", [db_symbol]
                 ).fetchone()
                 last_date = last_date_row[0] if last_date_row else None
 
+                fetch_symbol = "NIFTYBEES.NS" if symbol in ("^NSEI", "NSEI") else symbol
                 if last_date is None:
                     logger.info("%s has no rows yet, doing a full 12mo fetch", db_symbol)
-                    df_history = yf.Ticker(symbol).history(period="12mo", interval="1d", auto_adjust=True)
+                    df_history = yf.Ticker(fetch_symbol).history(period="12mo", interval="1d", auto_adjust=True)
                 else:
                     # yfinance's `start` is inclusive, so re-fetching last_date's own
                     # bar is harmless (ON CONFLICT upserts it) and guards against a
                     # partial/stale last row from an interrupted prior run.
                     start_str = pd.Timestamp(last_date).strftime("%Y-%m-%d")
-                    logger.info("%s last stored date is %s, fetching deltas since then", db_symbol, start_str)
-                    df_history = yf.Ticker(symbol).history(start=start_str, interval="1d", auto_adjust=True)
+                    logger.info("%s last stored date is %s, fetching deltas since then using %s", db_symbol, start_str, fetch_symbol)
+                    df_history = yf.Ticker(fetch_symbol).history(start=start_str, interval="1d", auto_adjust=True)
 
                 if df_history.empty:
                     logger.info("No new rows for %s", db_symbol)
                     continue
+
+                if db_symbol == "NSEI":
+                    # Scale NiftyBees ETF price by 100 to match Nifty index approximately
+                    for col in ["Open", "High", "Low", "Close"]:
+                        if col in df_history.columns:
+                            df_history[col] = df_history[col] * 100
 
                 df_history["symbol"] = db_symbol
                 all_dfs.append(df_history)
@@ -178,4 +191,6 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
     from stock_universe import get_stock_universe
     syms = get_stock_universe(max_stocks=config.BACKTEST_MAX_STOCKS)
+    if "^NSEI" not in syms:
+        syms.append("^NSEI")
     ingest_history(syms)

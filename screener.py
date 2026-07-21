@@ -96,7 +96,22 @@ class Candidate:
         )
 
 
+_HISTORY_CACHE = {}
+
 def fetch_history(symbol: str, period: str, interval: str) -> pd.DataFrame:
+    # Check if we have this symbol/interval cached (any period)
+    cache_key = (symbol, period, interval)
+    if cache_key in _HISTORY_CACHE:
+        logger.debug(f"Using cached history for {symbol} ({period}, {interval})")
+        return _HISTORY_CACHE[cache_key].copy()
+        
+    # Also reuse if we have a cached version for the same symbol/interval with any period
+    # Since more data is always fine for calculations, we can safely return the cached dataframe
+    for cached_key, cached_df in _HISTORY_CACHE.items():
+        if cached_key[0] == symbol and cached_key[2] == interval:
+            logger.debug(f"Using cached history for {symbol} ({cached_key[1]}, {cached_key[2]}) instead of fetching ({period}, {interval})")
+            return cached_df.copy()
+
     df = None
     try:
         ticker = yf.Ticker(symbol)
@@ -156,6 +171,8 @@ def fetch_history(symbol: str, period: str, interval: str) -> pd.DataFrame:
 
     if df is None or df.empty or len(df) < 60:
         raise ValueError(f"Not enough data for {symbol}")
+        
+    _HISTORY_CACHE[cache_key] = df.copy()
     return df
 
 def fetch_stock_info(symbol: str):

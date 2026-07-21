@@ -1,9 +1,20 @@
 import os
+import json
 import duckdb
 import pandas as pd
 import numpy as np
 import ta
 from datetime import date, timedelta
+
+MODEL_FILE = "models/btst_stock_weights.json"
+CUSTOM_WEIGHTS = {}
+if os.path.exists(MODEL_FILE):
+    try:
+        with open(MODEL_FILE, "r") as f:
+            CUSTOM_WEIGHTS = json.load(f)
+        print(f"Loaded custom BTST parameters for {len(CUSTOM_WEIGHTS)} stocks.")
+    except Exception as e:
+        print(f"Failed to load custom weights: {e}")
 
 DB_PATH = "data/duckdb/screener_data.duckdb"
 
@@ -49,6 +60,22 @@ def run_btst_backtest(symbols_data, start_date, end_date, index_df=None):
         df["rsi14"] = ta.momentum.rsi(df["Close"], window=14)
         df = df.dropna()
         
+        # Get custom parameters or defaults
+        params = CUSTOM_WEIGHTS.get(symbol, {
+            "near_high_pct": 0.002,
+            "vol_ratio_limit": 1.5,
+            "min_return": 2.0,
+            "rsi_min": 60,
+            "rsi_max": 78,
+            "index_filter": "sma50"
+        })
+        nh_pct = params.get("near_high_pct", 0.002)
+        vr_limit = params.get("vol_ratio_limit", 1.5)
+        min_ret = params.get("min_return", 2.0)
+        rsi_min = params.get("rsi_min", 60)
+        rsi_max = params.get("rsi_max", 78)
+        idx_filter = params.get("index_filter", "sma50")
+        
         eval_dates = df.index[(df.index >= pd.Timestamp(start_date)) & (df.index <= pd.Timestamp(end_date))]
         
         for idx in range(len(df) - 1):
@@ -59,27 +86,20 @@ def run_btst_backtest(symbols_data, start_date, end_date, index_df=None):
             row = df.iloc[idx]
             next_row = df.iloc[idx + 1] # Day D+1
             
-            # BTST Screener Criteria:
-            # 1. Price is above 20 SMA & 50 SMA (uptrend)
-            # 2. Closes within 0.7% of the high of the day
-            # 3. Volume is at least 2.0x the 20-day average volume
-            # 4. Bullish green candle (Close > Open)
-            # 5. Today's return is positive (> 1.5%)
-            # 6. RSI(14) is in momentum zone (between 55 and 78)
-            
+            # BTST Screener Criteria using custom/default parameters
             pct_today = (row["Close"] - row["Open"]) / row["Open"] * 100
-            near_high = row["Close"] >= 0.993 * row["High"]
-            vol_spike = row["Volume"] > 2.0 * row["vol_avg20"]
+            near_high = row["Close"] >= (1.0 - nh_pct) * row["High"]
+            vol_spike = row["Volume"] >= vr_limit * row["vol_avg20"]
             uptrend = row["Close"] > row["sma20"] and row["Close"] > row["sma50"]
-            rsi_momentum = 55 <= row["rsi14"] <= 78
+            rsi_momentum = rsi_min <= row["rsi14"] <= rsi_max
             
             # Broader Market Index filter
             index_ok = True
-            if not idx_df.empty:
+            if idx_filter == "sma50" and not idx_df.empty:
                 if dt in idx_df.index and dt in idx_df["sma50"].index:
                     index_ok = idx_df.loc[dt, "Close"] > idx_df.loc[dt, "sma50"]
             
-            if uptrend and near_high and vol_spike and row["Close"] > row["Open"] and pct_today > 1.5 and rsi_momentum and index_ok:
+            if uptrend and near_high and vol_spike and row["Close"] > row["Open"] and pct_today >= min_ret and rsi_momentum and index_ok:
                 entry_price = float(row["Close"])
                 next_open = float(next_row["Open"])
                 next_high = float(next_row["High"])
@@ -133,9 +153,9 @@ def main():
     symbols = get_symbols(con)
     latest_date_row = con.execute("SELECT max(date) FROM stock_prices").fetchone()
     end_date = pd.Timestamp(latest_date_row[0]).date()
-    start_date = end_date - timedelta(days=365) # Backtest 1 year
+    start_date = end_date - timedelta(days=200) # Backtest last 6-7 months (200 days)
     
-    print(f"Loading data for {len(symbols)} symbols over 1 year...")
+    print(f"Loading data for {len(symbols)} symbols over last 6-7 months...")
     symbols_data = {}
     for sym in symbols:
         symbols_data[sym] = load_data(con, sym, start_date, end_date)

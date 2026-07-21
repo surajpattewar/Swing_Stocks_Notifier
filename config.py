@@ -28,7 +28,8 @@ class Config:
     TWILIO_WHATSAPP_TO = os.getenv("TWILIO_WHATSAPP_TO", "")
 
     # Screener tuning
-    MIN_SCORE = int(os.getenv("MIN_SCORE", "3"))               # 0-5, higher = stricter
+    NIFTY_N_STOCKS = int(os.getenv("NIFTY_N_STOCKS", "200"))
+    MIN_SCORE = int(os.getenv("MIN_SCORE", "8"))               # 0-5, higher = stricter
     RISK_REWARD_RATIO = float(os.getenv("RISK_REWARD_RATIO", "1.5"))
     ATR_MULTIPLIER = float(os.getenv("ATR_MULTIPLIER", "2.0"))
     MAX_STOCKS_TO_SCAN = int(os.getenv("MAX_STOCKS_TO_SCAN", "500"))
@@ -49,10 +50,10 @@ class Config:
     GOOGLE_SHEETS_CREDENTIALS_JSON = os.getenv("GOOGLE_SHEETS_CREDENTIALS_JSON", "")
 
     # Backtesting
-    BACKTEST_MONTHS = int(os.getenv("BACKTEST_MONTHS", "4"))          # how far back to test
+    BACKTEST_MONTHS = int(os.getenv("BACKTEST_MONTHS", "8"))          # how far back to test
     BACKTEST_MAX_HOLDING_DAYS = int(os.getenv("BACKTEST_MAX_HOLDING_DAYS", "15"))  # trading days per signal
     BACKTEST_MIN_SCORE = int(os.getenv("BACKTEST_MIN_SCORE", str(MIN_SCORE)))
-    BACKTEST_MAX_STOCKS = int(os.getenv("BACKTEST_MAX_STOCKS", "100"))
+    BACKTEST_MAX_STOCKS = int(os.getenv("BACKTEST_MAX_STOCKS", "250"))
     BACKTEST_MAX_WORKERS = int(os.getenv("BACKTEST_MAX_WORKERS", "6"))
 
     ADDITIONAL_SYMBOLS = (os.getenv("ADDITIONAL_SYMBOLS","")).split("|")

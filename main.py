@@ -19,24 +19,22 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 def trigger_technical_screener():
-    from db_tracker import init_db, save_daily_results, update_open_positions, track_daily_progress
+    from db_tracker import init_db, save_daily_results, update_open_positions, track_daily_progress, save_btst_trades, update_btst_trades
     import datetime
 
     # Initialize tracker database
     init_db()
 
-    # for no_of_stocks in [100, 200, 500]:
-    for no_of_stocks in [100]:
-        logger.info(f"Scanning Nifty {no_of_stocks} stocks...")
 
-        candidates = run_screener(
-            symbols=get_stock_universe(max_stocks=config.MAX_STOCKS_TO_SCAN, no_of_stocks=no_of_stocks),
-            period=config.HISTORY_PERIOD,
-            interval=config.HISTORY_INTERVAL,
-            min_score=config.MIN_SCORE,
-        )
-        if candidates:
-            break
+    logger.info(f"Scanning Nifty 200 stocks...")
+
+    candidates = run_screener(
+        symbols=get_stock_universe(max_stocks=config.MAX_STOCKS_TO_SCAN, no_of_stocks=config.NIFTY_N_STOCKS),
+        period=config.HISTORY_PERIOD,
+        interval=config.HISTORY_INTERVAL,
+        min_score=config.MIN_SCORE,
+    )
+
     logger.info("Found %d stocks meeting min_score=%d", len(candidates), config.MIN_SCORE)
 
     # Run BTST Screener
@@ -57,6 +55,13 @@ def trigger_technical_screener():
     save_daily_results(date_str, candidates)
     update_open_positions(date_str, candidates)
     track_daily_progress(date_str)
+
+    # Save today's BTST trades, and update previous day's open BTST trades
+    try:
+        update_btst_trades(date_str)
+        save_btst_trades(date_str, btst_candidates)
+    except Exception as e:
+        logger.error("Failed to save/update BTST trades: %s", e)
 
     message = format_alert_message(candidates, config.TOP_N_ALERTS, btst_candidates=btst_candidates)
     print("\n" + message + "\n")

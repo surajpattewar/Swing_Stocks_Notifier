@@ -101,6 +101,13 @@ def init_db():
             ws.update(values=[headers], range_name='A1')
             logger.info("Created 'position_progress' worksheet.")
             
+        # 4. btst_trades
+        if "btst_trades" not in existing_worksheets:
+            headers = ["date", "symbol", "entry_price", "target_1_5", "sl_1_5", "rsi", "vol_ratio", "status", "next_open", "next_open_return", "exit_price_b", "exit_return_b", "outcome_b", "created_at"]
+            ws = sh.add_worksheet("btst_trades", rows=1000, cols=len(headers))
+            ws.update(values=[headers], range_name='A1')
+            logger.info("Created 'btst_trades' worksheet.")
+            
         logger.info("Database (Google Sheets) initialized successfully.")
     except Exception as e:
         logger.error(f"Error initializing Google Sheets database: {e}")
@@ -456,7 +463,7 @@ def clear_sheets():
     """Clear all worksheets in the Google Sheet (keeping only headers) for a clean run."""
     try:
         sh = get_spreadsheet()
-        for name in ["daily_results", "open_positions", "position_progress"]:
+        for name in ["daily_results", "open_positions", "position_progress", "btst_trades"]:
             try:
                 ws = sh.worksheet(name)
                 # Read headers (first row)
@@ -470,3 +477,161 @@ def clear_sheets():
     except Exception as e:
         logger.error(f"Error clearing Google Sheets: {e}")
         raise e
+
+# ------------------------------------------------------------------ #
+# BTST Google Sheets Methods
+# ------------------------------------------------------------------ #
+def get_btst_trades() -> pd.DataFrame:
+    return _get_sheet_as_df("btst_trades")
+
+def save_btst_trades(date_str, candidates):
+    if not candidates:
+        return
+    try:
+        df = get_btst_trades()
+        new_rows = []
+        for cand in candidates:
+            # Deduplication: check if (date, symbol) exists
+            exists = False
+            if not df.empty:
+                match = df[
+                    (df["date"] == date_str) & 
+                    (df["symbol"] == cand.symbol)
+                ]
+                if not match.empty:
+                    exists = True
+                    
+            if exists:
+                logger.info(f"Skipping duplicate BTST trade: {date_str}, {cand.symbol}")
+                continue
+                
+            new_rows.append({
+                "date": date_str,
+                "symbol": cand.symbol,
+                "entry_price": float(cand.close),
+                "target_1_5": float(cand.target),
+                "sl_1_5": float(cand.stop_loss),
+                "rsi": float(cand.rsi),
+                "vol_ratio": float(cand.volume_vs_avg),
+                "status": "OPEN",
+                "next_open": "",
+                "next_open_return": "",
+                "exit_price_b": "",
+                "exit_return_b": "",
+                "outcome_b": "",
+                "created_at": datetime.now().isoformat()
+            })
+            
+        if new_rows:
+            df_new = pd.DataFrame(new_rows)
+            df = pd.concat([df, df_new], ignore_index=True)
+            _save_df_to_sheet(df, "btst_trades")
+            logger.info(f"Saved {len(new_rows)} new BTST candidates to btst_trades sheet.")
+    except Exception as e:
+        logger.error(f"Error saving BTST trades: {e}")
+
+def update_btst_trades(date_str):
+    try:
+        df = get_btst_trades()
+        if df.empty:
+            return
+            
+        df["symbol"] = df["symbol"].astype(str)
+        df["status"] = df["status"].astype(str)
+        
+        open_rows = df[df["status"] == "OPEN"]
+        if open_rows.empty:
+            logger.info("No open BTST trades to update.")
+            return
+            
+        import yfinance as yf
+        import duckdb
+        
+        updated_any = False
+        
+        for idx, row in open_rows.iterrows():
+            symbol = row["symbol"]
+            entry_price = float(row["entry_price"])
+            target_price = float(row["target_1_5"])
+            sl_price = float(row["sl_1_5"])
+            
+            # Find today's OHLC
+            tomorrow_open = None
+            tomorrow_high = None
+            tomorrow_low = None
+            tomorrow_close = None
+            
+            # 1. Check local DuckDB first
+            try:
+                db_path = config.DUCKDB_PATH
+                if os.path.exists(db_path):
+                    with duckdb.connect(db_path, read_only=True) as con_db:
+                        row_db = con_db.execute(
+                            "SELECT open, high, low, close FROM stock_prices WHERE symbol = ? AND CAST(timezone('Asia/Kolkata', date) AS DATE) = ?",
+                            [symbol, date_str]
+                        ).fetchone()
+                        if row_db:
+                            tomorrow_open = float(row_db[0])
+                            tomorrow_high = float(row_db[1])
+                            tomorrow_low = float(row_db[2])
+                            tomorrow_close = float(row_db[3])
+            except Exception as ex:
+                logger.debug(f"DuckDB lookup failed for BTST {symbol} on {date_str}: {ex}")
+                
+            # 2. Try yfinance live data lookup if DuckDB missed
+            if tomorrow_open is None:
+                try:
+                    ticker = yf.Ticker(symbol)
+                    df_today = ticker.history(period="1d", auto_adjust=True)
+                    if not df_today.empty:
+                        tomorrow_open = float(df_today["Open"].iloc[-1])
+                        tomorrow_high = float(df_today["High"].iloc[-1])
+                        tomorrow_low = float(df_today["Low"].iloc[-1])
+                        tomorrow_close = float(df_today["Close"].iloc[-1])
+                except Exception:
+                    pass
+                    
+            if tomorrow_open is None:
+                logger.warning(f"Could not retrieve tomorrow's prices for BTST symbol {symbol}.")
+                continue
+                
+            # Calculate Exit Type A: Sell at Next Day's Open
+            ret_open = (tomorrow_open - entry_price) / entry_price * 100
+            
+            # Calculate Exit Type B: Limit Target +1.5% or SL -1.5%, else Close
+            if tomorrow_open >= target_price:
+                exit_price_b = tomorrow_open
+                ret_limit = (tomorrow_open - entry_price) / entry_price * 100
+                outcome = "WIN"
+            elif tomorrow_open <= sl_price:
+                exit_price_b = tomorrow_open
+                ret_limit = (tomorrow_open - entry_price) / entry_price * 100
+                outcome = "LOSS"
+            elif tomorrow_high >= target_price:
+                exit_price_b = target_price
+                ret_limit = 1.5
+                outcome = "WIN"
+            elif tomorrow_low <= sl_price:
+                exit_price_b = sl_price
+                ret_limit = -1.5
+                outcome = "LOSS"
+            else:
+                exit_price_b = tomorrow_close
+                ret_limit = (tomorrow_close - entry_price) / entry_price * 100
+                outcome = "WIN" if ret_limit > 0 else "LOSS"
+                
+            # Update dataframe row
+            df.at[idx, "next_open"] = str(round(tomorrow_open, 2))
+            df.at[idx, "next_open_return"] = f"{ret_open:+.2f}%"
+            df.at[idx, "exit_price_b"] = str(round(exit_price_b, 2))
+            df.at[idx, "exit_return_b"] = f"{ret_limit:+.2f}%"
+            df.at[idx, "outcome_b"] = outcome
+            df.at[idx, "status"] = "CLOSED"
+            updated_any = True
+            logger.info(f"Updated BTST trade results for {symbol}: Open Ret {ret_open:+.2f}%, Exit B Ret {ret_limit:+.2f}%")
+            
+        if updated_any:
+            _save_df_to_sheet(df, "btst_trades")
+            logger.info("Saved updated BTST trades back to Google Sheets.")
+    except Exception as e:
+        logger.error(f"Error updating BTST trades: {e}")

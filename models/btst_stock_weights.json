@@ -1,0 +1,742 @@
+{
+    "360ONE.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 6,
+        "win_rate": 100.0
+    },
+    "ABCAPITAL.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 2.0,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 5,
+        "win_rate": 80.0
+    },
+    "ADANIENT.NS": {
+        "near_high_pct": 0.005,
+        "vol_ratio_limit": 1.2,
+        "min_return": 2.0,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 4,
+        "win_rate": 75.0
+    },
+    "ADANIPORTS.NS": {
+        "near_high_pct": 0.005,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 4,
+        "win_rate": 75.0
+    },
+    "ADANIPOWER.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 6,
+        "win_rate": 83.3
+    },
+    "APLAPOLLO.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 5,
+        "win_rate": 80.0
+    },
+    "APOLLOHOSP.NS": {
+        "near_high_pct": 0.005,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "sma50",
+        "total_trades": 4,
+        "win_rate": 75.0
+    },
+    "AUBANK.NS": {
+        "near_high_pct": 0.005,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 5,
+        "win_rate": 80.0
+    },
+    "BAJAJ-AUTO.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.5,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 7,
+        "win_rate": 85.7
+    },
+    "BAJAJFINSV.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.5,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "sma50",
+        "total_trades": 4,
+        "win_rate": 100.0
+    },
+    "BAJFINANCE.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "sma50",
+        "total_trades": 5,
+        "win_rate": 100.0
+    },
+    "BANKINDIA.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 2.0,
+        "rsi_min": 65,
+        "rsi_max": 80,
+        "index_filter": "none",
+        "total_trades": 7,
+        "win_rate": 85.7
+    },
+    "BDL.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 6,
+        "win_rate": 83.3
+    },
+    "BHARTIARTL.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "sma50",
+        "total_trades": 4,
+        "win_rate": 75.0
+    },
+    "BHEL.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 2.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 5,
+        "win_rate": 100.0
+    },
+    "BLUESTARCO.NS": {
+        "near_high_pct": 0.005,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "sma50",
+        "total_trades": 4,
+        "win_rate": 75.0
+    },
+    "BPCL.NS": {
+        "near_high_pct": 0.005,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 4,
+        "win_rate": 75.0
+    },
+    "BSE.NS": {
+        "near_high_pct": 0.005,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 5,
+        "win_rate": 100.0
+    },
+    "CANBK.NS": {
+        "near_high_pct": 0.005,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 5,
+        "win_rate": 100.0
+    },
+    "CGPOWER.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 2.0,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 8,
+        "win_rate": 100.0
+    },
+    "CHOLAFIN.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 65,
+        "rsi_max": 80,
+        "index_filter": "sma50",
+        "total_trades": 4,
+        "win_rate": 75.0
+    },
+    "COALINDIA.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 65,
+        "rsi_max": 80,
+        "index_filter": "none",
+        "total_trades": 4,
+        "win_rate": 75.0
+    },
+    "COFORGE.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 2.0,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "sma50",
+        "total_trades": 6,
+        "win_rate": 83.3
+    },
+    "DMART.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 2.0,
+        "min_return": 2.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 5,
+        "win_rate": 80.0
+    },
+    "DREDGECORP.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 4,
+        "win_rate": 100.0
+    },
+    "ETERNAL.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 65,
+        "rsi_max": 80,
+        "index_filter": "sma50",
+        "total_trades": 4,
+        "win_rate": 100.0
+    },
+    "EXIDEIND.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "sma50",
+        "total_trades": 7,
+        "win_rate": 71.4
+    },
+    "FEDERALBNK.NS": {
+        "near_high_pct": 0.005,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 4,
+        "win_rate": 75.0
+    },
+    "GODREJPROP.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 2.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "sma50",
+        "total_trades": 6,
+        "win_rate": 83.3
+    },
+    "GRASIM.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 5,
+        "win_rate": 80.0
+    },
+    "HAL.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 65,
+        "rsi_max": 80,
+        "index_filter": "none",
+        "total_trades": 4,
+        "win_rate": 100.0
+    },
+    "HDFCAMC.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 4,
+        "win_rate": 75.0
+    },
+    "HINDALCO.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 2.0,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 5,
+        "win_rate": 80.0
+    },
+    "HINDPETRO.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "sma50",
+        "total_trades": 7,
+        "win_rate": 85.7
+    },
+    "HSCL.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 5,
+        "win_rate": 100.0
+    },
+    "HUDCO.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 2.0,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 5,
+        "win_rate": 80.0
+    },
+    "INDUSINDBK.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "sma50",
+        "total_trades": 6,
+        "win_rate": 100.0
+    },
+    "IOC.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 65,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 5,
+        "win_rate": 80.0
+    },
+    "JINDALSTEL.NS": {
+        "near_high_pct": 0.005,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 5,
+        "win_rate": 100.0
+    },
+    "KOTAKBANK.NS": {
+        "near_high_pct": 0.005,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "sma50",
+        "total_trades": 4,
+        "win_rate": 75.0
+    },
+    "LAURUSLABS.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 3.0,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 4,
+        "win_rate": 75.0
+    },
+    "LODHA.NS": {
+        "near_high_pct": 0.005,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 65,
+        "rsi_max": 80,
+        "index_filter": "sma50",
+        "total_trades": 4,
+        "win_rate": 75.0
+    },
+    "LTF.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "sma50",
+        "total_trades": 9,
+        "win_rate": 88.9
+    },
+    "LUPIN.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 2.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "sma50",
+        "total_trades": 4,
+        "win_rate": 100.0
+    },
+    "M&MFIN.NS": {
+        "near_high_pct": 0.005,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 65,
+        "rsi_max": 80,
+        "index_filter": "sma50",
+        "total_trades": 4,
+        "win_rate": 100.0
+    },
+    "MCX.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.5,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 7,
+        "win_rate": 100.0
+    },
+    "MOTHERSON.NS": {
+        "near_high_pct": 0.005,
+        "vol_ratio_limit": 1.2,
+        "min_return": 2.0,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "sma50",
+        "total_trades": 4,
+        "win_rate": 75.0
+    },
+    "MOTILALOFS.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 65,
+        "rsi_max": 80,
+        "index_filter": "none",
+        "total_trades": 6,
+        "win_rate": 83.3
+    },
+    "MUTHOOTFIN.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "sma50",
+        "total_trades": 4,
+        "win_rate": 75.0
+    },
+    "NATIONALUM.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 65,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 4,
+        "win_rate": 100.0
+    },
+    "NESTLEIND.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 65,
+        "rsi_max": 80,
+        "index_filter": "none",
+        "total_trades": 4,
+        "win_rate": 75.0
+    },
+    "NYKAA.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 5,
+        "win_rate": 100.0
+    },
+    "OBEROIRLTY.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 2.0,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 4,
+        "win_rate": 75.0
+    },
+    "OFSS.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 5,
+        "win_rate": 100.0
+    },
+    "ONGC.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 4,
+        "win_rate": 100.0
+    },
+    "PERSISTENT.NS": {
+        "near_high_pct": 0.005,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "sma50",
+        "total_trades": 5,
+        "win_rate": 80.0
+    },
+    "PHOENIXLTD.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 3.0,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "sma50",
+        "total_trades": 4,
+        "win_rate": 100.0
+    },
+    "PNB.NS": {
+        "near_high_pct": 0.005,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 65,
+        "rsi_max": 80,
+        "index_filter": "none",
+        "total_trades": 4,
+        "win_rate": 75.0
+    },
+    "POLYCAB.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 2.0,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 4,
+        "win_rate": 100.0
+    },
+    "POWERGRID.NS": {
+        "near_high_pct": 0.005,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 4,
+        "win_rate": 100.0
+    },
+    "POWERINDIA.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 3.0,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 6,
+        "win_rate": 83.3
+    },
+    "RADICO.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 2.0,
+        "min_return": 1.5,
+        "rsi_min": 65,
+        "rsi_max": 80,
+        "index_filter": "none",
+        "total_trades": 7,
+        "win_rate": 100.0
+    },
+    "SAIL.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 65,
+        "rsi_max": 80,
+        "index_filter": "sma50",
+        "total_trades": 4,
+        "win_rate": 100.0
+    },
+    "SIEMENS.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 2.0,
+        "min_return": 2.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 6,
+        "win_rate": 83.3
+    },
+    "SOLARINDS.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 2.0,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 6,
+        "win_rate": 100.0
+    },
+    "SUNPHARMA.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 4,
+        "win_rate": 75.0
+    },
+    "SUZLON.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 2.0,
+        "rsi_min": 65,
+        "rsi_max": 80,
+        "index_filter": "none",
+        "total_trades": 4,
+        "win_rate": 75.0
+    },
+    "TIINDIA.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 65,
+        "rsi_max": 80,
+        "index_filter": "none",
+        "total_trades": 4,
+        "win_rate": 75.0
+    },
+    "TORNTPHARM.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 2.0,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 4,
+        "win_rate": 75.0
+    },
+    "TRENT.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 4,
+        "win_rate": 100.0
+    },
+    "TVSMOTOR.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "sma50",
+        "total_trades": 5,
+        "win_rate": 100.0
+    },
+    "UNIONBANK.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "none",
+        "total_trades": 6,
+        "win_rate": 83.3
+    },
+    "UNITDSPR.NS": {
+        "near_high_pct": 0.005,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "sma50",
+        "total_trades": 4,
+        "win_rate": 100.0
+    },
+    "UPL.NS": {
+        "near_high_pct": 0.01,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.5,
+        "rsi_min": 60,
+        "rsi_max": 78,
+        "index_filter": "sma50",
+        "total_trades": 5,
+        "win_rate": 100.0
+    }
+}

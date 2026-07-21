@@ -37,14 +37,14 @@ def main():
         
     con_duck = duckdb.connect(duck_db_path, read_only=True)
     
-    # Get the latest 22 available days (approx 1 month) in Nifty index
+    # Get the latest 44 available days (approx 2 months) in Nifty index
     dates_raw = con_duck.execute(
         """
         SELECT DISTINCT CAST(timezone('Asia/Kolkata', date) AS DATE) AS d 
         FROM stock_prices 
         WHERE symbol = 'NSEI' 
         ORDER BY d DESC 
-        LIMIT 22
+        LIMIT 44
         """
     ).fetchall()
     
