@@ -1,0 +1,6512 @@
+{
+    "360ONE.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.4,
+                "uptrend_sma200": 0.4,
+                "adx_strong_trend": 0.4,
+                "ema_cross": 2.0,
+                "volume_spike": 0.7,
+                "bullish_engulfing": 0.4
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 2.6,
+            "win_rate": 85.7,
+            "total_trades": 7,
+            "test_trades": 55,
+            "test_wins": 16,
+            "test_win_rate": 29.1
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.1,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.1,
+                "stoch_d_turn": 0.1
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 100.0,
+            "total_trades": 5,
+            "test_trades": 4,
+            "test_wins": 1,
+            "test_win_rate": 25.0
+        },
+        "total_trades": 7
+    },
+    "ABB.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 0.8,
+                "ema_cross": 0.3,
+                "volume_spike": 1.7,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 2.7,
+            "win_rate": 66.7,
+            "total_trades": 24,
+            "test_trades": 1,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.2,
+                "rsi2_pullback": 0.2,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 75.0,
+            "total_trades": 8,
+            "test_trades": 7,
+            "test_wins": 5,
+            "test_win_rate": 71.4
+        },
+        "total_trades": 24
+    },
+    "ABCAPITAL.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 1.3,
+                "uptrend_sma200": 0.6,
+                "adx_strong_trend": 1.1,
+                "ema_cross": 2.0,
+                "volume_spike": 0.6,
+                "bullish_engulfing": 0.6
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.5,
+            "win_rate": 64.3,
+            "total_trades": 28,
+            "test_trades": 90,
+            "test_wins": 49,
+            "test_win_rate": 54.4
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.2,
+                "rsi2_pullback": 0.2,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 1.8,
+            "min_score": 1.5,
+            "win_rate": 80.0,
+            "total_trades": 5,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 28
+    },
+    "ADANIENSOL.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.5,
+                "uptrend_sma200": 0.7,
+                "adx_strong_trend": 1.4,
+                "ema_cross": 0.5,
+                "volume_spike": 0.5,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 3.1,
+            "win_rate": 100.0,
+            "total_trades": 5,
+            "test_trades": 5,
+            "test_wins": 4,
+            "test_win_rate": 80.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.3,
+                "rsi14_oversold": 0.3,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 2.0,
+            "win_rate": 88.9,
+            "total_trades": 9,
+            "test_trades": 2,
+            "test_wins": 2,
+            "test_win_rate": 100.0
+        },
+        "total_trades": 9
+    },
+    "ADANIENT.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 0.7,
+                "ema_cross": 1.6,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 2.9,
+            "win_rate": 60.0,
+            "total_trades": 5,
+            "test_trades": 3,
+            "test_wins": 1,
+            "test_win_rate": 33.3
+        },
+        "total_trades": 5
+    },
+    "ADANIGREEN.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 0.5,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 0.3,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 71.4,
+            "total_trades": 7,
+            "test_trades": 6,
+            "test_wins": 1,
+            "test_win_rate": 16.7
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.6,
+                "rsi14_oversold": 0.6,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.2,
+            "win_rate": 90.0,
+            "total_trades": 10,
+            "test_trades": 3,
+            "test_wins": 3,
+            "test_win_rate": 100.0
+        },
+        "total_trades": 10
+    },
+    "ADANIPORTS.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.2,
+                "uptrend_sma200": 0.2,
+                "adx_strong_trend": 0.2,
+                "ema_cross": 0.2,
+                "volume_spike": 0.2,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 85.7,
+            "total_trades": 7,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.6,
+                "rsi14_oversold": 0.6,
+                "stoch_d_turn": 0.9
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.9,
+            "win_rate": 66.7,
+            "total_trades": 18,
+            "test_trades": 2,
+            "test_wins": 2,
+            "test_win_rate": 100.0
+        },
+        "total_trades": 18
+    },
+    "ADANIPOWER.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 2.0,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.8,
+            "win_rate": 87.5,
+            "total_trades": 16,
+            "test_trades": 60,
+            "test_wins": 25,
+            "test_win_rate": 41.7
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.6,
+                "rsi2_pullback": 0.3,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 2.5,
+            "win_rate": 66.7,
+            "total_trades": 6,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 16
+    },
+    "ALKEM.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 0.3,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.9,
+            "win_rate": 72.0,
+            "total_trades": 50,
+            "test_trades": 73,
+            "test_wins": 23,
+            "test_win_rate": 31.5
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 1.6,
+                "rsi2_pullback": 0.2,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.9,
+            "win_rate": 80.0,
+            "total_trades": 5,
+            "test_trades": 2,
+            "test_wins": 2,
+            "test_win_rate": 100.0
+        },
+        "total_trades": 50
+    },
+    "AMBUJACEM.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.9,
+                "uptrend_sma200": 0.9,
+                "adx_strong_trend": 0.9,
+                "ema_cross": 1.3,
+                "volume_spike": 0.9,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 2.5,
+            "min_score": 1.5,
+            "win_rate": 69.8,
+            "total_trades": 63,
+            "test_trades": 37,
+            "test_wins": 16,
+            "test_win_rate": 43.2
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.1,
+                "rsi2_pullback": 0.1,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.1
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 100.0,
+            "total_trades": 9,
+            "test_trades": 3,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 63
+    },
+    "APLAPOLLO.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.2,
+                "uptrend_sma200": 0.2,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 0.5,
+                "volume_spike": 1.0,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.6,
+            "win_rate": 92.9,
+            "total_trades": 28,
+            "test_trades": 26,
+            "test_wins": 8,
+            "test_win_rate": 30.8
+        },
+        "total_trades": 28
+    },
+    "APOLLOHOSP.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 2.0,
+                "volume_spike": 2.0,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 93.5,
+            "total_trades": 31,
+            "test_trades": 90,
+            "test_wins": 16,
+            "test_win_rate": 17.8
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.1,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.1,
+                "stoch_d_turn": 0.1
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 100.0,
+            "total_trades": 9,
+            "test_trades": 8,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 31
+    },
+    "ASHOKLEY.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.2,
+                "adx_strong_trend": 1.1,
+                "ema_cross": 0.2,
+                "volume_spike": 0.2,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 3.0,
+            "win_rate": 100.0,
+            "total_trades": 5,
+            "test_trades": 48,
+            "test_wins": 19,
+            "test_win_rate": 39.6
+        },
+        "total_trades": 5
+    },
+    "ASIANPAINT.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.4,
+                "uptrend_sma200": 1.0,
+                "adx_strong_trend": 0.4,
+                "ema_cross": 2.0,
+                "volume_spike": 0.4,
+                "bullish_engulfing": 0.4
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 1.8,
+            "min_score": 2.7,
+            "win_rate": 64.3,
+            "total_trades": 42,
+            "test_trades": 53,
+            "test_wins": 27,
+            "test_win_rate": 50.9
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 1.8,
+            "min_score": 1.5,
+            "win_rate": 55.3,
+            "total_trades": 206,
+            "test_trades": 49,
+            "test_wins": 34,
+            "test_win_rate": 69.4
+        },
+        "total_trades": 206
+    },
+    "ASTRAL.NS": {
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.2,
+                "rsi2_pullback": 0.9,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.4
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.4,
+            "win_rate": 80.0,
+            "total_trades": 15,
+            "test_trades": 1,
+            "test_wins": 1,
+            "test_win_rate": 100.0
+        },
+        "total_trades": 15
+    },
+    "ATGL.NS": {
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.3,
+                "rsi2_pullback": 0.3,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.8,
+            "win_rate": 60.0,
+            "total_trades": 30,
+            "test_trades": 8,
+            "test_wins": 4,
+            "test_win_rate": 50.0
+        },
+        "total_trades": 30
+    },
+    "AUBANK.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 0.9,
+                "ema_cross": 2.0,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.5,
+            "win_rate": 71.4,
+            "total_trades": 28,
+            "test_trades": 69,
+            "test_wins": 47,
+            "test_win_rate": 68.1
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.4,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.4,
+                "stoch_d_turn": 0.4
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 1.8,
+            "min_score": 1.5,
+            "win_rate": 57.1,
+            "total_trades": 14,
+            "test_trades": 1,
+            "test_wins": 1,
+            "test_win_rate": 100.0
+        },
+        "total_trades": 28
+    },
+    "AUROPHARMA.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.1,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 0.1,
+                "volume_spike": 0.1,
+                "bullish_engulfing": 0.5
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.8,
+            "win_rate": 100.0,
+            "total_trades": 6,
+            "test_trades": 1,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 6
+    },
+    "AXISBANK.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.8,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 0.8,
+                "ema_cross": 1.3,
+                "volume_spike": 0.8,
+                "bullish_engulfing": 0.8
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 1.8,
+            "min_score": 1.5,
+            "win_rate": 63.4,
+            "total_trades": 227,
+            "test_trades": 79,
+            "test_wins": 38,
+            "test_win_rate": 48.1
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.7,
+                "rsi14_oversold": 0.7,
+                "stoch_d_turn": 0.7
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 1.8,
+            "min_score": 1.5,
+            "win_rate": 75.0,
+            "total_trades": 12,
+            "test_trades": 4,
+            "test_wins": 1,
+            "test_win_rate": 25.0
+        },
+        "total_trades": 227
+    },
+    "BAJAJ-AUTO.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 1.2,
+                "adx_strong_trend": 0.2,
+                "ema_cross": 0.2,
+                "volume_spike": 0.2,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 2.0,
+            "min_score": 3.2,
+            "win_rate": 90.0,
+            "total_trades": 10,
+            "test_trades": 53,
+            "test_wins": 13,
+            "test_win_rate": 24.5
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.1,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.1,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 91.7,
+            "total_trades": 12,
+            "test_trades": 2,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 12
+    },
+    "BAJAJFINSV.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 1.6,
+                "volume_spike": 1.0,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 3.1,
+            "win_rate": 100.0,
+            "total_trades": 38,
+            "test_trades": 31,
+            "test_wins": 3,
+            "test_win_rate": 9.7
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.3,
+                "rsi14_oversold": 0.3,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.8,
+            "win_rate": 66.7,
+            "total_trades": 9,
+            "test_trades": 4,
+            "test_wins": 3,
+            "test_win_rate": 75.0
+        },
+        "total_trades": 38
+    },
+    "BAJAJHLDNG.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.2,
+                "uptrend_sma200": 0.2,
+                "adx_strong_trend": 0.2,
+                "ema_cross": 2.0,
+                "volume_spike": 0.2,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 100.0,
+            "total_trades": 15,
+            "test_trades": 35,
+            "test_wins": 7,
+            "test_win_rate": 20.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.3,
+                "rsi2_pullback": 0.3,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 57.3,
+            "total_trades": 220,
+            "test_trades": 3,
+            "test_wins": 3,
+            "test_win_rate": 100.0
+        },
+        "total_trades": 220
+    },
+    "BAJFINANCE.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 2.0,
+                "volume_spike": 1.2,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 2.4,
+            "win_rate": 83.3,
+            "total_trades": 6,
+            "test_trades": 45,
+            "test_wins": 14,
+            "test_win_rate": 31.1
+        },
+        "total_trades": 6
+    },
+    "BANKBARODA.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.5,
+                "uptrend_sma200": 0.5,
+                "adx_strong_trend": 0.5,
+                "ema_cross": 2.0,
+                "volume_spike": 0.5,
+                "bullish_engulfing": 0.5
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 75.0,
+            "total_trades": 8,
+            "test_trades": 73,
+            "test_wins": 43,
+            "test_win_rate": 58.9
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.2,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.2,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 1.8,
+            "min_score": 1.5,
+            "win_rate": 72.7,
+            "total_trades": 11,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 11
+    },
+    "BANKINDIA.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.5,
+                "adx_strong_trend": 0.5,
+                "ema_cross": 1.9,
+                "volume_spike": 0.5,
+                "bullish_engulfing": 0.7
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 4.2,
+            "win_rate": 61.8,
+            "total_trades": 89,
+            "test_trades": 60,
+            "test_wins": 12,
+            "test_win_rate": 20.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.9,
+                "rsi2_pullback": 0.9,
+                "rsi14_oversold": 0.9,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 57.4,
+            "total_trades": 242,
+            "test_trades": 47,
+            "test_wins": 21,
+            "test_win_rate": 44.7
+        },
+        "total_trades": 242
+    },
+    "BDL.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.4,
+                "uptrend_sma200": 0.4,
+                "adx_strong_trend": 0.4,
+                "ema_cross": 2.0,
+                "volume_spike": 0.4,
+                "bullish_engulfing": 0.4
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 100.0,
+            "total_trades": 5,
+            "test_trades": 42,
+            "test_wins": 3,
+            "test_win_rate": 7.1
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 1.1,
+                "rsi2_pullback": 1.1,
+                "rsi14_oversold": 1.1,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 59.1,
+            "total_trades": 232,
+            "test_trades": 51,
+            "test_wins": 11,
+            "test_win_rate": 21.6
+        },
+        "total_trades": 232
+    },
+    "BEL.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 1.1,
+                "adx_strong_trend": 0.2,
+                "ema_cross": 0.6,
+                "volume_spike": 0.2,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 3.1,
+            "win_rate": 57.7,
+            "total_trades": 362,
+            "test_trades": 50,
+            "test_wins": 14,
+            "test_win_rate": 28.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 1.8,
+            "min_score": 1.5,
+            "win_rate": 56.7,
+            "total_trades": 233,
+            "test_trades": 54,
+            "test_wins": 23,
+            "test_win_rate": 42.6
+        },
+        "total_trades": 362
+    },
+    "BHARATFORG.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 0.3,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 93.8,
+            "total_trades": 32,
+            "test_trades": 69,
+            "test_wins": 23,
+            "test_win_rate": 33.3
+        },
+        "total_trades": 32
+    },
+    "BHARTIARTL.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.2,
+                "adx_strong_trend": 0.2,
+                "ema_cross": 0.2,
+                "volume_spike": 0.2,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 87.5,
+            "total_trades": 8,
+            "test_trades": 68,
+            "test_wins": 16,
+            "test_win_rate": 23.5
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.1,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.1,
+                "stoch_d_turn": 0.1
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 100.0,
+            "total_trades": 7,
+            "test_trades": 3,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 8
+    },
+    "BHEL.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.7,
+                "adx_strong_trend": 0.2,
+                "ema_cross": 0.2,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.5,
+            "win_rate": 76.6,
+            "total_trades": 141,
+            "test_trades": 56,
+            "test_wins": 18,
+            "test_win_rate": 32.1
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.9,
+                "rsi2_pullback": 0.9,
+                "rsi14_oversold": 0.9,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 59.3,
+            "total_trades": 236,
+            "test_trades": 48,
+            "test_wins": 23,
+            "test_win_rate": 47.9
+        },
+        "total_trades": 236
+    },
+    "BIOCON.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 0.3,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 84.9,
+            "total_trades": 53,
+            "test_trades": 23,
+            "test_wins": 5,
+            "test_win_rate": 21.7
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.4,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.2,
+                "stoch_d_turn": 0.8
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 2.1,
+            "win_rate": 80.0,
+            "total_trades": 5,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 53
+    },
+    "BLUESTARCO.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 1.6,
+                "uptrend_sma200": 1.6,
+                "adx_strong_trend": 1.6,
+                "ema_cross": 1.6,
+                "volume_spike": 1.6,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 73.6,
+            "total_trades": 129,
+            "test_trades": 85,
+            "test_wins": 31,
+            "test_win_rate": 36.5
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.7,
+                "rsi2_pullback": 0.7,
+                "rsi14_oversold": 1.9,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 2.6,
+            "win_rate": 61.5,
+            "total_trades": 13,
+            "test_trades": 1,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 129
+    },
+    "BOSCHLTD.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 0.7,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 0.3,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.2,
+            "win_rate": 96.8,
+            "total_trades": 31,
+            "test_trades": 57,
+            "test_wins": 11,
+            "test_win_rate": 19.3
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.6,
+                "rsi14_oversold": 0.6,
+                "stoch_d_turn": 1.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.6,
+            "win_rate": 66.7,
+            "total_trades": 12,
+            "test_trades": 10,
+            "test_wins": 1,
+            "test_win_rate": 10.0
+        },
+        "total_trades": 31
+    },
+    "BPCL.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 2.0,
+                "volume_spike": 2.0,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 77.8,
+            "total_trades": 45,
+            "test_trades": 90,
+            "test_wins": 52,
+            "test_win_rate": 57.8
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.4,
+                "rsi14_oversold": 0.4,
+                "stoch_d_turn": 0.4
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 68.8,
+            "total_trades": 16,
+            "test_trades": 1,
+            "test_wins": 1,
+            "test_win_rate": 100.0
+        },
+        "total_trades": 45
+    },
+    "BRITANNIA.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 1.8,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.2,
+            "win_rate": 75.2,
+            "total_trades": 109,
+            "test_trades": 67,
+            "test_wins": 19,
+            "test_win_rate": 28.4
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.8,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.8,
+                "stoch_d_turn": 0.8
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 61.5,
+            "total_trades": 13,
+            "test_trades": 5,
+            "test_wins": 2,
+            "test_win_rate": 40.0
+        },
+        "total_trades": 109
+    },
+    "BSE.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.6,
+                "uptrend_sma200": 0.2,
+                "adx_strong_trend": 1.4,
+                "ema_cross": 2.0,
+                "volume_spike": 0.2,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 3.2,
+            "win_rate": 95.2,
+            "total_trades": 21,
+            "test_trades": 42,
+            "test_wins": 11,
+            "test_win_rate": 26.2
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 57.9,
+            "total_trades": 216,
+            "test_trades": 58,
+            "test_wins": 20,
+            "test_win_rate": 34.5
+        },
+        "total_trades": 216
+    },
+    "CANBK.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 1.2,
+                "adx_strong_trend": 1.2,
+                "ema_cross": 1.2,
+                "volume_spike": 1.2,
+                "bullish_engulfing": 1.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 64.7,
+            "total_trades": 17,
+            "test_trades": 84,
+            "test_wins": 45,
+            "test_win_rate": 53.6
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.1,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.6,
+                "stoch_d_turn": 0.1
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.9,
+            "win_rate": 100.0,
+            "total_trades": 6,
+            "test_trades": 1,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 17
+    },
+    "CGPOWER.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.2,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 0.5,
+                "ema_cross": 0.2,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 75.7,
+            "total_trades": 74,
+            "test_trades": 62,
+            "test_wins": 14,
+            "test_win_rate": 22.6
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.2,
+                "rsi14_oversold": 0.2,
+                "stoch_d_turn": 0.7
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 2.1,
+            "win_rate": 80.0,
+            "total_trades": 5,
+            "test_trades": 12,
+            "test_wins": 2,
+            "test_win_rate": 16.7
+        },
+        "total_trades": 74
+    },
+    "CHOLAFIN.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 2.0,
+                "volume_spike": 2.0,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 88.9,
+            "total_trades": 9,
+            "test_trades": 90,
+            "test_wins": 34,
+            "test_win_rate": 37.8
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.9,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.9,
+                "stoch_d_turn": 0.9
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.8,
+            "win_rate": 60.0,
+            "total_trades": 10,
+            "test_trades": 7,
+            "test_wins": 4,
+            "test_win_rate": 57.1
+        },
+        "total_trades": 10
+    },
+    "CIPLA.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 0.3,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.9
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 70.8,
+            "total_trades": 48,
+            "test_trades": 40,
+            "test_wins": 6,
+            "test_win_rate": 15.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 1.0,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 1.0,
+                "stoch_d_turn": 1.0
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.6,
+            "win_rate": 62.5,
+            "total_trades": 8,
+            "test_trades": 1,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 48
+    },
+    "COALINDIA.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.1,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 0.1,
+                "ema_cross": 0.1,
+                "volume_spike": 0.1,
+                "bullish_engulfing": 0.1
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 2.0,
+            "win_rate": 100.0,
+            "total_trades": 5,
+            "test_trades": 71,
+            "test_wins": 21,
+            "test_win_rate": 29.6
+        },
+        "total_trades": 5
+    },
+    "COCHINSHIP.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 1.8,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 2.0,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 2.0,
+            "win_rate": 70.3,
+            "total_trades": 111,
+            "test_trades": 50,
+            "test_wins": 4,
+            "test_win_rate": 8.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.1,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.1,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 80.0,
+            "total_trades": 5,
+            "test_trades": 4,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 111
+    },
+    "COFORGE.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 0.4,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 1.1,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 2.5,
+            "win_rate": 80.0,
+            "total_trades": 10,
+            "test_trades": 2,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.2,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.2,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 78.6,
+            "total_trades": 14,
+            "test_trades": 3,
+            "test_wins": 1,
+            "test_win_rate": 33.3
+        },
+        "total_trades": 14
+    },
+    "COLPAL.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.8,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 0.8,
+                "ema_cross": 0.2,
+                "volume_spike": 0.2,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.4,
+            "win_rate": 81.8,
+            "total_trades": 22,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 63.6,
+            "total_trades": 231,
+            "test_trades": 55,
+            "test_wins": 9,
+            "test_win_rate": 16.4
+        },
+        "total_trades": 231
+    },
+    "CONCOR.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.5,
+                "adx_strong_trend": 0.5,
+                "ema_cross": 0.5,
+                "volume_spike": 0.5,
+                "bullish_engulfing": 0.5
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 2.0,
+            "min_score": 1.8,
+            "win_rate": 60.4,
+            "total_trades": 48,
+            "test_trades": 21,
+            "test_wins": 13,
+            "test_win_rate": 61.9
+        },
+        "total_trades": 48
+    },
+    "COROMANDEL.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.7,
+                "adx_strong_trend": 0.7,
+                "ema_cross": 1.4,
+                "volume_spike": 1.8,
+                "bullish_engulfing": 0.7
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.5,
+            "win_rate": 88.2,
+            "total_trades": 17,
+            "test_trades": 43,
+            "test_wins": 13,
+            "test_win_rate": 30.2
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.2,
+                "rsi2_pullback": 0.2,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 72.7,
+            "total_trades": 11,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 17
+    },
+    "CUMMINSIND.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 1.6,
+                "uptrend_sma200": 0.5,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 0.5,
+                "volume_spike": 0.5,
+                "bullish_engulfing": 1.1
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 1.8,
+            "min_score": 3.2,
+            "win_rate": 60.0,
+            "total_trades": 10,
+            "test_trades": 69,
+            "test_wins": 30,
+            "test_win_rate": 43.5
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.2,
+                "rsi2_pullback": 0.2,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 83.3,
+            "total_trades": 6,
+            "test_trades": 2,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 10
+    },
+    "DABUR.NS": {
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.6,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.6,
+                "stoch_d_turn": 0.6
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 2.0,
+            "min_score": 1.8,
+            "win_rate": 66.7,
+            "total_trades": 9,
+            "test_trades": 5,
+            "test_wins": 2,
+            "test_win_rate": 40.0
+        },
+        "total_trades": 9
+    },
+    "DIVISLAB.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 1.6,
+                "adx_strong_trend": 1.6,
+                "ema_cross": 1.6,
+                "volume_spike": 1.6,
+                "bullish_engulfing": 1.6
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 55.6,
+            "total_trades": 9,
+            "test_trades": 85,
+            "test_wins": 17,
+            "test_win_rate": 20.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.3,
+                "rsi2_pullback": 0.3,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.5
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 65.2,
+            "total_trades": 23,
+            "test_trades": 1,
+            "test_wins": 1,
+            "test_win_rate": 100.0
+        },
+        "total_trades": 23
+    },
+    "DIXON.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.1,
+                "adx_strong_trend": 0.1,
+                "ema_cross": 0.1,
+                "volume_spike": 0.1,
+                "bullish_engulfing": 0.4
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.7,
+            "win_rate": 100.0,
+            "total_trades": 13,
+            "test_trades": 24,
+            "test_wins": 6,
+            "test_win_rate": 25.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.4,
+                "rsi2_pullback": 0.4,
+                "rsi14_oversold": 0.4,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 55.3,
+            "total_trades": 235,
+            "test_trades": 45,
+            "test_wins": 16,
+            "test_win_rate": 35.6
+        },
+        "total_trades": 235
+    },
+    "DLF.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 0.5,
+                "ema_cross": 0.3,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.4,
+            "win_rate": 100.0,
+            "total_trades": 7,
+            "test_trades": 29,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.2,
+                "rsi14_oversold": 0.2,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 73.3,
+            "total_trades": 15,
+            "test_trades": 9,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 15
+    },
+    "DMART.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.7,
+                "uptrend_sma200": 0.7,
+                "adx_strong_trend": 0.7,
+                "ema_cross": 2.0,
+                "volume_spike": 0.7,
+                "bullish_engulfing": 0.7
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 67.3,
+            "total_trades": 49,
+            "test_trades": 37,
+            "test_wins": 2,
+            "test_win_rate": 5.4
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.2,
+                "rsi2_pullback": 0.2,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 2.0,
+            "win_rate": 87.5,
+            "total_trades": 8,
+            "test_trades": 30,
+            "test_wins": 2,
+            "test_win_rate": 6.7
+        },
+        "total_trades": 49
+    },
+    "DREDGECORP.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.4,
+                "uptrend_sma200": 0.4,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 1.3,
+                "volume_spike": 0.4,
+                "bullish_engulfing": 0.4
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 2.7,
+            "win_rate": 93.8,
+            "total_trades": 16,
+            "test_trades": 43,
+            "test_wins": 22,
+            "test_win_rate": 51.2
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.3,
+                "rsi14_oversold": 0.3,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.6,
+            "win_rate": 88.9,
+            "total_trades": 9,
+            "test_trades": 4,
+            "test_wins": 2,
+            "test_win_rate": 50.0
+        },
+        "total_trades": 16
+    },
+    "DRREDDY.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.2,
+                "uptrend_sma200": 0.2,
+                "adx_strong_trend": 0.5,
+                "ema_cross": 0.2,
+                "volume_spike": 0.2,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 77.8,
+            "total_trades": 9,
+            "test_trades": 1,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.2,
+                "rsi2_pullback": 0.2,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 81.8,
+            "total_trades": 11,
+            "test_trades": 3,
+            "test_wins": 3,
+            "test_win_rate": 100.0
+        },
+        "total_trades": 11
+    },
+    "EICHERMOT.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 0.3,
+                "volume_spike": 1.1,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 2.4,
+            "win_rate": 100.0,
+            "total_trades": 5,
+            "test_trades": 46,
+            "test_wins": 19,
+            "test_win_rate": 41.3
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 1.0,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.4,
+                "stoch_d_turn": 0.4
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.9,
+            "win_rate": 75.0,
+            "total_trades": 8,
+            "test_trades": 1,
+            "test_wins": 1,
+            "test_win_rate": 100.0
+        },
+        "total_trades": 8
+    },
+    "ETERNAL.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.7,
+                "adx_strong_trend": 1.6,
+                "ema_cross": 0.7,
+                "volume_spike": 0.7,
+                "bullish_engulfing": 0.7
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 2.6,
+            "win_rate": 100.0,
+            "total_trades": 7,
+            "test_trades": 55,
+            "test_wins": 27,
+            "test_win_rate": 49.1
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 1.4,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 1.4,
+                "stoch_d_turn": 1.4
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 100.0,
+            "total_trades": 6,
+            "test_trades": 8,
+            "test_wins": 2,
+            "test_win_rate": 25.0
+        },
+        "total_trades": 7
+    },
+    "EXIDEIND.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.9,
+                "uptrend_sma200": 0.4,
+                "adx_strong_trend": 0.4,
+                "ema_cross": 2.0,
+                "volume_spike": 0.9,
+                "bullish_engulfing": 0.4
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 2.0,
+            "min_score": 3.0,
+            "win_rate": 82.4,
+            "total_trades": 17,
+            "test_trades": 15,
+            "test_wins": 2,
+            "test_win_rate": 13.3
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.3,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.3,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 2.5,
+            "min_score": 1.5,
+            "win_rate": 100.0,
+            "total_trades": 6,
+            "test_trades": 4,
+            "test_wins": 3,
+            "test_win_rate": 75.0
+        },
+        "total_trades": 17
+    },
+    "FEDERALBNK.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 1.0,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 1.0,
+                "ema_cross": 1.0,
+                "volume_spike": 1.0,
+                "bullish_engulfing": 1.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 2.0,
+            "min_score": 2.0,
+            "win_rate": 65.8,
+            "total_trades": 38,
+            "test_trades": 77,
+            "test_wins": 48,
+            "test_win_rate": 62.3
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.5,
+                "rsi2_pullback": 0.2,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 80.0,
+            "total_trades": 10,
+            "test_trades": 4,
+            "test_wins": 3,
+            "test_win_rate": 75.0
+        },
+        "total_trades": 38
+    },
+    "FORTIS.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.5,
+                "adx_strong_trend": 0.5,
+                "ema_cross": 0.5,
+                "volume_spike": 0.5,
+                "bullish_engulfing": 1.4
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 72.7,
+            "total_trades": 11,
+            "test_trades": 67,
+            "test_wins": 13,
+            "test_win_rate": 19.4
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 67.2,
+            "total_trades": 241,
+            "test_trades": 53,
+            "test_wins": 8,
+            "test_win_rate": 15.1
+        },
+        "total_trades": 241
+    },
+    "GAIL.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 2.0,
+                "volume_spike": 2.0,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 69.0,
+            "total_trades": 29,
+            "test_trades": 64,
+            "test_wins": 9,
+            "test_win_rate": 14.1
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.2,
+                "rsi14_oversold": 0.9,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.9,
+            "win_rate": 92.9,
+            "total_trades": 14,
+            "test_trades": 8,
+            "test_wins": 1,
+            "test_win_rate": 12.5
+        },
+        "total_trades": 29
+    },
+    "GLENMARK.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.5,
+                "adx_strong_trend": 0.5,
+                "ema_cross": 0.5,
+                "volume_spike": 1.2,
+                "bullish_engulfing": 0.5
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.0,
+            "win_rate": 65.2,
+            "total_trades": 66,
+            "test_trades": 49,
+            "test_wins": 27,
+            "test_win_rate": 55.1
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.2,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.2,
+                "stoch_d_turn": 0.5
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 72.7,
+            "total_trades": 11,
+            "test_trades": 7,
+            "test_wins": 3,
+            "test_win_rate": 42.9
+        },
+        "total_trades": 66
+    },
+    "GMRAIRPORT.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.4,
+                "uptrend_sma200": 0.4,
+                "adx_strong_trend": 1.9,
+                "ema_cross": 0.4,
+                "volume_spike": 2.0,
+                "bullish_engulfing": 0.4
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 76.5,
+            "total_trades": 17,
+            "test_trades": 46,
+            "test_wins": 19,
+            "test_win_rate": 41.3
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.7,
+                "rsi2_pullback": 0.8,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.4
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 100.0,
+            "total_trades": 5,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 17
+    },
+    "GODFRYPHLP.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 0.6,
+                "ema_cross": 0.3,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 92.1,
+            "total_trades": 38,
+            "test_trades": 37,
+            "test_wins": 18,
+            "test_win_rate": 48.6
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.5,
+                "rsi2_pullback": 0.1,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.1
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 2.5,
+            "min_score": 1.9,
+            "win_rate": 100.0,
+            "total_trades": 5,
+            "test_trades": 16,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 38
+    },
+    "GODREJCP.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.2,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 0.2,
+                "ema_cross": 2.0,
+                "volume_spike": 0.4,
+                "bullish_engulfing": 1.3
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 2.5,
+            "win_rate": 100.0,
+            "total_trades": 5,
+            "test_trades": 28,
+            "test_wins": 8,
+            "test_win_rate": 28.6
+        },
+        "total_trades": 5
+    },
+    "GODREJPROP.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.4,
+                "uptrend_sma200": 1.4,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 0.4,
+                "volume_spike": 0.4,
+                "bullish_engulfing": 0.8
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 3.3,
+            "win_rate": 83.3,
+            "total_trades": 6,
+            "test_trades": 11,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.3,
+                "rsi14_oversold": 0.3,
+                "stoch_d_turn": 0.8
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 81.8,
+            "total_trades": 11,
+            "test_trades": 5,
+            "test_wins": 1,
+            "test_win_rate": 20.0
+        },
+        "total_trades": 11
+    },
+    "GRASIM.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 1.1,
+                "uptrend_sma200": 1.1,
+                "adx_strong_trend": 1.1,
+                "ema_cross": 1.1,
+                "volume_spike": 2.0,
+                "bullish_engulfing": 1.1
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 85.7,
+            "total_trades": 7,
+            "test_trades": 71,
+            "test_wins": 13,
+            "test_win_rate": 18.3
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.3,
+                "rsi14_oversold": 0.3,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 2.1,
+            "win_rate": 85.7,
+            "total_trades": 7,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 7
+    },
+    "GVT&D.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.2,
+                "adx_strong_trend": 0.2,
+                "ema_cross": 0.2,
+                "volume_spike": 0.2,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 100.0,
+            "total_trades": 6,
+            "test_trades": 73,
+            "test_wins": 27,
+            "test_win_rate": 37.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.4,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.4,
+                "stoch_d_turn": 0.4
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 76.9,
+            "total_trades": 13,
+            "test_trades": 4,
+            "test_wins": 2,
+            "test_win_rate": 50.0
+        },
+        "total_trades": 13
+    },
+    "HAL.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 0.3,
+                "volume_spike": 1.2,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 3.0,
+            "win_rate": 63.2,
+            "total_trades": 19,
+            "test_trades": 3,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 1.8,
+            "min_score": 1.5,
+            "win_rate": 55.8,
+            "total_trades": 459,
+            "test_trades": 62,
+            "test_wins": 17,
+            "test_win_rate": 27.4
+        },
+        "total_trades": 459
+    },
+    "HAVELLS.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 1.8,
+                "adx_strong_trend": 0.4,
+                "ema_cross": 0.3,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 2.5,
+            "min_score": 1.8,
+            "win_rate": 77.3,
+            "total_trades": 22,
+            "test_trades": 20,
+            "test_wins": 2,
+            "test_win_rate": 10.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.1,
+                "rsi2_pullback": 0.1,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.1
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 100.0,
+            "total_trades": 6,
+            "test_trades": 5,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 22
+    },
+    "HCLTECH.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 2.0,
+                "volume_spike": 1.6,
+                "bullish_engulfing": 0.6
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 2.1,
+            "win_rate": 63.5,
+            "total_trades": 74,
+            "test_trades": 58,
+            "test_wins": 23,
+            "test_win_rate": 39.7
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 1.8,
+            "min_score": 1.5,
+            "win_rate": 56.2,
+            "total_trades": 208,
+            "test_trades": 58,
+            "test_wins": 25,
+            "test_win_rate": 43.1
+        },
+        "total_trades": 208
+    },
+    "HDFCAMC.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.2,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 0.2,
+                "ema_cross": 0.2,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.1,
+            "win_rate": 85.0,
+            "total_trades": 20,
+            "test_trades": 60,
+            "test_wins": 22,
+            "test_win_rate": 36.7
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.8,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.8,
+                "stoch_d_turn": 0.8
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 66.7,
+            "total_trades": 9,
+            "test_trades": 9,
+            "test_wins": 1,
+            "test_win_rate": 11.1
+        },
+        "total_trades": 20
+    },
+    "HDFCBANK.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 2.0,
+                "volume_spike": 2.0,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 1.8,
+            "min_score": 1.5,
+            "win_rate": 87.0,
+            "total_trades": 46,
+            "test_trades": 90,
+            "test_wins": 31,
+            "test_win_rate": 34.4
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.3,
+                "rsi14_oversold": 0.3,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 83.3,
+            "total_trades": 6,
+            "test_trades": 8,
+            "test_wins": 2,
+            "test_win_rate": 25.0
+        },
+        "total_trades": 46
+    },
+    "HDFCLIFE.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.5,
+                "uptrend_sma200": 0.5,
+                "adx_strong_trend": 0.5,
+                "ema_cross": 2.0,
+                "volume_spike": 0.5,
+                "bullish_engulfing": 0.5
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 59.1,
+            "total_trades": 181,
+            "test_trades": 53,
+            "test_wins": 9,
+            "test_win_rate": 17.0
+        },
+        "total_trades": 181
+    },
+    "HEROMOTOCO.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.4,
+                "uptrend_sma200": 0.4,
+                "adx_strong_trend": 0.4,
+                "ema_cross": 2.0,
+                "volume_spike": 0.4,
+                "bullish_engulfing": 0.4
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 69.2,
+            "total_trades": 65,
+            "test_trades": 74,
+            "test_wins": 30,
+            "test_win_rate": 40.5
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.2,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.2,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.6,
+            "win_rate": 80.0,
+            "total_trades": 10,
+            "test_trades": 1,
+            "test_wins": 1,
+            "test_win_rate": 100.0
+        },
+        "total_trades": 65
+    },
+    "HINDALCO.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.7,
+                "uptrend_sma200": 0.7,
+                "adx_strong_trend": 1.9,
+                "ema_cross": 2.0,
+                "volume_spike": 1.4,
+                "bullish_engulfing": 0.7
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.9,
+            "win_rate": 93.3,
+            "total_trades": 15,
+            "test_trades": 81,
+            "test_wins": 51,
+            "test_win_rate": 63.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.2,
+                "rsi2_pullback": 0.2,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 2.0,
+            "win_rate": 83.3,
+            "total_trades": 6,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 15
+    },
+    "HINDPETRO.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 1.1,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 1.1,
+                "ema_cross": 1.3,
+                "volume_spike": 1.1,
+                "bullish_engulfing": 1.1
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 3.3,
+            "win_rate": 69.2,
+            "total_trades": 26,
+            "test_trades": 63,
+            "test_wins": 24,
+            "test_win_rate": 38.1
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.4,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.2,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 87.5,
+            "total_trades": 8,
+            "test_trades": 3,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 26
+    },
+    "HINDUNILVR.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.6,
+                "uptrend_sma200": 0.5,
+                "adx_strong_trend": 0.4,
+                "ema_cross": 2.0,
+                "volume_spike": 0.4,
+                "bullish_engulfing": 0.4
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 1.8,
+            "min_score": 2.8,
+            "win_rate": 55.4,
+            "total_trades": 193,
+            "test_trades": 27,
+            "test_wins": 8,
+            "test_win_rate": 29.6
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.3,
+                "rsi14_oversold": 0.9,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 1.8,
+            "min_score": 1.9,
+            "win_rate": 55.2,
+            "total_trades": 29,
+            "test_trades": 11,
+            "test_wins": 3,
+            "test_win_rate": 27.3
+        },
+        "total_trades": 193
+    },
+    "HINDZINC.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 0.7,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 2.4,
+            "win_rate": 100.0,
+            "total_trades": 14,
+            "test_trades": 31,
+            "test_wins": 7,
+            "test_win_rate": 22.6
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.1,
+                "rsi2_pullback": 0.4,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.1
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 76.5,
+            "total_trades": 17,
+            "test_trades": 2,
+            "test_wins": 1,
+            "test_win_rate": 50.0
+        },
+        "total_trades": 17
+    },
+    "HSCL.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 1.3,
+                "uptrend_sma200": 0.5,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 0.5,
+                "volume_spike": 0.5,
+                "bullish_engulfing": 0.5
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 59.5,
+            "total_trades": 259,
+            "test_trades": 33,
+            "test_wins": 9,
+            "test_win_rate": 27.3
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.3,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.3,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 73.7,
+            "total_trades": 19,
+            "test_trades": 5,
+            "test_wins": 2,
+            "test_win_rate": 40.0
+        },
+        "total_trades": 259
+    },
+    "HUDCO.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.2,
+                "uptrend_sma200": 0.4,
+                "adx_strong_trend": 0.2,
+                "ema_cross": 2.0,
+                "volume_spike": 0.2,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.1,
+            "win_rate": 78.2,
+            "total_trades": 78,
+            "test_trades": 59,
+            "test_wins": 23,
+            "test_win_rate": 39.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 1.3,
+                "rsi2_pullback": 1.3,
+                "rsi14_oversold": 1.3,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 58.1,
+            "total_trades": 229,
+            "test_trades": 48,
+            "test_wins": 15,
+            "test_win_rate": 31.2
+        },
+        "total_trades": 229
+    },
+    "ICICIBANK.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 1.1,
+                "adx_strong_trend": 1.1,
+                "ema_cross": 1.1,
+                "volume_spike": 1.1,
+                "bullish_engulfing": 1.1
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 70.6,
+            "total_trades": 34,
+            "test_trades": 42,
+            "test_wins": 12,
+            "test_win_rate": 28.6
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.5,
+                "rsi14_oversold": 0.1,
+                "stoch_d_turn": 0.1
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 2.0,
+            "min_score": 1.5,
+            "win_rate": 81.8,
+            "total_trades": 22,
+            "test_trades": 4,
+            "test_wins": 1,
+            "test_win_rate": 25.0
+        },
+        "total_trades": 34
+    },
+    "ICICIGI.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 1.0,
+                "uptrend_sma200": 0.5,
+                "adx_strong_trend": 0.2,
+                "ema_cross": 0.2,
+                "volume_spike": 0.4,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.4,
+            "win_rate": 69.2,
+            "total_trades": 13,
+            "test_trades": 4,
+            "test_wins": 1,
+            "test_win_rate": 25.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.4,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.4,
+                "stoch_d_turn": 0.4
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 88.9,
+            "total_trades": 9,
+            "test_trades": 2,
+            "test_wins": 1,
+            "test_win_rate": 50.0
+        },
+        "total_trades": 13
+    },
+    "IDEA.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 0.3,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 2.0,
+            "win_rate": 91.7,
+            "total_trades": 12,
+            "test_trades": 60,
+            "test_wins": 36,
+            "test_win_rate": 60.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.2,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.2,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 61.1,
+            "total_trades": 18,
+            "test_trades": 2,
+            "test_wins": 2,
+            "test_win_rate": 100.0
+        },
+        "total_trades": 18
+    },
+    "IDFCFIRSTB.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 1.5,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 0.6,
+                "ema_cross": 0.5,
+                "volume_spike": 0.9,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 5.0,
+            "win_rate": 68.2,
+            "total_trades": 22,
+            "test_trades": 2,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 22
+    },
+    "INDHOTEL.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 0.4,
+                "ema_cross": 0.3,
+                "volume_spike": 0.4,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 69.2,
+            "total_trades": 13,
+            "test_trades": 4,
+            "test_wins": 1,
+            "test_win_rate": 25.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.3,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.3,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 69.2,
+            "total_trades": 13,
+            "test_trades": 3,
+            "test_wins": 1,
+            "test_win_rate": 33.3
+        },
+        "total_trades": 13
+    },
+    "INDIANB.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.5,
+                "uptrend_sma200": 0.5,
+                "adx_strong_trend": 0.5,
+                "ema_cross": 2.0,
+                "volume_spike": 0.5,
+                "bullish_engulfing": 0.5
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 80.0,
+            "total_trades": 45,
+            "test_trades": 83,
+            "test_wins": 39,
+            "test_win_rate": 47.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.3,
+                "rsi2_pullback": 0.3,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 65.9,
+            "total_trades": 223,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 223
+    },
+    "INDIGO.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.6,
+                "uptrend_sma200": 0.6,
+                "adx_strong_trend": 0.6,
+                "ema_cross": 0.6,
+                "volume_spike": 2.0,
+                "bullish_engulfing": 0.6
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 60.0,
+            "total_trades": 5,
+            "test_trades": 42,
+            "test_wins": 8,
+            "test_win_rate": 19.0
+        },
+        "total_trades": 5
+    },
+    "INDUSINDBK.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.9,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 0.3,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 58.0,
+            "total_trades": 138,
+            "test_trades": 52,
+            "test_wins": 28,
+            "test_win_rate": 53.8
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.4,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.4,
+                "stoch_d_turn": 0.4
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 1.8,
+            "min_score": 1.5,
+            "win_rate": 70.0,
+            "total_trades": 10,
+            "test_trades": 1,
+            "test_wins": 1,
+            "test_win_rate": 100.0
+        },
+        "total_trades": 138
+    },
+    "INDUSTOWER.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 0.3,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.7,
+            "win_rate": 83.3,
+            "total_trades": 6,
+            "test_trades": 4,
+            "test_wins": 1,
+            "test_win_rate": 25.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.6,
+                "rsi2_pullback": 0.6,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.6
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.8,
+            "win_rate": 75.0,
+            "total_trades": 8,
+            "test_trades": 4,
+            "test_wins": 2,
+            "test_win_rate": 50.0
+        },
+        "total_trades": 8
+    },
+    "INFY.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.9,
+                "uptrend_sma200": 0.9,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 0.9,
+                "volume_spike": 0.9,
+                "bullish_engulfing": 0.9
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 62.0,
+            "total_trades": 108,
+            "test_trades": 66,
+            "test_wins": 23,
+            "test_win_rate": 34.8
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.6,
+                "rsi2_pullback": 0.3,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 2.1,
+            "win_rate": 60.0,
+            "total_trades": 5,
+            "test_trades": 2,
+            "test_wins": 2,
+            "test_win_rate": 100.0
+        },
+        "total_trades": 108
+    },
+    "IOC.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.5,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 1.6,
+                "ema_cross": 0.5,
+                "volume_spike": 0.5,
+                "bullish_engulfing": 0.5
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.8,
+            "win_rate": 64.8,
+            "total_trades": 54,
+            "test_trades": 88,
+            "test_wins": 36,
+            "test_win_rate": 40.9
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 1.5,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.4,
+                "stoch_d_turn": 0.4
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 70.6,
+            "total_trades": 17,
+            "test_trades": 7,
+            "test_wins": 4,
+            "test_win_rate": 57.1
+        },
+        "total_trades": 54
+    },
+    "IRCTC.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 0.8,
+                "ema_cross": 0.3,
+                "volume_spike": 1.0,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 2.0,
+            "min_score": 1.8,
+            "win_rate": 60.0,
+            "total_trades": 5,
+            "test_trades": 2,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.1,
+                "rsi2_pullback": 0.4,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.5
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 90.0,
+            "total_trades": 10,
+            "test_trades": 4,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 10
+    },
+    "IREDA.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.1,
+                "adx_strong_trend": 1.8,
+                "ema_cross": 0.1,
+                "volume_spike": 0.1,
+                "bullish_engulfing": 0.1
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 100.0,
+            "total_trades": 5,
+            "test_trades": 47,
+            "test_wins": 7,
+            "test_win_rate": 14.9
+        },
+        "total_trades": 5
+    },
+    "IRFC.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.9,
+                "uptrend_sma200": 0.4,
+                "adx_strong_trend": 0.4,
+                "ema_cross": 2.0,
+                "volume_spike": 1.1,
+                "bullish_engulfing": 0.4
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 3.2,
+            "win_rate": 79.2,
+            "total_trades": 24,
+            "test_trades": 15,
+            "test_wins": 2,
+            "test_win_rate": 13.3
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.4,
+                "rsi2_pullback": 0.4,
+                "rsi14_oversold": 0.4,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 60.7,
+            "total_trades": 211,
+            "test_trades": 49,
+            "test_wins": 7,
+            "test_win_rate": 14.3
+        },
+        "total_trades": 211
+    },
+    "ITC.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.2,
+                "uptrend_sma200": 0.6,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 0.5,
+                "volume_spike": 0.2,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.9,
+            "win_rate": 69.6,
+            "total_trades": 168,
+            "test_trades": 8,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 70.0,
+            "total_trades": 10,
+            "test_trades": 53,
+            "test_wins": 13,
+            "test_win_rate": 24.5
+        },
+        "total_trades": 168
+    },
+    "JINDALSTEL.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.2,
+                "uptrend_sma200": 0.2,
+                "adx_strong_trend": 0.8,
+                "ema_cross": 0.2,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 85.7,
+            "total_trades": 7,
+            "test_trades": 3,
+            "test_wins": 1,
+            "test_win_rate": 33.3
+        },
+        "total_trades": 7
+    },
+    "JIOFIN.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.2,
+                "adx_strong_trend": 0.2,
+                "ema_cross": 0.2,
+                "volume_spike": 1.0,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 67.9,
+            "total_trades": 28,
+            "test_trades": 24,
+            "test_wins": 6,
+            "test_win_rate": 25.0
+        },
+        "total_trades": 28
+    },
+    "JSWENERGY.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.5,
+                "uptrend_sma200": 0.7,
+                "adx_strong_trend": 0.5,
+                "ema_cross": 2.0,
+                "volume_spike": 0.5,
+                "bullish_engulfing": 0.5
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 71.4,
+            "total_trades": 70,
+            "test_trades": 44,
+            "test_wins": 14,
+            "test_win_rate": 31.8
+        },
+        "total_trades": 70
+    },
+    "JSWSTEEL.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.7,
+                "uptrend_sma200": 0.7,
+                "adx_strong_trend": 0.7,
+                "ema_cross": 2.0,
+                "volume_spike": 0.7,
+                "bullish_engulfing": 0.7
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.8,
+            "win_rate": 100.0,
+            "total_trades": 17,
+            "test_trades": 74,
+            "test_wins": 32,
+            "test_win_rate": 43.2
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.3,
+                "rsi14_oversold": 0.3,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 2.0,
+            "min_score": 1.5,
+            "win_rate": 72.7,
+            "total_trades": 22,
+            "test_trades": 5,
+            "test_wins": 2,
+            "test_win_rate": 40.0
+        },
+        "total_trades": 22
+    },
+    "JUBLFOOD.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 2.0,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.8,
+            "win_rate": 68.4,
+            "total_trades": 19,
+            "test_trades": 32,
+            "test_wins": 1,
+            "test_win_rate": 3.1
+        },
+        "total_trades": 19
+    },
+    "KALYANKJIL.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 1.8,
+                "adx_strong_trend": 1.1,
+                "ema_cross": 2.0,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.1,
+            "win_rate": 88.6,
+            "total_trades": 44,
+            "test_trades": 18,
+            "test_wins": 11,
+            "test_win_rate": 61.1
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 62.1,
+            "total_trades": 459,
+            "test_trades": 65,
+            "test_wins": 31,
+            "test_win_rate": 47.7
+        },
+        "total_trades": 459
+    },
+    "KEI.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 2.0,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 81.4,
+            "total_trades": 43,
+            "test_trades": 76,
+            "test_wins": 14,
+            "test_win_rate": 18.4
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.3,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.3,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 80.0,
+            "total_trades": 5,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 43
+    },
+    "KOTAKBANK.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 0.3,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 68.8,
+            "total_trades": 96,
+            "test_trades": 79,
+            "test_wins": 32,
+            "test_win_rate": 40.5
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.3,
+                "rsi2_pullback": 0.3,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.4
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 75.0,
+            "total_trades": 8,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 96
+    },
+    "KPITTECH.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 1.8,
+                "uptrend_sma200": 0.4,
+                "adx_strong_trend": 0.4,
+                "ema_cross": 0.4,
+                "volume_spike": 1.2,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 91.3,
+            "total_trades": 23,
+            "test_trades": 33,
+            "test_wins": 3,
+            "test_win_rate": 9.1
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.3,
+                "rsi2_pullback": 1.4,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 80.0,
+            "total_trades": 20,
+            "test_trades": 3,
+            "test_wins": 2,
+            "test_win_rate": 66.7
+        },
+        "total_trades": 23
+    },
+    "LAURUSLABS.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.2,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 0.2,
+                "ema_cross": 0.2,
+                "volume_spike": 0.2,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.9,
+            "win_rate": 89.5,
+            "total_trades": 38,
+            "test_trades": 90,
+            "test_wins": 50,
+            "test_win_rate": 55.6
+        },
+        "total_trades": 38
+    },
+    "LICHSGFIN.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.4,
+                "uptrend_sma200": 1.1,
+                "adx_strong_trend": 1.7,
+                "ema_cross": 0.4,
+                "volume_spike": 0.4,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 2.4,
+            "win_rate": 100.0,
+            "total_trades": 15,
+            "test_trades": 6,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 15
+    },
+    "LODHA.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 1.4,
+                "uptrend_sma200": 1.9,
+                "adx_strong_trend": 1.3,
+                "ema_cross": 2.0,
+                "volume_spike": 1.3,
+                "bullish_engulfing": 1.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 5.0,
+            "win_rate": 65.6,
+            "total_trades": 64,
+            "test_trades": 8,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 57.5,
+            "total_trades": 452,
+            "test_trades": 58,
+            "test_wins": 16,
+            "test_win_rate": 27.6
+        },
+        "total_trades": 452
+    },
+    "LT.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.6,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 0.7,
+                "ema_cross": 0.6,
+                "volume_spike": 0.6,
+                "bullish_engulfing": 0.6
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 2.4,
+            "win_rate": 82.4,
+            "total_trades": 17,
+            "test_trades": 81,
+            "test_wins": 22,
+            "test_win_rate": 27.2
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 58.7,
+            "total_trades": 225,
+            "test_trades": 48,
+            "test_wins": 26,
+            "test_win_rate": 54.2
+        },
+        "total_trades": 225
+    },
+    "LTM.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.4,
+                "uptrend_sma200": 0.4,
+                "adx_strong_trend": 0.4,
+                "ema_cross": 2.0,
+                "volume_spike": 0.4,
+                "bullish_engulfing": 0.4
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 81.6,
+            "total_trades": 38,
+            "test_trades": 78,
+            "test_wins": 35,
+            "test_win_rate": 44.9
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.8,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.8,
+                "stoch_d_turn": 0.8
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 68.4,
+            "total_trades": 19,
+            "test_trades": 1,
+            "test_wins": 1,
+            "test_win_rate": 100.0
+        },
+        "total_trades": 38
+    },
+    "LUPIN.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 0.8,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 0.3,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 2.0,
+            "min_score": 2.7,
+            "win_rate": 81.8,
+            "total_trades": 11,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.4,
+                "rsi14_oversold": 0.4,
+                "stoch_d_turn": 0.4
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 85.7,
+            "total_trades": 7,
+            "test_trades": 2,
+            "test_wins": 1,
+            "test_win_rate": 50.0
+        },
+        "total_trades": 11
+    },
+    "M&M.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 0.3,
+                "volume_spike": 1.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 100.0,
+            "total_trades": 14,
+            "test_trades": 20,
+            "test_wins": 2,
+            "test_win_rate": 10.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.1,
+                "rsi14_oversold": 0.1,
+                "stoch_d_turn": 0.1
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.9,
+            "win_rate": 100.0,
+            "total_trades": 9,
+            "test_trades": 3,
+            "test_wins": 1,
+            "test_win_rate": 33.3
+        },
+        "total_trades": 14
+    },
+    "M&MFIN.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 2.0,
+                "volume_spike": 2.0,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 55.7,
+            "total_trades": 88,
+            "test_trades": 85,
+            "test_wins": 46,
+            "test_win_rate": 54.1
+        },
+        "total_trades": 88
+    },
+    "MANKIND.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.2,
+                "uptrend_sma200": 0.2,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 0.2,
+                "volume_spike": 0.2,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 60.8,
+            "total_trades": 51,
+            "test_trades": 15,
+            "test_wins": 2,
+            "test_win_rate": 13.3
+        },
+        "total_trades": 51
+    },
+    "MARICO.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 0.3,
+                "volume_spike": 0.6,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 2.0,
+            "win_rate": 87.5,
+            "total_trades": 8,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.1,
+                "rsi2_pullback": 0.1,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.1
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.9,
+            "win_rate": 100.0,
+            "total_trades": 7,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 8
+    },
+    "MARUTI.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 0.6,
+                "ema_cross": 0.3,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 2.6,
+            "win_rate": 83.3,
+            "total_trades": 6,
+            "test_trades": 76,
+            "test_wins": 34,
+            "test_win_rate": 44.7
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.9,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.9,
+                "stoch_d_turn": 0.9
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 2.0,
+            "min_score": 1.5,
+            "win_rate": 60.0,
+            "total_trades": 10,
+            "test_trades": 2,
+            "test_wins": 2,
+            "test_win_rate": 100.0
+        },
+        "total_trades": 10
+    },
+    "MAXHEALTH.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 2.0,
+                "volume_spike": 2.0,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 100.0,
+            "total_trades": 8,
+            "test_trades": 76,
+            "test_wins": 7,
+            "test_win_rate": 9.2
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.7,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.2,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 90.9,
+            "total_trades": 22,
+            "test_trades": 6,
+            "test_wins": 1,
+            "test_win_rate": 16.7
+        },
+        "total_trades": 22
+    },
+    "MAZDOCK.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.2,
+                "uptrend_sma200": 0.2,
+                "adx_strong_trend": 0.2,
+                "ema_cross": 2.0,
+                "volume_spike": 0.2,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.9,
+            "win_rate": 100.0,
+            "total_trades": 9,
+            "test_trades": 24,
+            "test_wins": 1,
+            "test_win_rate": 4.2
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 66.1,
+            "total_trades": 233,
+            "test_trades": 57,
+            "test_wins": 6,
+            "test_win_rate": 10.5
+        },
+        "total_trades": 233
+    },
+    "MCX.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.2,
+                "uptrend_sma200": 0.9,
+                "adx_strong_trend": 0.9,
+                "ema_cross": 0.7,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 2.9,
+            "win_rate": 85.7,
+            "total_trades": 7,
+            "test_trades": 11,
+            "test_wins": 6,
+            "test_win_rate": 54.5
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.2,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.2,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 77.8,
+            "total_trades": 9,
+            "test_trades": 3,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 9
+    },
+    "MFSL.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.6,
+                "uptrend_sma200": 0.6,
+                "adx_strong_trend": 0.6,
+                "ema_cross": 2.0,
+                "volume_spike": 0.8,
+                "bullish_engulfing": 0.6
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 63.0,
+            "total_trades": 92,
+            "test_trades": 62,
+            "test_wins": 8,
+            "test_win_rate": 12.9
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 1.6,
+                "rsi14_oversold": 0.2,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 2.0,
+            "win_rate": 83.3,
+            "total_trades": 6,
+            "test_trades": 7,
+            "test_wins": 4,
+            "test_win_rate": 57.1
+        },
+        "total_trades": 92
+    },
+    "MOTHERSON.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 2.0,
+                "volume_spike": 2.0,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 76.9,
+            "total_trades": 39,
+            "test_trades": 85,
+            "test_wins": 31,
+            "test_win_rate": 36.5
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.1,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 1.4,
+                "stoch_d_turn": 0.1
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.5,
+            "win_rate": 100.0,
+            "total_trades": 5,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 39
+    },
+    "MOTILALOFS.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.1,
+                "adx_strong_trend": 0.1,
+                "ema_cross": 0.1,
+                "volume_spike": 0.1,
+                "bullish_engulfing": 0.1
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.1,
+            "win_rate": 100.0,
+            "total_trades": 10,
+            "test_trades": 57,
+            "test_wins": 22,
+            "test_win_rate": 38.6
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.1,
+                "rsi2_pullback": 0.1,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 2.1,
+            "win_rate": 88.2,
+            "total_trades": 17,
+            "test_trades": 2,
+            "test_wins": 1,
+            "test_win_rate": 50.0
+        },
+        "total_trades": 17
+    },
+    "MPHASIS.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 2.0,
+                "volume_spike": 2.0,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 2.0,
+            "min_score": 1.5,
+            "win_rate": 55.9,
+            "total_trades": 59,
+            "test_trades": 90,
+            "test_wins": 43,
+            "test_win_rate": 47.8
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.4,
+                "rsi2_pullback": 0.4,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.6
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.9,
+            "win_rate": 100.0,
+            "total_trades": 5,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 59
+    },
+    "MRF.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.5,
+                "uptrend_sma200": 0.5,
+                "adx_strong_trend": 0.5,
+                "ema_cross": 2.0,
+                "volume_spike": 0.5,
+                "bullish_engulfing": 0.5
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.7,
+            "win_rate": 56.3,
+            "total_trades": 302,
+            "test_trades": 57,
+            "test_wins": 25,
+            "test_win_rate": 43.9
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.3,
+                "rsi2_pullback": 0.3,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 2.0,
+            "min_score": 1.5,
+            "win_rate": 83.3,
+            "total_trades": 6,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 302
+    },
+    "MUTHOOTFIN.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.2,
+                "uptrend_sma200": 0.2,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 2.0,
+                "volume_spike": 0.2,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 84.3,
+            "total_trades": 51,
+            "test_trades": 90,
+            "test_wins": 63,
+            "test_win_rate": 70.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.3,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.3,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 70.0,
+            "total_trades": 10,
+            "test_trades": 2,
+            "test_wins": 2,
+            "test_win_rate": 100.0
+        },
+        "total_trades": 51
+    },
+    "NATIONALUM.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.2,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 0.6,
+                "ema_cross": 0.2,
+                "volume_spike": 0.2,
+                "bullish_engulfing": 1.7
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 74.7,
+            "total_trades": 91,
+            "test_trades": 67,
+            "test_wins": 38,
+            "test_win_rate": 56.7
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.1,
+                "rsi2_pullback": 0.1,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.1
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 100.0,
+            "total_trades": 8,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 91
+    },
+    "NAUKRI.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 1.0,
+                "uptrend_sma200": 0.5,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 0.5,
+                "volume_spike": 0.5,
+                "bullish_engulfing": 0.5
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.9,
+            "win_rate": 75.0,
+            "total_trades": 20,
+            "test_trades": 3,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.4,
+                "rsi14_oversold": 0.2,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 88.9,
+            "total_trades": 9,
+            "test_trades": 3,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 20
+    },
+    "NESTLEIND.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.2,
+                "uptrend_sma200": 0.6,
+                "adx_strong_trend": 0.2,
+                "ema_cross": 2.0,
+                "volume_spike": 0.9,
+                "bullish_engulfing": 0.5
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.4,
+            "win_rate": 87.2,
+            "total_trades": 47,
+            "test_trades": 71,
+            "test_wins": 22,
+            "test_win_rate": 31.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.5,
+                "rsi2_pullback": 1.1,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 83.3,
+            "total_trades": 12,
+            "test_trades": 1,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 47
+    },
+    "NHPC.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.8,
+                "uptrend_sma200": 0.8,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 0.8,
+                "volume_spike": 0.8,
+                "bullish_engulfing": 0.8
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 2.0,
+            "win_rate": 58.9,
+            "total_trades": 151,
+            "test_trades": 55,
+            "test_wins": 9,
+            "test_win_rate": 16.4
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.2,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.2,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 100.0,
+            "total_trades": 5,
+            "test_trades": 3,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 151
+    },
+    "NMDC.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 1.6,
+                "uptrend_sma200": 0.5,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 0.5,
+                "volume_spike": 1.0,
+                "bullish_engulfing": 0.5
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.9,
+            "win_rate": 57.1,
+            "total_trades": 28,
+            "test_trades": 25,
+            "test_wins": 3,
+            "test_win_rate": 12.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.2,
+                "rsi14_oversold": 0.1,
+                "stoch_d_turn": 0.1
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 96.2,
+            "total_trades": 26,
+            "test_trades": 7,
+            "test_wins": 4,
+            "test_win_rate": 57.1
+        },
+        "total_trades": 28
+    },
+    "NTPC.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.1,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 0.1,
+                "ema_cross": 0.1,
+                "volume_spike": 0.1,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.8,
+            "win_rate": 90.5,
+            "total_trades": 42,
+            "test_trades": 32,
+            "test_wins": 5,
+            "test_win_rate": 15.6
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 1.4,
+                "rsi14_oversold": 0.4,
+                "stoch_d_turn": 0.4
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 1.8,
+            "min_score": 3.3,
+            "win_rate": 100.0,
+            "total_trades": 5,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 42
+    },
+    "NYKAA.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.5,
+                "uptrend_sma200": 1.5,
+                "adx_strong_trend": 0.5,
+                "ema_cross": 2.0,
+                "volume_spike": 0.5,
+                "bullish_engulfing": 0.5
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.1,
+            "win_rate": 61.8,
+            "total_trades": 34,
+            "test_trades": 81,
+            "test_wins": 20,
+            "test_win_rate": 24.7
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.5,
+                "rsi2_pullback": 0.5,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.5
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 57.1,
+            "total_trades": 28,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 34
+    },
+    "OBEROIRLTY.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 0.3,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 78.6,
+            "total_trades": 56,
+            "test_trades": 42,
+            "test_wins": 7,
+            "test_win_rate": 16.7
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.6,
+                "rsi2_pullback": 0.6,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.6
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 72.7,
+            "total_trades": 11,
+            "test_trades": 1,
+            "test_wins": 1,
+            "test_win_rate": 100.0
+        },
+        "total_trades": 56
+    },
+    "OFSS.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 0.3,
+                "volume_spike": 0.9,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 2.5,
+            "min_score": 2.9,
+            "win_rate": 91.7,
+            "total_trades": 12,
+            "test_trades": 8,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 60.4,
+            "total_trades": 227,
+            "test_trades": 48,
+            "test_wins": 3,
+            "test_win_rate": 6.2
+        },
+        "total_trades": 227
+    },
+    "OIL.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.2,
+                "adx_strong_trend": 0.2,
+                "ema_cross": 0.2,
+                "volume_spike": 0.2,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 85.7,
+            "total_trades": 14,
+            "test_trades": 39,
+            "test_wins": 7,
+            "test_win_rate": 17.9
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.2,
+                "rsi2_pullback": 0.2,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 83.3,
+            "total_trades": 12,
+            "test_trades": 1,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 14
+    },
+    "ONGC.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.6,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 1.6,
+                "ema_cross": 0.6,
+                "volume_spike": 0.6,
+                "bullish_engulfing": 0.6
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 62.7,
+            "total_trades": 59,
+            "test_trades": 55,
+            "test_wins": 12,
+            "test_win_rate": 21.8
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.2,
+                "rsi2_pullback": 0.2,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 83.3,
+            "total_trades": 12,
+            "test_trades": 1,
+            "test_wins": 1,
+            "test_win_rate": 100.0
+        },
+        "total_trades": 59
+    },
+    "PAGEIND.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.2,
+                "uptrend_sma200": 0.2,
+                "adx_strong_trend": 0.2,
+                "ema_cross": 2.0,
+                "volume_spike": 0.7,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 2.0,
+            "min_score": 2.7,
+            "win_rate": 71.4,
+            "total_trades": 7,
+            "test_trades": 4,
+            "test_wins": 1,
+            "test_win_rate": 25.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.5,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.5,
+                "stoch_d_turn": 0.5
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 2.0,
+            "min_score": 1.5,
+            "win_rate": 62.5,
+            "total_trades": 24,
+            "test_trades": 9,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 24
+    },
+    "PATANJALI.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.8,
+                "uptrend_sma200": 0.4,
+                "adx_strong_trend": 0.4,
+                "ema_cross": 0.4,
+                "volume_spike": 0.4,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 100.0,
+            "total_trades": 25,
+            "test_trades": 6,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.5,
+                "rsi2_pullback": 0.6,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.5
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.5,
+            "win_rate": 66.7,
+            "total_trades": 12,
+            "test_trades": 4,
+            "test_wins": 3,
+            "test_win_rate": 75.0
+        },
+        "total_trades": 25
+    },
+    "PAYTM.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 1.4,
+                "ema_cross": 2.0,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 3.3,
+            "win_rate": 66.7,
+            "total_trades": 33,
+            "test_trades": 38,
+            "test_wins": 14,
+            "test_win_rate": 36.8
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.3,
+                "rsi2_pullback": 0.3,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.0,
+            "win_rate": 87.0,
+            "total_trades": 23,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 33
+    },
+    "PERSISTENT.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.2,
+                "uptrend_sma200": 0.4,
+                "adx_strong_trend": 0.2,
+                "ema_cross": 2.0,
+                "volume_spike": 0.5,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 77.6,
+            "total_trades": 76,
+            "test_trades": 70,
+            "test_wins": 22,
+            "test_win_rate": 31.4
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.7,
+                "rsi2_pullback": 0.7,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.7
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 85.7,
+            "total_trades": 7,
+            "test_trades": 1,
+            "test_wins": 1,
+            "test_win_rate": 100.0
+        },
+        "total_trades": 76
+    },
+    "PFC.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 1.6,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 0.6,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 3.2,
+            "win_rate": 100.0,
+            "total_trades": 9,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 1.1,
+                "rsi2_pullback": 1.1,
+                "rsi14_oversold": 1.1,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 58.8,
+            "total_trades": 245,
+            "test_trades": 54,
+            "test_wins": 18,
+            "test_win_rate": 33.3
+        },
+        "total_trades": 245
+    },
+    "PHOENIXLTD.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.5,
+                "uptrend_sma200": 0.5,
+                "adx_strong_trend": 0.5,
+                "ema_cross": 0.5,
+                "volume_spike": 0.5,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 82.1,
+            "total_trades": 78,
+            "test_trades": 60,
+            "test_wins": 39,
+            "test_win_rate": 65.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.5,
+                "rsi14_oversold": 0.5,
+                "stoch_d_turn": 0.5
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.8,
+            "win_rate": 71.4,
+            "total_trades": 14,
+            "test_trades": 4,
+            "test_wins": 1,
+            "test_win_rate": 25.0
+        },
+        "total_trades": 78
+    },
+    "PIDILITIND.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 1.7,
+                "uptrend_sma200": 1.0,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 1.0,
+                "volume_spike": 1.0,
+                "bullish_engulfing": 1.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 2.0,
+            "min_score": 2.6,
+            "win_rate": 91.7,
+            "total_trades": 24,
+            "test_trades": 46,
+            "test_wins": 6,
+            "test_win_rate": 13.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 2.0,
+            "min_score": 1.5,
+            "win_rate": 55.8,
+            "total_trades": 233,
+            "test_trades": 56,
+            "test_wins": 18,
+            "test_win_rate": 32.1
+        },
+        "total_trades": 233
+    },
+    "PIIND.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.1,
+                "uptrend_sma200": 0.1,
+                "adx_strong_trend": 0.1,
+                "ema_cross": 2.0,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.1
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 2.2,
+            "win_rate": 75.0,
+            "total_trades": 16,
+            "test_trades": 20,
+            "test_wins": 3,
+            "test_win_rate": 15.0
+        },
+        "total_trades": 16
+    },
+    "PNB.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 1.0,
+                "uptrend_sma200": 0.8,
+                "adx_strong_trend": 0.4,
+                "ema_cross": 1.7,
+                "volume_spike": 1.3,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 3.8,
+            "win_rate": 71.9,
+            "total_trades": 32,
+            "test_trades": 33,
+            "test_wins": 11,
+            "test_win_rate": 33.3
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 1.6,
+                "rsi2_pullback": 0.8,
+                "rsi14_oversold": 0.6,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 3.5,
+            "win_rate": 100.0,
+            "total_trades": 5,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 32
+    },
+    "POLICYBZR.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.2,
+                "adx_strong_trend": 0.2,
+                "ema_cross": 0.2,
+                "volume_spike": 0.2,
+                "bullish_engulfing": 1.9
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.6,
+            "win_rate": 92.3,
+            "total_trades": 13,
+            "test_trades": 6,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 1.9,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 1.9,
+                "stoch_d_turn": 1.9
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 68.1,
+            "total_trades": 389,
+            "test_trades": 56,
+            "test_wins": 15,
+            "test_win_rate": 26.8
+        },
+        "total_trades": 389
+    },
+    "POLYCAB.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.6,
+                "uptrend_sma200": 0.6,
+                "adx_strong_trend": 0.6,
+                "ema_cross": 2.0,
+                "volume_spike": 0.6,
+                "bullish_engulfing": 0.9
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 1.8,
+            "min_score": 2.2,
+            "win_rate": 85.7,
+            "total_trades": 7,
+            "test_trades": 76,
+            "test_wins": 41,
+            "test_win_rate": 53.9
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.4,
+                "rsi14_oversold": 0.4,
+                "stoch_d_turn": 0.5
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 66.7,
+            "total_trades": 18,
+            "test_trades": 10,
+            "test_wins": 2,
+            "test_win_rate": 20.0
+        },
+        "total_trades": 18
+    },
+    "POWERGRID.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 0.3,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.0,
+            "win_rate": 63.2,
+            "total_trades": 38,
+            "test_trades": 16,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.3,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.3,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 80.0,
+            "total_trades": 5,
+            "test_trades": 2,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 38
+    },
+    "POWERINDIA.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.2,
+                "uptrend_sma200": 1.0,
+                "adx_strong_trend": 0.2,
+                "ema_cross": 0.2,
+                "volume_spike": 0.2,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.6,
+            "win_rate": 100.0,
+            "total_trades": 7,
+            "test_trades": 32,
+            "test_wins": 8,
+            "test_win_rate": 25.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 1.6,
+                "rsi2_pullback": 1.6,
+                "rsi14_oversold": 1.6,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 68.4,
+            "total_trades": 225,
+            "test_trades": 58,
+            "test_wins": 26,
+            "test_win_rate": 44.8
+        },
+        "total_trades": 225
+    },
+    "PRESTIGE.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.9,
+                "uptrend_sma200": 0.9,
+                "adx_strong_trend": 0.9,
+                "ema_cross": 0.9,
+                "volume_spike": 0.9,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 80.0,
+            "total_trades": 5,
+            "test_trades": 68,
+            "test_wins": 17,
+            "test_win_rate": 25.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 1.1,
+                "rsi14_oversold": 0.6,
+                "stoch_d_turn": 0.1
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.8,
+            "win_rate": 100.0,
+            "total_trades": 7,
+            "test_trades": 4,
+            "test_wins": 2,
+            "test_win_rate": 50.0
+        },
+        "total_trades": 7
+    },
+    "RADICO.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.6,
+                "uptrend_sma200": 0.6,
+                "adx_strong_trend": 0.6,
+                "ema_cross": 2.0,
+                "volume_spike": 0.6,
+                "bullish_engulfing": 0.6
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 84.6,
+            "total_trades": 26,
+            "test_trades": 76,
+            "test_wins": 30,
+            "test_win_rate": 39.5
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.2,
+                "rsi2_pullback": 0.2,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 75.0,
+            "total_trades": 8,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 26
+    },
+    "RECLTD.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.1,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 0.8,
+                "ema_cross": 0.1,
+                "volume_spike": 0.1,
+                "bullish_engulfing": 0.1
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.2,
+            "win_rate": 75.7,
+            "total_trades": 37,
+            "test_trades": 4,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 1.4,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.8,
+                "stoch_d_turn": 0.8
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.7,
+            "win_rate": 75.0,
+            "total_trades": 8,
+            "test_trades": 6,
+            "test_wins": 1,
+            "test_win_rate": 16.7
+        },
+        "total_trades": 37
+    },
+    "RELIANCE.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 2.0,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 2.0,
+            "win_rate": 66.7,
+            "total_trades": 24,
+            "test_trades": 70,
+            "test_wins": 31,
+            "test_win_rate": 44.3
+        },
+        "total_trades": 24
+    },
+    "RVNL.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 1.1,
+                "uptrend_sma200": 0.6,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 0.6,
+                "volume_spike": 0.9,
+                "bullish_engulfing": 0.6
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 3.4,
+            "win_rate": 83.3,
+            "total_trades": 6,
+            "test_trades": 10,
+            "test_wins": 1,
+            "test_win_rate": 10.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.4,
+                "rsi2_pullback": 0.4,
+                "rsi14_oversold": 0.4,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 63.7,
+            "total_trades": 234,
+            "test_trades": 49,
+            "test_wins": 16,
+            "test_win_rate": 32.7
+        },
+        "total_trades": 234
+    },
+    "SAIL.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 2.0,
+                "volume_spike": 2.0,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 76.5,
+            "total_trades": 34,
+            "test_trades": 90,
+            "test_wins": 37,
+            "test_win_rate": 41.1
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.2,
+                "rsi14_oversold": 0.2,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.8,
+            "win_rate": 100.0,
+            "total_trades": 6,
+            "test_trades": 6,
+            "test_wins": 5,
+            "test_win_rate": 83.3
+        },
+        "total_trades": 34
+    },
+    "SBICARD.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.2,
+                "adx_strong_trend": 0.2,
+                "ema_cross": 0.2,
+                "volume_spike": 0.2,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 2.5,
+            "min_score": 1.5,
+            "win_rate": 61.1,
+            "total_trades": 36,
+            "test_trades": 31,
+            "test_wins": 2,
+            "test_win_rate": 6.5
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.1,
+                "rsi2_pullback": 0.1,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.1
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 94.4,
+            "total_trades": 18,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 36
+    },
+    "SBILIFE.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.7,
+                "uptrend_sma200": 0.7,
+                "adx_strong_trend": 0.7,
+                "ema_cross": 0.7,
+                "volume_spike": 0.7,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 1.8,
+            "min_score": 1.5,
+            "win_rate": 60.0,
+            "total_trades": 25,
+            "test_trades": 65,
+            "test_wins": 30,
+            "test_win_rate": 46.2
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.4,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.2,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 80.0,
+            "total_trades": 10,
+            "test_trades": 1,
+            "test_wins": 1,
+            "test_win_rate": 100.0
+        },
+        "total_trades": 25
+    },
+    "SBIN.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 1.0,
+                "uptrend_sma200": 0.4,
+                "adx_strong_trend": 0.4,
+                "ema_cross": 2.0,
+                "volume_spike": 0.4,
+                "bullish_engulfing": 0.4
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 2.0,
+            "min_score": 2.9,
+            "win_rate": 100.0,
+            "total_trades": 7,
+            "test_trades": 78,
+            "test_wins": 48,
+            "test_win_rate": 61.5
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.1,
+                "rsi2_pullback": 0.1,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.1
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 100.0,
+            "total_trades": 7,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 7
+    },
+    "SHREECEM.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 2.0,
+                "volume_spike": 2.0,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 56.8,
+            "total_trades": 81,
+            "test_trades": 78,
+            "test_wins": 16,
+            "test_win_rate": 20.5
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.2,
+                "rsi2_pullback": 0.2,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.7,
+            "win_rate": 92.3,
+            "total_trades": 13,
+            "test_trades": 20,
+            "test_wins": 3,
+            "test_win_rate": 15.0
+        },
+        "total_trades": 81
+    },
+    "SHRIRAMFIN.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 2.0,
+                "volume_spike": 2.0,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 65.1,
+            "total_trades": 86,
+            "test_trades": 88,
+            "test_wins": 54,
+            "test_win_rate": 61.4
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.5,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.2,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 90.0,
+            "total_trades": 10,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 86
+    },
+    "SIEMENS.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 0.6,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 0.3,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 70.7,
+            "total_trades": 58,
+            "test_trades": 18,
+            "test_wins": 1,
+            "test_win_rate": 5.6
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 1.8,
+                "rsi2_pullback": 0.2,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.7
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 2.9,
+            "win_rate": 100.0,
+            "total_trades": 5,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 58
+    },
+    "SOLARINDS.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 1.8,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 0.3,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 3.4,
+            "win_rate": 80.0,
+            "total_trades": 5,
+            "test_trades": 17,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.4,
+                "rsi14_oversold": 1.3,
+                "stoch_d_turn": 0.9
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.5,
+            "win_rate": 87.5,
+            "total_trades": 8,
+            "test_trades": 6,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 8
+    },
+    "SRF.NS": {
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.2,
+                "rsi14_oversold": 0.2,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 57.9,
+            "total_trades": 38,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 38
+    },
+    "SUNPHARMA.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 1.1,
+                "uptrend_sma200": 0.4,
+                "adx_strong_trend": 0.5,
+                "ema_cross": 2.0,
+                "volume_spike": 1.2,
+                "bullish_engulfing": 0.8
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 4.6,
+            "win_rate": 77.3,
+            "total_trades": 22,
+            "test_trades": 5,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.1,
+                "rsi2_pullback": 0.1,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.1
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 100.0,
+            "total_trades": 5,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 22
+    },
+    "SUPREMEIND.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 0.8,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.1,
+            "win_rate": 83.3,
+            "total_trades": 30,
+            "test_trades": 34,
+            "test_wins": 2,
+            "test_win_rate": 5.9
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 63.1,
+            "total_trades": 222,
+            "test_trades": 60,
+            "test_wins": 8,
+            "test_win_rate": 13.3
+        },
+        "total_trades": 222
+    },
+    "SUZLON.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.8,
+                "uptrend_sma200": 0.8,
+                "adx_strong_trend": 0.8,
+                "ema_cross": 2.0,
+                "volume_spike": 0.8,
+                "bullish_engulfing": 0.8
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.7,
+            "win_rate": 70.8,
+            "total_trades": 65,
+            "test_trades": 33,
+            "test_wins": 2,
+            "test_win_rate": 6.1
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.4,
+                "rsi14_oversold": 0.4,
+                "stoch_d_turn": 0.4
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.7,
+            "win_rate": 84.6,
+            "total_trades": 13,
+            "test_trades": 7,
+            "test_wins": 1,
+            "test_win_rate": 14.3
+        },
+        "total_trades": 65
+    },
+    "TATACHEM.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 1.6,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 1.4,
+                "ema_cross": 0.3,
+                "volume_spike": 2.0,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.0,
+            "win_rate": 84.2,
+            "total_trades": 19,
+            "test_trades": 31,
+            "test_wins": 7,
+            "test_win_rate": 22.6
+        },
+        "total_trades": 19
+    },
+    "TATACOMM.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.1,
+                "adx_strong_trend": 0.1,
+                "ema_cross": 0.1,
+                "volume_spike": 0.1,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 100.0,
+            "total_trades": 5,
+            "test_trades": 52,
+            "test_wins": 12,
+            "test_win_rate": 23.1
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.1,
+                "rsi14_oversold": 1.4,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 86.1,
+            "total_trades": 36,
+            "test_trades": 6,
+            "test_wins": 3,
+            "test_win_rate": 50.0
+        },
+        "total_trades": 36
+    },
+    "TATACONSUM.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.4,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 0.4,
+                "ema_cross": 0.4,
+                "volume_spike": 0.4,
+                "bullish_engulfing": 0.4
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 61.0,
+            "total_trades": 77,
+            "test_trades": 90,
+            "test_wins": 40,
+            "test_win_rate": 44.4
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.1,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.1,
+                "stoch_d_turn": 0.1
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 92.3,
+            "total_trades": 13,
+            "test_trades": 1,
+            "test_wins": 1,
+            "test_win_rate": 100.0
+        },
+        "total_trades": 77
+    },
+    "TATAELXSI.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.2,
+                "adx_strong_trend": 0.2,
+                "ema_cross": 0.9,
+                "volume_spike": 0.2,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 2.6,
+            "win_rate": 60.7,
+            "total_trades": 28,
+            "test_trades": 4,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 28
+    },
+    "TATAINVEST.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.4,
+                "adx_strong_trend": 1.2,
+                "ema_cross": 1.5,
+                "volume_spike": 0.4,
+                "bullish_engulfing": 0.4
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 58.9,
+            "total_trades": 316,
+            "test_trades": 59,
+            "test_wins": 23,
+            "test_win_rate": 39.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.6,
+                "rsi2_pullback": 0.6,
+                "rsi14_oversold": 0.6,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 57.8,
+            "total_trades": 218,
+            "test_trades": 44,
+            "test_wins": 8,
+            "test_win_rate": 18.2
+        },
+        "total_trades": 316
+    },
+    "TATAPOWER.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 1.4,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 1.4,
+                "volume_spike": 1.4,
+                "bullish_engulfing": 1.4
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 58.8,
+            "total_trades": 34,
+            "test_trades": 61,
+            "test_wins": 16,
+            "test_win_rate": 26.2
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 1.1,
+                "rsi14_oversold": 0.2,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 80.0,
+            "total_trades": 10,
+            "test_trades": 4,
+            "test_wins": 1,
+            "test_win_rate": 25.0
+        },
+        "total_trades": 34
+    },
+    "TATASTEEL.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 2.0,
+                "volume_spike": 2.0,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 78.6,
+            "total_trades": 28,
+            "test_trades": 90,
+            "test_wins": 25,
+            "test_win_rate": 27.8
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.2,
+                "rsi2_pullback": 0.2,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 1.8,
+            "min_score": 1.5,
+            "win_rate": 85.7,
+            "total_trades": 7,
+            "test_trades": 3,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 28
+    },
+    "TCS.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 2.0,
+                "volume_spike": 2.0,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 1.8,
+            "min_score": 1.5,
+            "win_rate": 57.5,
+            "total_trades": 193,
+            "test_trades": 66,
+            "test_wins": 27,
+            "test_win_rate": 40.9
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.2,
+                "rsi2_pullback": 0.2,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 2.1,
+            "win_rate": 100.0,
+            "total_trades": 5,
+            "test_trades": 1,
+            "test_wins": 1,
+            "test_win_rate": 100.0
+        },
+        "total_trades": 193
+    },
+    "TECHM.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.7,
+                "uptrend_sma200": 0.7,
+                "adx_strong_trend": 0.7,
+                "ema_cross": 1.0,
+                "volume_spike": 1.6,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.2,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 60.5,
+            "total_trades": 86,
+            "test_trades": 48,
+            "test_wins": 15,
+            "test_win_rate": 31.2
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.3,
+                "rsi2_pullback": 0.3,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 66.7,
+            "total_trades": 18,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 86
+    },
+    "TIINDIA.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 0.3,
+                "ema_cross": 0.3,
+                "volume_spike": 0.9,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.1,
+            "win_rate": 70.4,
+            "total_trades": 27,
+            "test_trades": 30,
+            "test_wins": 2,
+            "test_win_rate": 6.7
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.3,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.5,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.6,
+            "win_rate": 90.0,
+            "total_trades": 10,
+            "test_trades": 4,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 27
+    },
+    "TITAN.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.2,
+                "adx_strong_trend": 0.2,
+                "ema_cross": 0.2,
+                "volume_spike": 0.2,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.0,
+            "win_rate": 66.7,
+            "total_trades": 21,
+            "test_trades": 73,
+            "test_wins": 34,
+            "test_win_rate": 46.6
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.1,
+                "rsi14_oversold": 0.1,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 80.0,
+            "total_trades": 15,
+            "test_trades": 11,
+            "test_wins": 3,
+            "test_win_rate": 27.3
+        },
+        "total_trades": 21
+    },
+    "TMPV.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.2,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 1.7,
+                "ema_cross": 2.0,
+                "volume_spike": 0.2,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.8,
+            "win_rate": 62.2,
+            "total_trades": 172,
+            "test_trades": 7,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 172
+    },
+    "TORNTPHARM.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.4,
+                "uptrend_sma200": 0.4,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 1.5,
+                "volume_spike": 0.4,
+                "bullish_engulfing": 0.6
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 86.4,
+            "total_trades": 22,
+            "test_trades": 65,
+            "test_wins": 41,
+            "test_win_rate": 63.1
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.2,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.2,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.7,
+            "win_rate": 100.0,
+            "total_trades": 5,
+            "test_trades": 3,
+            "test_wins": 2,
+            "test_win_rate": 66.7
+        },
+        "total_trades": 22
+    },
+    "TRENT.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 1.1,
+                "adx_strong_trend": 0.8,
+                "ema_cross": 0.8,
+                "volume_spike": 0.8,
+                "bullish_engulfing": 0.8
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 2.1,
+            "win_rate": 80.0,
+            "total_trades": 5,
+            "test_trades": 13,
+            "test_wins": 3,
+            "test_win_rate": 23.1
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.3,
+                "rsi14_oversold": 0.3,
+                "stoch_d_turn": 0.3
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.7,
+            "win_rate": 88.9,
+            "total_trades": 9,
+            "test_trades": 12,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 9
+    },
+    "TVSMOTOR.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.8,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 0.7,
+                "ema_cross": 0.1,
+                "volume_spike": 0.1,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 94.1,
+            "total_trades": 17,
+            "test_trades": 40,
+            "test_wins": 11,
+            "test_win_rate": 27.5
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 2.0
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 55.1,
+            "total_trades": 227,
+            "test_trades": 48,
+            "test_wins": 22,
+            "test_win_rate": 45.8
+        },
+        "total_trades": 227
+    },
+    "ULTRACEMCO.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 1.4,
+                "uptrend_sma200": 1.4,
+                "adx_strong_trend": 1.4,
+                "ema_cross": 1.4,
+                "volume_spike": 2.0,
+                "bullish_engulfing": 1.4
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 87.5,
+            "total_trades": 8,
+            "test_trades": 56,
+            "test_wins": 11,
+            "test_win_rate": 19.6
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.7,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.7,
+                "stoch_d_turn": 0.7
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 66.7,
+            "total_trades": 12,
+            "test_trades": 3,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 12
+    },
+    "UNIONBANK.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 1.1,
+                "uptrend_sma200": 0.4,
+                "adx_strong_trend": 0.5,
+                "ema_cross": 0.3,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 2.0
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 2.8,
+            "win_rate": 83.3,
+            "total_trades": 6,
+            "test_trades": 1,
+            "test_wins": 1,
+            "test_win_rate": 100.0
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.2,
+                "rsi14_oversold": 0.2,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 85.7,
+            "total_trades": 7,
+            "test_trades": 1,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 7
+    },
+    "UNITDSPR.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 2.0,
+                "uptrend_sma200": 0.4,
+                "adx_strong_trend": 0.4,
+                "ema_cross": 0.4,
+                "volume_spike": 0.4,
+                "bullish_engulfing": 0.4
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 83.3,
+            "total_trades": 30,
+            "test_trades": 43,
+            "test_wins": 18,
+            "test_win_rate": 41.9
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 1.9,
+                "rsi2_pullback": 2.0,
+                "rsi14_oversold": 0.6,
+                "stoch_d_turn": 0.6
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 80.0,
+            "total_trades": 10,
+            "test_trades": 12,
+            "test_wins": 1,
+            "test_win_rate": 8.3
+        },
+        "total_trades": 30
+    },
+    "UPL.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.4,
+                "uptrend_sma200": 0.4,
+                "adx_strong_trend": 2.0,
+                "ema_cross": 0.9,
+                "volume_spike": 0.4,
+                "bullish_engulfing": 0.4
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 2.0,
+            "min_score": 2.8,
+            "win_rate": 75.0,
+            "total_trades": 24,
+            "test_trades": 19,
+            "test_wins": 3,
+            "test_win_rate": 15.8
+        },
+        "total_trades": 24
+    },
+    "VBL.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.1,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 0.4,
+                "ema_cross": 0.1,
+                "volume_spike": 0.1,
+                "bullish_engulfing": 0.1
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.9,
+            "win_rate": 64.6,
+            "total_trades": 240,
+            "test_trades": 7,
+            "test_wins": 2,
+            "test_win_rate": 28.6
+        },
+        "total_trades": 240
+    },
+    "VEDL.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.3,
+                "uptrend_sma200": 0.3,
+                "adx_strong_trend": 0.7,
+                "ema_cross": 2.0,
+                "volume_spike": 0.3,
+                "bullish_engulfing": 0.3
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.1,
+            "win_rate": 75.0,
+            "total_trades": 28,
+            "test_trades": 86,
+            "test_wins": 51,
+            "test_win_rate": 59.3
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.4,
+                "rsi2_pullback": 0.4,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.4
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 3.0,
+            "min_score": 1.9,
+            "win_rate": 80.0,
+            "total_trades": 5,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 28
+    },
+    "VOLTAS.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.2,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 0.2,
+                "ema_cross": 0.2,
+                "volume_spike": 0.2,
+                "bullish_engulfing": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 77.4,
+            "total_trades": 31,
+            "test_trades": 53,
+            "test_wins": 14,
+            "test_win_rate": 26.4
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.2,
+                "rsi2_pullback": 0.2,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.2
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 81.2,
+            "total_trades": 16,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 31
+    },
+    "WIPRO.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.8,
+                "uptrend_sma200": 0.8,
+                "adx_strong_trend": 0.8,
+                "ema_cross": 2.0,
+                "volume_spike": 0.8,
+                "bullish_engulfing": 0.8
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.6,
+            "win_rate": 58.1,
+            "total_trades": 62,
+            "test_trades": 64,
+            "test_wins": 22,
+            "test_win_rate": 34.4
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 1.5,
+                "rsi14_oversold": 1.8,
+                "stoch_d_turn": 0.6
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 2.1,
+            "win_rate": 80.0,
+            "total_trades": 10,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 62
+    },
+    "YESBANK.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.6,
+                "uptrend_sma200": 1.3,
+                "adx_strong_trend": 1.0,
+                "ema_cross": 2.0,
+                "volume_spike": 0.6,
+                "bullish_engulfing": 0.6
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 3.1,
+            "win_rate": 69.2,
+            "total_trades": 172,
+            "test_trades": 55,
+            "test_wins": 25,
+            "test_win_rate": 45.5
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 0.5,
+                "rsi2_pullback": 0.5,
+                "rsi14_oversold": 2.0,
+                "stoch_d_turn": 0.5
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 1.5,
+            "win_rate": 100.0,
+            "total_trades": 5,
+            "test_trades": 0,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 172
+    },
+    "ZYDUSLIFE.NS": {
+        "trend": {
+            "weights": {
+                "uptrend_sma50": 0.4,
+                "uptrend_sma200": 2.0,
+                "adx_strong_trend": 1.1,
+                "ema_cross": 1.5,
+                "volume_spike": 0.4,
+                "bullish_engulfing": 0.4
+            },
+            "stop_loss_atr": 1.5,
+            "target_atr": 3.0,
+            "min_score": 3.6,
+            "win_rate": 75.0,
+            "total_trades": 12,
+            "test_trades": 39,
+            "test_wins": 8,
+            "test_win_rate": 20.5
+        },
+        "pullback": {
+            "weights": {
+                "bb_pullback": 2.0,
+                "rsi2_pullback": 0.6,
+                "rsi14_oversold": 0.6,
+                "stoch_d_turn": 0.9
+            },
+            "stop_loss_atr": 1.0,
+            "target_atr": 2.0,
+            "min_score": 2.9,
+            "win_rate": 71.4,
+            "total_trades": 7,
+            "test_trades": 2,
+            "test_wins": 0,
+            "test_win_rate": 0.0
+        },
+        "total_trades": 12
+    }
+}

@@ -5,7 +5,7 @@ from pathlib import Path
 
 import duckdb
 
-from backtest import fetch_long_history, get_latest_price_date, get_local_symbols
+from backtesting.backtest import fetch_long_history, get_latest_price_date, get_local_symbols
 
 
 class LocalBacktestDataTests(unittest.TestCase):

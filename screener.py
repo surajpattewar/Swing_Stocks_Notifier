@@ -25,8 +25,36 @@ import ta
 from config import config
 from news_analyzer import analyze_stock_news, check_event_risk
 from institutional_deals import get_deal_catalyst
+import os
+import json
 
 logger = logging.getLogger(__name__)
+
+# Load custom per-stock swing weights if available
+workspace_dir = os.path.dirname(os.path.abspath(__file__))
+SWING_WEIGHTS_FILE = os.path.join(workspace_dir, "models", "swing_stock_weights.json")
+SWING_CUSTOM_WEIGHTS = {}
+if os.path.exists(SWING_WEIGHTS_FILE):
+    try:
+        with open(SWING_WEIGHTS_FILE, "r") as f:
+            raw_weights = json.load(f)
+        filtered_weights = {}
+        excluded_count = 0
+        for sym, w in raw_weights.items():
+            t_trades = w.get("total_trades", 0)
+            if "trend" in w or "pullback" in w:
+                t_trades = max(w.get("trend", {}).get("total_trades", 0), w.get("pullback", {}).get("total_trades", 0))
+            if t_trades >= config.WEIGHTS_MIN_SAMPLE_SIZE:
+                filtered_weights[sym] = w
+            else:
+                excluded_count += 1
+        SWING_CUSTOM_WEIGHTS = filtered_weights
+        logger.info(f"Loaded custom Swing weights for {len(SWING_CUSTOM_WEIGHTS)} stocks. Excluded {excluded_count} stocks with < {config.WEIGHTS_MIN_SAMPLE_SIZE} training samples.")
+    except Exception as e:
+        logger.error(f"Failed to load custom Swing weights: {e}")
+
+
+
 
 
 @dataclass
@@ -36,6 +64,9 @@ class Candidate:
     beta: float
     adx: float
     setup_type: str = "momentum"
+    trend_score: float = 0.0
+    pullback_score: float = 0.0
+    setup_class: str = "trend"
     reasons: list = field(default_factory=list)
     close: float = 0.0
     rsi: float = 0.0
@@ -46,6 +77,7 @@ class Candidate:
     event_risk: bool = False
     has_institutional_buy: bool = False
     has_institutional_sell: bool = False
+    win_rate: float = 0.0
 
     def to_line(self) -> str:
         sym = self.symbol.replace(".NS", "")
@@ -55,13 +87,21 @@ class Candidate:
         is_high_prob_setup = self.setup_type in ["pullback_sma50", "rsi2_pullback"]
         is_outperforming_index = any("Outperforming index" in r for r in self.reasons)
         
-        if is_high_prob_setup:
-            if is_outperforming_index:
-                setup_highlight = "🔥 [100% Win Rate Setup] "
+        if self.win_rate > 0:
+            if self.win_rate >= 95.0:
+                setup_highlight = f"🔥 [{self.win_rate}% Win Rate Setup] "
+            elif self.win_rate >= 90.0:
+                setup_highlight = f"⭐ [{self.win_rate}% Win Rate Setup] "
             else:
-                setup_highlight = "⭐ [90% Win Rate Setup] "
+                setup_highlight = f"✨ [{self.win_rate}% Win Rate Setup] "
         else:
-            setup_highlight = ""
+            if is_high_prob_setup:
+                if is_outperforming_index:
+                    setup_highlight = "🔥 [100% Win Rate Setup] "
+                else:
+                    setup_highlight = "⭐ [90% Win Rate Setup] "
+            else:
+                setup_highlight = ""
 
         if self.setup_type == "pullback_sma50":
             tag = "Golden Pullback"
@@ -135,6 +175,32 @@ def fetch_history(symbol: str, period: str, interval: str) -> pd.DataFrame:
                 
         if df is not None and not df.empty:
             df = df[~df.index.duplicated(keep="last")]
+            # Merge delivery_pct from DuckDB
+            try:
+                import os
+                from config import config
+                db_path = config.DUCKDB_PATH
+                if os.path.exists(db_path):
+                    import duckdb
+                    # Strip tz for matching
+                    if isinstance(df.index, pd.DatetimeIndex) and df.index.tz is not None:
+                        df.index = df.index.tz_localize(None)
+                    with duckdb.connect(db_path, read_only=True) as con:
+                        deliv_df = con.execute(
+                            """
+                            SELECT CAST(timezone('Asia/Kolkata', date) AS DATE) AS Date,
+                                   delivery_pct
+                            FROM stock_prices
+                            WHERE symbol = ?
+                            """,
+                            [symbol]
+                        ).fetchdf()
+                        if not deliv_df.empty:
+                            deliv_df["Date"] = pd.to_datetime(deliv_df["Date"])
+                            deliv_df = deliv_df.set_index("Date")
+                            df = df.join(deliv_df, how="left")
+            except Exception as e:
+                logger.warning(f"Could not merge delivery_pct from DuckDB: {e}")
     except Exception as e:
         logger.warning(f"Yahoo Finance download failed for {symbol}: {e}. Trying local DuckDB fallback.")
         
@@ -151,7 +217,7 @@ def fetch_history(symbol: str, period: str, interval: str) -> pd.DataFrame:
                         """
                         SELECT CAST(timezone('Asia/Kolkata', date) AS DATE) AS Date,
                                open AS Open, high AS High, low AS Low, close AS Close, volume AS Volume,
-                               dividends AS Dividends, stock_splits AS "Stock Splits"
+                               dividends AS Dividends, stock_splits AS "Stock Splits", delivery_pct
                         FROM stock_prices
                         WHERE symbol = ?
                         ORDER BY date
@@ -225,6 +291,17 @@ def _add_indicators(df: pd.DataFrame) -> pd.DataFrame:
     # Short-term Exponential Moving Averages (EMA 9 and 21)
     df["ema9"] = ta.trend.ema_indicator(df["Close"], window=9)
     df["ema21"] = ta.trend.ema_indicator(df["Close"], window=21)
+    df["ema5"] = ta.trend.ema_indicator(df["Close"], window=5)
+    df["ema20"] = ta.trend.ema_indicator(df["Close"], window=20)
+
+    # Class-specific swing indicators
+    df["uptrend_sma200"] = df["Close"] > df["sma200"]
+    df["ema_cross"] = df["ema5"] > df["ema20"]
+    df["bullish_engulfing"] = (df["Close"].shift(1) < df["Open"].shift(1)) & (df["Close"] > df["Open"]) & (df["Open"] <= df["Close"].shift(1)) & (df["Close"] >= df["Open"].shift(1))
+    df["rsi14_oversold"] = df["rsi14"] < 35
+    df["stoch_d_turn"] = df["stoch_d"] > df["stoch_d"].shift(1)
+    df["bb_pullback"] = df["Low"] <= df["bb_low"]
+    df["rsi2_pullback"] = df["rsi2"] < 5
 
     logger.info(f"Indicators added to {df.shape}")
     return df.dropna()
@@ -318,9 +395,56 @@ def get_benchmark_data(symbol: str, period: str = "2y", interval: str = "1d") ->
         _BENCHMARK_CACHE[key] = df
     return _BENCHMARK_CACHE[key]
 
-def evaluate(symbol: str, df: pd.DataFrame, stock_info=None, skip_fundamental=False, index_df: pd.DataFrame = None) -> Candidate:
+
+def fetch_india_vix(period="1mo") -> float | None:
+    try:
+        df = yf.download("^INDIAVIX", period=period, progress=False)
+        if not df.empty:
+            # Flatten multi-index columns if present
+            if isinstance(df.columns, pd.MultiIndex):
+                df.columns = [col[0] for col in df.columns]
+            return float(df["Close"].iloc[-1])
+    except Exception as e:
+        logger.warning(f"Failed to download India VIX from yfinance: {e}. Trying local fallback.")
+        
+    try:
+        import os
+        from config import config
+        db_path = config.DUCKDB_PATH
+        if os.path.exists(db_path):
+            import duckdb
+            with duckdb.connect(db_path, read_only=True) as con:
+                res = con.execute("SELECT close FROM india_vix ORDER BY date DESC LIMIT 1").fetchone()
+                if res:
+                    return float(res[0])
+    except Exception as ex:
+        logger.warning(f"Local India VIX fallback failed: {ex}")
+    return None
+
+def evaluate(symbol: str, df: pd.DataFrame, stock_info=None, skip_fundamental=False, index_df: pd.DataFrame = None, custom_weights: dict = None, use_custom_weights: bool = True, setup_class: str = "trend") -> Candidate:
     if stock_info is None or not isinstance(stock_info, dict):
         stock_info = {}
+
+    # Extract weights dict and target/stop params for active class
+    custom_sl_atr = None
+    custom_target_atr = None
+    weights_dict = None
+
+    if custom_weights is None and use_custom_weights:
+        custom_weights = SWING_CUSTOM_WEIGHTS.get(symbol, None)
+
+    if custom_weights is not None:
+        if setup_class in custom_weights:
+            class_weights = custom_weights[setup_class]
+            weights_dict = class_weights.get("weights", {})
+            custom_sl_atr = class_weights.get("stop_loss_atr", None)
+            custom_target_atr = class_weights.get("target_atr", None)
+        elif "weights" in custom_weights:
+            weights_dict = custom_weights["weights"]
+            custom_sl_atr = custom_weights.get("stop_loss_atr", None)
+            custom_target_atr = custom_weights.get("target_atr", None)
+        else:
+            weights_dict = custom_weights
 
     # Strip timezone from index to avoid timezone-naive vs timezone-aware mismatches
     if isinstance(df.index, pd.DatetimeIndex) and df.index.tz is not None:
@@ -332,387 +456,217 @@ def evaluate(symbol: str, df: pd.DataFrame, stock_info=None, skip_fundamental=Fa
             index_df = index_df.copy()
             index_df.index = index_df.index.tz_localize(None)
 
-    # Compute daily indicators
-    df_indicators = _add_indicators(df)
-    logger.info(f"length of {symbol} is: {len(df_indicators)}, {df_indicators.shape}")
+    # Compute daily indicators (skip if already pre-calculated)
+    if "sma50" in df.columns and "rsi14" in df.columns and "atr" in df.columns:
+        df_indicators = df
+    else:
+        df_indicators = _add_indicators(df)
     if len(df_indicators) < 10:
         raise ValueError("Not enough indicator history")
 
     last = df_indicators.iloc[-1]
-    prev3 = df_indicators.iloc[-4:-1]
 
-    # 1. Weekly Trend Filter (calculated using daily equivalents)
-    weekly_trend_up = False
-    w_ema = last["weekly_ema20_equiv"]
-    w_rsi = last["weekly_rsi_equiv"]
-    if last["Close"] > w_ema and w_rsi > 50:
-        weekly_trend_up = True
-
-    # 2. Relative Strength vs Index
-    if index_df is None or index_df.empty:
-        index_df = get_benchmark_data(symbol)
-
-    last_date = df.index[-1]
-    index_slice = index_df.loc[index_df.index <= last_date]
-
-    rs_line_rising = False
-    outperforming_index = False
-
-    if not index_slice.empty:
-        # Merge on Date index
-        merged = pd.merge(df[['Close']], index_slice[['Close']], left_index=True, right_index=True, suffixes=('_stock', '_index'))
-        if len(merged) >= 20:
-            merged['rs_line'] = merged['Close_stock'] / merged['Close_index']
-            merged['rs_line_sma20'] = merged['rs_line'].rolling(20).mean()
-            rs_line_rising = merged['rs_line'].iloc[-1] > merged['rs_line_sma20'].iloc[-1]
-
-            if len(merged) >= 50:
-                stock_perf = (merged['Close_stock'].iloc[-1] - merged['Close_stock'].iloc[-50]) / merged['Close_stock'].iloc[-50]
-                index_perf = (merged['Close_index'].iloc[-1] - merged['Close_index'].iloc[-50]) / merged['Close_index'].iloc[-50]
-                outperforming_index = stock_perf > index_perf
-
-    # Nifty 200 SMA trend calculation for Larry Connors RSI(2) setup
-    index_trend_up = True
-    if index_df is not None and not index_df.empty:
-        idx_close = index_df["Close"]
-        if len(idx_close) >= 200:
-            idx_sma200 = ta.trend.sma_indicator(idx_close, window=200)
-            if not idx_sma200.empty and last_date in idx_sma200.index:
-                index_trend_up = bool(idx_close.loc[last_date] > idx_sma200.loc[last_date])
-
-    score = 0
-    reasons = []
-
-    # 1. Trend
+    # Signal vector extraction
     sma50_rising = last["sma50"] > df_indicators.iloc[-6]["sma50"]
-    if last["Close"] > last["sma50"] and sma50_rising:
-        score += 1
-        reasons.append("Uptrend (above rising SMA50)")
+    uptrend_sma50_val = bool(last["Close"] > last["sma50"] and sma50_rising)
+    uptrend_sma200_val = bool(last["uptrend_sma200"])
+    adx_strong_trend_val = bool(last["adx"] >= 25)
+    ema_cross_val = bool(last["ema_cross"])
+    volume_spike_val = bool(last["Volume"] > 1.5 * last["vol_avg20"])
+    bullish_engulfing_val = bool(last["bullish_engulfing"])
 
-    # 2. Momentum
-    oversold_bounce = (prev3["rsi14"] < 30).any() and last["rsi14"] >= 30
-    healthy_zone = 45 <= last["rsi14"] <= 65
-    if healthy_zone:
-        score += 1
-        reasons.append("RSI in healthy zone")
-    elif oversold_bounce:
-        score += 1
-        reasons.append("RSI bounced off oversold")
-
-    # 3. MACD bullish crossover recently
-    crossed = ((df_indicators["macd"] - df_indicators["macd_signal"]).iloc[-4:-1] < 0).any() and \
-              (last["macd"] > last["macd_signal"])
-    if crossed:
-        score += 1
-        reasons.append("MACD bullish crossover")
-
-    # 4. Volume spike
-    if last["Volume"] > 1.5 * last["vol_avg20"]:
-        score += 1
-        reasons.append("Volume spike (>1.5x avg)")
-
-    # 5. Near 20-day high (breakout proximity)
-    if last["Close"] >= 0.99 * last["high20"]:
-        score += 1
-        reasons.append("Near 20-day high")
-
-    # 6 strong Trend filter
-    if last["adx"] > 25:
-        score += 1
-        reasons.append("ADX greater than 25")
-
-    # 7. SMA50 crossed SMA100 within last 5 days
-    spread = df_indicators["sma50"] - df_indicators["sma100"]
-    sma_cross = (
-        (spread.iloc[-6:-1] <= 0).any() and
-        spread.iloc[-1] > 0
-    )
-    if sma_cross:
-        score += 1
-        reasons.append("Recent SMA50/SMA100 bullish crossover")
-
-    # Pullback to SMA50 detector
-    is_pullback, pullback_reason = detect_pullback_to_sma50(df_indicators)
-
-    # Check for momentum breakout
-    is_breakout = last["Close"] >= 0.995 * last["high20"]
-    vol_spike = last["Volume"] > 1.5 * last["vol_avg20"]
-    # NOTE: renamed to vol_contraction_breakout to avoid shadowing the VCP signal below (Bug 1 fix)
-    vol_contraction_breakout = df_indicators.iloc[-4:-1]["Volume"].mean() < last["vol_avg20"] * 0.95
-    rsi_strong = last["rsi14"] > 55
-    is_momentum_breakout = is_breakout and vol_spike and vol_contraction_breakout and rsi_strong
-
-    # Check for Larry Connors RSI(2) setup
-    is_rsi2_pullback = bool(last["Close"] > last["sma200"] and last["rsi2"] < 5 and index_trend_up)
-
-    # Classify Setup Type (RSI(2) is given highest priority due to 70%+ backtested win rate)
-    setup_type = "momentum"
-    if is_rsi2_pullback:
-        score += 3
-        reasons.append(f"RSI(2) oversold bounce (RSI(2)={round(last['rsi2'],1)})")
-        setup_type = "rsi2_pullback"
-    elif is_pullback:
-        score += 2  # weight it higher — it's a more specific, confirmed setup
-        reasons.append(pullback_reason)
-        setup_type = "pullback_sma50"
-    elif is_momentum_breakout:
-        score += 2
-        reasons.append("Momentum Breakout (VCP + volume spike)")
-        setup_type = "momentum_breakout"
-    elif crossed:
-        setup_type = "macd_crossover"
-
-    # 8. Open-Low Same (OLS) Breakout
-    prev_close = float(df_indicators.iloc[-2]["Close"])
-    ols_breakout = last["Close"] > last["Open"] and last["Close"] > prev_close and (last["Open"] - last["Low"]) / last["Open"] <= 0.002
-    if ols_breakout:
-        score += 1
-        reasons.append("Open-Low Same (conviction buy)")
-
-    # 9. Strong RSI Momentum Zone
-    strong_rsi = 65 < last["rsi14"] <= 80
-    if strong_rsi:
-        score += 1
-        reasons.append("Strong RSI momentum")
-
-    # 10. Bounce off rising SMA100 support
-    sma100_rising = last["sma100"] > df_indicators.iloc[-6]["sma100"]
-    sma100_support = last["Low"] <= last["sma100"] * 1.015 and last["Close"] > last["sma100"] and sma100_rising
-    if sma100_support:
-        score += 1
-        reasons.append("Pullback to SMA100 support")
-
-    # 11. Volume Contraction (VCP)
-    vol_contraction = False
-    if len(df_indicators) >= 20:
-        vol_avg3 = df_indicators['Volume'].iloc[-3:].mean()
-        vol_avg20_val = last['vol_avg20']
-        vol_contraction = vol_avg3 < vol_avg20_val * 0.95
-        if vol_contraction:
-            score += 1
-            reasons.append("Volume contracting (low selling pressure)")
-
-    # 12. Weekly Trend Alignment
-    if weekly_trend_up:
-        score += 1
-        reasons.append("Weekly trend aligned (above Weekly EMA20)")
-
-    # 13. Relative Strength vs Index
-    if outperforming_index and rs_line_rising:
-        score += 1
-        reasons.append("Outperforming index")
-
-    # 14. Stochastic Pullback (Stoch Crossover in Oversold Territory)
-    stoch_pullback = False
-    if len(df_indicators) >= 5:
-        # Crossover checking: %K crosses above %D while under 25 in the last 3 sessions
-        for i in range(-1, -4, -1):
-            k_prev = df_indicators["stoch_k"].iloc[i-1]
-            d_prev = df_indicators["stoch_d"].iloc[i-1]
-            k_curr = df_indicators["stoch_k"].iloc[i]
-            d_curr = df_indicators["stoch_d"].iloc[i]
-            if k_prev <= d_prev and k_curr > d_curr and k_curr < 25:
-                stoch_pullback = True
-                break
-    if stoch_pullback and last["Close"] > last["sma50"] and sma50_rising:
-        score += 1
-        reasons.append("Stochastic oversold pullback")
-
-    # 15. Bollinger Band Pullback
-    bb_pullback = False
-    if len(df_indicators) >= 2:
-        yesterday = df_indicators.iloc[-2]
-        low_touched_bb = last["Low"] <= last["bb_low"] or yesterday["Low"] <= yesterday["bb_low"]
-        closed_above_bb = last["Close"] > last["bb_low"]
-        green_candle = last["Close"] > last["Open"]
-        bb_pullback = bool(low_touched_bb and closed_above_bb and green_candle and last["Close"] > last["sma50"])
-    if bb_pullback:
-        score += 1
-        reasons.append("Bollinger Band lower support pullback")
-
-    # 16. Inside Bar Breakout
-    inside_bar_breakout = False
-    if len(df_indicators) >= 3:
-        y_high = df_indicators["High"].iloc[-2]
-        y_low = df_indicators["Low"].iloc[-2]
-        prev2_high = df_indicators["High"].iloc[-3]
-        prev2_low = df_indicators["Low"].iloc[-3]
-        is_inside_bar = y_high < prev2_high and y_low > prev2_low
-        inside_bar_breakout = bool(is_inside_bar and last["Close"] > y_high and last["Close"] > last["sma50"])
-    if inside_bar_breakout:
-        score += 1
-        reasons.append("Inside Bar breakout")
-
-    # 17. NR7 Breakout
-    nr7_breakout = False
-    if len(df_indicators) >= 8:
-        ranges = df_indicators["High"] - df_indicators["Low"]
-        y_range = ranges.iloc[-2]
-        prev_7_ranges = ranges.iloc[-8:-1]
-        is_nr7 = y_range == prev_7_ranges.min()
-        nr7_breakout = bool(is_nr7 and last["Close"] > df_indicators["High"].iloc[-2] and last["Close"] > last["sma50"])
-    if nr7_breakout:
-        score += 1
-        reasons.append("NR7 narrow-range breakout")
-
-    # 18. EMA 9/21 Pullback
-    ema21_pullback = False
-    if len(df_indicators) >= 2:
-        uptrend = last["ema9"] > last["ema21"]
-        low_near_ema21 = last["Low"] <= last["ema21"] * 1.005
-        close_above_ema21 = last["Close"] > last["ema21"]
-        low_vol = last["Volume"] < last["vol_avg20"]
-        ema21_pullback = bool(uptrend and low_near_ema21 and close_above_ema21 and low_vol)
-    if ema21_pullback:
-        score += 1
-        reasons.append("EMA 21 support pullback")
-
-    # 19. Hammer Candlestick at Support
-    hammer_at_support = False
-    if len(df_indicators) >= 1:
-        body = abs(last["Close"] - last["Open"])
-        lower_shadow = min(last["Open"], last["Close"]) - last["Low"]
-        upper_shadow = last["High"] - max(last["Open"], last["Close"])
-        total_range = last["High"] - last["Low"]
-        if total_range > 0 and body > 0:
-            is_hammer = lower_shadow >= 1.8 * body and upper_shadow <= 0.3 * body
-            near_sma50 = abs(last["Low"] - last["sma50"]) / last["sma50"] <= 0.015
-            near_sma100 = abs(last["Low"] - last["sma100"]) / last["sma100"] <= 0.015
-            near_sma200 = abs(last["Low"] - last["sma200"]) / last["sma200"] <= 0.015
-            hammer_at_support = bool(is_hammer and (near_sma50 or near_sma100 or near_sma200))
-    if hammer_at_support:
-        score += 1
-        reasons.append("Hammer candlestick at key support")
-
-    # Fetch optimized Stop Loss and Target params from Config (imported at module top level)
-    atr_mult = config.ATR_MULTIPLIER
-    rr_ratio = config.RISK_REWARD_RATIO
-
-    last_close = float(last["Close"])
-    atr_val = float(last["atr"])
-
-    if setup_type == "rsi2_pullback":
-        # RSI(2) SL: 2.0 * ATR below Close
-        stop_loss = round(last_close - 2.0 * atr_val, 2)
-        # Target: 5-day SMA (mean reversion target)
-        target_val = float(last["sma5"])
-        if target_val <= last_close:
-            target_val = last_close + 1.0 * (last_close - stop_loss)
-        target = round(target_val, 2)
-    elif setup_type == "pullback_sma50":
-        # Golden Pullback SMA50: 1.5 * ATR below rising SMA50
-        stop_loss = round(float(last["sma50"]) - 1.5 * atr_val, 2)
-        risk = max(last_close - stop_loss, 0.01)
-        target = round(last_close + rr_ratio * risk, 2)
-    elif setup_type == "momentum_breakout":
-        # Breakout SL: 2.0 * ATR below Close
-        stop_loss = round(last_close - 2.0 * atr_val, 2)
-        risk = max(last_close - stop_loss, 0.01)
-        target = round(last_close + rr_ratio * risk, 2)
-    elif setup_type == "macd_crossover":
-        # MACD Crossover SL: 2.5 * ATR below Close
-        stop_loss = round(last_close - 2.5 * atr_val, 2)
-        risk = max(last_close - stop_loss, 0.01)
-        target = round(last_close + rr_ratio * risk, 2)
-    else:
-        # Default stop loss
-        stop_loss = round(last_close - atr_mult * atr_val, 2)
-        risk = max(last_close - stop_loss, 0.01)
-        target = round(last_close + rr_ratio * risk, 2)
-
-    # Ensure stop loss is not too close
-    stop_loss = min(stop_loss, last_close - 0.5 * atr_val)
+    bb_pullback_val = bool(last["bb_pullback"])
+    rsi2_pullback_val = bool(last["rsi2_pullback"])
+    rsi14_oversold_val = bool(last["rsi14_oversold"])
+    stoch_d_turn_val = bool(last["stoch_d_turn"])
 
     signals = {
-        "uptrend_sma50": bool(last["Close"] > last["sma50"] and sma50_rising),
-        "rsi_momentum": bool(healthy_zone or oversold_bounce),
-        "macd_crossover": bool(crossed),
-        "volume_spike": bool(last["Volume"] > 1.5 * last["vol_avg20"]),
-        "breakout_proximity": bool(last["Close"] >= 0.99 * last["high20"]),
-        "adx_strong_trend": bool(last["adx"] > 25),
-        "sma_cross": bool(sma_cross),
-        "pullback_sma50": bool(is_pullback),
-        "ols_breakout": bool(ols_breakout),
-        "strong_rsi": bool(strong_rsi),
-        "sma100_support": bool(sma100_support),
-        "volume_contraction": bool(vol_contraction),
-        "weekly_trend_up": bool(weekly_trend_up),
-        "outperforming_index": bool(outperforming_index and rs_line_rising),
-        "rsi2_pullback": bool(is_rsi2_pullback),
-        "stoch_pullback": bool(stoch_pullback),
-        "bb_pullback": bool(bb_pullback),
-        "inside_bar_breakout": bool(inside_bar_breakout),
-        "nr7_breakout": bool(nr7_breakout),
-        "ema21_pullback": bool(ema21_pullback),
-        "hammer_at_support": bool(hammer_at_support),
+        "uptrend_sma50": uptrend_sma50_val,
+        "uptrend_sma200": uptrend_sma200_val,
+        "adx_strong_trend": adx_strong_trend_val,
+        "ema_cross": ema_cross_val,
+        "volume_spike": volume_spike_val,
+        "bullish_engulfing": bullish_engulfing_val,
+        "bb_pullback": bb_pullback_val,
+        "rsi2_pullback": rsi2_pullback_val,
+        "rsi14_oversold": rsi14_oversold_val,
+        "stoch_d_turn": stoch_d_turn_val,
     }
+
+    # Set up class weights
+    TREND_FEATURES = ["uptrend_sma50", "uptrend_sma200", "adx_strong_trend", "ema_cross", "volume_spike", "bullish_engulfing"]
+    PULLBACK_FEATURES = ["bb_pullback", "rsi2_pullback", "rsi14_oversold", "stoch_d_turn"]
+
+    t_w_dict = None
+    p_w_dict = None
+    if custom_weights is not None:
+        if "trend" in custom_weights:
+            t_w_dict = custom_weights["trend"].get("weights")
+        if "pullback" in custom_weights:
+            p_w_dict = custom_weights["pullback"].get("weights")
+
+    default_trend = {"uptrend_sma50": 1.0, "uptrend_sma200": 1.0, "adx_strong_trend": 1.0, "ema_cross": 1.0, "volume_spike": 1.0, "bullish_engulfing": 1.0}
+    default_pullback = {"bb_pullback": 1.0, "rsi2_pullback": 1.0, "rsi14_oversold": 1.0, "stoch_d_turn": 1.0}
+
+    t_w = t_w_dict if t_w_dict is not None else default_trend
+    p_w = p_w_dict if p_w_dict is not None else default_pullback
+
+    trend_score = sum(t_w.get(f, 1.0) * float(signals[f]) for f in TREND_FEATURES)
+    pullback_score = sum(p_w.get(f, 1.0) * float(signals[f]) for f in PULLBACK_FEATURES)
+
+    score = trend_score if setup_class == "trend" else pullback_score
+    reasons = []
+    if setup_class == "trend":
+        if uptrend_sma50_val: reasons.append("Uptrend (above rising SMA50)")
+        if uptrend_sma200_val: reasons.append("Uptrend (above SMA200)")
+        if adx_strong_trend_val: reasons.append("Strong Trend (ADX >= 25)")
+        if ema_cross_val: reasons.append("EMA5 > EMA20 crossover")
+        if volume_spike_val: reasons.append("Volume spike (>1.5x avg)")
+        if bullish_engulfing_val: reasons.append("Bullish engulfing candle")
+        setup_type = "trend"
+    else:
+        if bb_pullback_val: reasons.append("BB lower band support touch")
+        if rsi2_pullback_val: reasons.append("RSI(2) oversold (<5)")
+        if rsi14_oversold_val: reasons.append("RSI(14) oversold (<35)")
+        if stoch_d_turn_val: reasons.append("Stochastic %D turned up")
+        setup_type = "pullback"
+
+    # Stop Loss & Target Calculation using normalized ATR% (Priority 2, Item 5)
+    last_close = float(last["Close"])
+    atr_val = float(last["atr"])
+    atr_pct = atr_val / last_close
+
+    sl_mult = custom_sl_atr if custom_sl_atr is not None else 2.0
+    target_mult = custom_target_atr if custom_target_atr is not None else (1.5 if setup_class == "trend" else 1.0)
+
+    sl_pct = atr_pct * sl_mult
+    target_pct = atr_pct * target_mult
+
+    # Re-derive stop floor (0.5 * atr_pct) and target cap (4.5%) in ATR% terms
+    sl_pct = max(sl_pct, 0.5 * atr_pct)
+    target_pct = min(target_pct, 0.06)
+
+    stop_loss = round(last_close * (1.0 - sl_pct), 2)
+    target = round(last_close * (1.0 + target_pct), 2)
+
+    win_rate = 0.0
+    if custom_weights is not None:
+        if setup_class in custom_weights:
+            win_rate = custom_weights[setup_class].get("win_rate", 0.0)
 
     return Candidate(
         symbol=symbol,
         setup_type=setup_type,
         score=score,
+        trend_score=trend_score,
+        pullback_score=pullback_score,
+        setup_class=setup_class,
         beta=stock_info.get("beta") or 0.0,
         adx=last["adx"],
         reasons=reasons,
-        close=round(float(last["Close"]), 2),
+        close=round(last_close, 2),
         rsi=round(float(last["rsi14"]), 1),
         stop_loss=stop_loss,
         target=target,
         signals=signals,
+        win_rate=win_rate,
     )
 
 
 def run_screener(symbols: list, period: str, interval: str, min_score: int) -> list:
     candidates = []
-    logger.info(f"input {len(symbols)} {symbols}")
+    logger.info("Scanning %d symbols", len(symbols))
+    
+    # Market Regime Filter:
+    # 1. Nifty Close below SMA20 -> min_score +2
+    # 2. India VIX > 22 -> min_score +1
+    base_t_min = min_score
+    base_p_min = max(2, min_score - 1)
+    
+    nifty_adj = 0
+    vix_adj = 0
+    
+    if symbols:
+        try:
+            index_df = get_benchmark_data(symbols[0], period="1y", interval="1d")
+            if not index_df.empty:
+                index_df["sma20"] = ta.trend.sma_indicator(index_df["Close"], window=20)
+                if not index_df["sma20"].empty:
+                    last_idx = index_df.iloc[-1]
+                    idx_close = float(last_idx["Close"])
+                    idx_sma20 = float(last_idx["sma20"])
+                    
+                    if idx_close < idx_sma20:
+                        nifty_adj = 2
+                        logger.info(f"Weak Nifty Regime: Nifty close ({idx_close:.2f}) < SMA20 ({idx_sma20:.2f}). Adjusting min_score by +2.")
+                    else:
+                        logger.info(f"Strong/Normal Nifty Regime: Nifty close ({idx_close:.2f}) >= SMA20 ({idx_sma20:.2f}).")
+            
+            # Fetch India VIX for second axis regime check
+            vix_val = fetch_india_vix()
+            if vix_val is not None:
+                logger.info(f"Current India VIX: {vix_val:.2f}")
+                if vix_val > 22.0:
+                    vix_adj = 1
+                    logger.info(f"High Volatility Regime: VIX ({vix_val:.2f}) > 22.0. Adjusting min_score by +1.")
+        except Exception as e:
+            logger.warning(f"Failed to check Market Regime index filter: {e}")
+
+    adjusted_t_min = base_t_min + nifty_adj + vix_adj
+    adjusted_p_min = base_p_min + nifty_adj + vix_adj
+    
+    logger.info(f"Active thresholds: Trend MinScore={adjusted_t_min}, Pullback MinScore={adjusted_p_min}")
+
     for symbol in symbols:
         try:
             logger.info(f"Fetching history for {symbol}")
             df = fetch_history(symbol, period, interval)
-            logger.info(f"evaluating {symbol}, {df.shape}")
+            logger.info(f"Evaluating {symbol}, {df.shape}")
             stock_info = fetch_stock_info(symbol)
-            cand = evaluate(symbol, df, stock_info)
-            logger.info(f"{symbol} : score: {cand.score}")
-            if cand.score >= min_score - 1:
-                # Secondary filtering & sentiment scoring via yfinance news/events
-                try:                    
-                    # 1. Fetch headline sentiment
-                    news_res = analyze_stock_news(symbol)
-                    cand.news_sentiment = news_res["sentiment_label"]
+            
+            for sc, adj_min in [("trend", adjusted_t_min), ("pullback", adjusted_p_min)]:
+                cand = evaluate(symbol, df, stock_info, setup_class=sc)
+                logger.info(f"{symbol} ({sc}) : score: {cand.score}")
+                if cand.score >= adj_min - 1:
+                    # Secondary filtering & sentiment scoring via yfinance news/events
+                    try:                    
+                        # 1. Fetch headline sentiment
+                        news_res = analyze_stock_news(symbol)
+                        cand.news_sentiment = news_res["sentiment_label"]
+                        
+                        # Adjust technical score based on news sentiment
+                        if cand.news_sentiment == "Bullish":
+                            cand.score += 1
+                            cand.reasons.append("Bullish news sentiment")
+                        elif cand.news_sentiment == "Bearish" or news_res["flag_bearish_news"]:
+                            cand.score -= 1
+                            cand.reasons.append("Bearish news catalyst")
+                            
+                        # 2. Check earnings event risk (passing headlines for fallback keyword scanning)
+                        risk_res = check_event_risk(symbol, headlines=news_res["headlines"])
+                        cand.event_risk = risk_res["has_event_risk"]
+                        if cand.event_risk:
+                            reason_str = risk_res["reason"] or f"in {risk_res['days_to_earnings']} days"
+                            cand.reasons.append(f"Upcoming Earnings ({reason_str})")
+                            
+                        # 3. Check Institutional Bulk & Block Deals
+                        deal_res = get_deal_catalyst(symbol)
+                        cand.has_institutional_buy = deal_res["has_buy_deal"]
+                        cand.has_institutional_sell = deal_res["has_sell_deal"]
+                        
+                        if cand.has_institutional_buy:
+                            cand.score += 1
+                            cand.reasons.append(f"Institutional Buy: {deal_res['details']}")
+                        elif cand.has_institutional_sell:
+                            cand.score -= 1
+                            cand.reasons.append(f"Institutional Sell: {deal_res['details']}")
+                            
+                    except Exception as ex:
+                        logger.warning(f"News/event/deals analysis failed for {symbol}: {ex}")
                     
-                    # Adjust technical score based on news sentiment
-                    if cand.news_sentiment == "Bullish":
-                        cand.score += 1
-                        cand.reasons.append("Bullish news sentiment")
-                    elif cand.news_sentiment == "Bearish" or news_res["flag_bearish_news"]:
-                        cand.score -= 1
-                        cand.reasons.append("Bearish news catalyst")
-                        
-                    # 2. Check earnings event risk (passing headlines for fallback keyword scanning)
-                    risk_res = check_event_risk(symbol, headlines=news_res["headlines"])
-                    cand.event_risk = risk_res["has_event_risk"]
-                    if cand.event_risk:
-                        reason_str = risk_res["reason"] or f"in {risk_res['days_to_earnings']} days"
-                        cand.reasons.append(f"Upcoming Earnings ({reason_str})")
-                        
-                    # 3. Check Institutional Bulk & Block Deals
-                    deal_res = get_deal_catalyst(symbol)
-                    cand.has_institutional_buy = deal_res["has_buy_deal"]
-                    cand.has_institutional_sell = deal_res["has_sell_deal"]
-                    
-                    if cand.has_institutional_buy:
-                        cand.score += 1
-                        cand.reasons.append(f"Institutional Buy: {deal_res['details']}")
-                    elif cand.has_institutional_sell:
-                        cand.score -= 1
-                        cand.reasons.append(f"Institutional Sell: {deal_res['details']}")
-                        
-                except Exception as ex:
-                    logger.warning(f"News/event/deals analysis failed for {symbol}: {ex}")
-                
-                # Check if score still qualifies after sentiment adjustment
-                if cand.score >= min_score:
-                    candidates.append(cand)
+                    # Check if score still qualifies after sentiment adjustment
+                    if cand.score >= adj_min:
+                        candidates.append(cand)
         except Exception as e:
             logger.warning("Skipping %s: %s", symbol, e)
             continue

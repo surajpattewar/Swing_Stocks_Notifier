@@ -32,6 +32,7 @@ class Config:
     MIN_SCORE = int(os.getenv("MIN_SCORE", "8"))               # 0-5, higher = stricter
     RISK_REWARD_RATIO = float(os.getenv("RISK_REWARD_RATIO", "1.5"))
     ATR_MULTIPLIER = float(os.getenv("ATR_MULTIPLIER", "2.0"))
+    BTST_ATR_MULTIPLIER = float(os.getenv("BTST_ATR_MULTIPLIER", "0.75"))
     MAX_STOCKS_TO_SCAN = int(os.getenv("MAX_STOCKS_TO_SCAN", "500"))
     TOP_N_ALERTS = int(os.getenv("TOP_N_ALERTS", "7"))
     HISTORY_PERIOD = os.getenv("HISTORY_PERIOD", "9mo")
@@ -55,6 +56,9 @@ class Config:
     BACKTEST_MIN_SCORE = int(os.getenv("BACKTEST_MIN_SCORE", str(MIN_SCORE)))
     BACKTEST_MAX_STOCKS = int(os.getenv("BACKTEST_MAX_STOCKS", "250"))
     BACKTEST_MAX_WORKERS = int(os.getenv("BACKTEST_MAX_WORKERS", "6"))
+    BACKTEST_TRANSACTION_COST_PCT = float(os.getenv("BACKTEST_TRANSACTION_COST_PCT", "0.25"))
+    BTST_DELIVERY_MARGIN = float(os.getenv("BTST_DELIVERY_MARGIN", "1.25"))
+    WEIGHTS_MIN_SAMPLE_SIZE = int(os.getenv("WEIGHTS_MIN_SAMPLE_SIZE", "30"))
 
     ADDITIONAL_SYMBOLS = (os.getenv("ADDITIONAL_SYMBOLS","")).split("|")
 

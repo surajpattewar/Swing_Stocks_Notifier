@@ -2,7 +2,7 @@ import unittest
 
 import pandas as pd
 
-from dashboard_metrics import compute_dashboard_metrics, parse_params
+from dashboard.dashboard_metrics import compute_dashboard_metrics, parse_params
 
 
 class DashboardMetricsTests(unittest.TestCase):

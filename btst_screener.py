@@ -6,6 +6,7 @@ import numpy as np
 import ta
 import yfinance as yf
 from datetime import datetime
+import json
 
 # Add the workspace root to sys.path
 workspace_dir = os.path.dirname(os.path.abspath(__file__))
@@ -15,6 +16,7 @@ if workspace_dir not in sys.path:
 from config import config
 from stock_universe import get_stock_universe
 from screener import fetch_history, fetch_stock_info, get_benchmark_data
+from news_analyzer import check_event_risk
 from notifier import send_telegram, send_whatsapp_twilio
 
 logging.basicConfig(
@@ -23,7 +25,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-import json
 
 # Load custom stock weights if available
 MODEL_FILE = os.path.join(workspace_dir, "models", "btst_stock_weights.json")
@@ -31,13 +32,24 @@ CUSTOM_WEIGHTS = {}
 if os.path.exists(MODEL_FILE):
     try:
         with open(MODEL_FILE, "r") as f:
-            CUSTOM_WEIGHTS = json.load(f)
-        logger.info(f"Loaded custom BTST parameters for {len(CUSTOM_WEIGHTS)} stocks.")
+            raw_weights = json.load(f)
+        filtered_weights = {}
+        excluded_count = 0
+        for sym, w in raw_weights.items():
+            t_trades = w.get("total_trades", 0)
+            if "trend" in w or "pullback" in w:
+                t_trades = max(w.get("trend", {}).get("total_trades", 0), w.get("pullback", {}).get("total_trades", 0))
+            if t_trades >= 5:
+                filtered_weights[sym] = w
+            else:
+                excluded_count += 1
+        CUSTOM_WEIGHTS = filtered_weights
+        logger.info(f"Loaded custom BTST parameters for {len(CUSTOM_WEIGHTS)} stocks. Excluded {excluded_count} stocks with < 5 training samples.")
     except Exception as e:
         logger.error(f"Failed to load custom weights from {MODEL_FILE}: {e}")
 
 class BTSTCandidate:
-    def __init__(self, symbol, close, change_pct, volume_vs_avg, rsi, stop_loss, target, reasons):
+    def __init__(self, symbol, close, change_pct, volume_vs_avg, rsi, stop_loss, target, reasons, win_rate=0.0):
         self.symbol = symbol
         self.close = close
         self.change_pct = change_pct
@@ -46,12 +58,21 @@ class BTSTCandidate:
         self.stop_loss = stop_loss
         self.target = target
         self.reasons = reasons
+        self.win_rate = win_rate
 
     def to_line(self) -> str:
         sym = self.symbol.replace(".NS", "")
         reasons_str = ", ".join(self.reasons)
+        highlight = ""
+        if self.win_rate > 0:
+            if self.win_rate >= 95.0:
+                highlight = f"🔥 [{self.win_rate}% Win Rate Setup] "
+            elif self.win_rate >= 90.0:
+                highlight = f"⭐ [{self.win_rate}% Win Rate Setup] "
+            else:
+                highlight = f"✨ [{self.win_rate}% Win Rate Setup] "
         return (
-            f"• {sym} [BTST Setup] (RSI: {self.rsi:.1f}, Vol vs Avg: {self.volume_vs_avg:.2f}x)\n"
+            f"• {highlight}{sym} [BTST Setup] (RSI: {self.rsi:.1f}, Vol vs Avg: {self.volume_vs_avg:.2f}x)\n"
             f"   CMP: ₹{self.close:.2f} | Today's Return: {self.change_pct:+.2f}%\n"
             f"   SL: ₹{self.stop_loss:.2f} | Target: ₹{self.target:.2f}\n"
             f"   Signals: {reasons_str}"
@@ -77,6 +98,11 @@ def evaluate_btst(symbol, df, index_df=None) -> BTSTCandidate:
     df["sma50"] = ta.trend.sma_indicator(df["Close"], window=50)
     df["vol_avg20"] = df["Volume"].shift(1).rolling(20).mean()
     df["rsi14"] = ta.momentum.rsi(df["Close"], window=14)
+    df["atr"] = ta.volatility.average_true_range(df["High"], df["Low"], df["Close"], window=14)
+    df["turnover"] = df["Close"] * df["Volume"]
+    df["turnover_avg20"] = df["turnover"].shift(1).rolling(20).mean()
+    if "delivery_pct" in df.columns:
+        df["deliv_avg20"] = df["delivery_pct"].shift(1).rolling(20).mean()
     df = df.dropna()
 
     if len(df) < 5:
@@ -127,6 +153,38 @@ def evaluate_btst(symbol, df, index_df=None) -> BTSTCandidate:
     if not rsi_momentum:
         return None
 
+    # 6. Delivery volume check (ensure absolute delivery volume is higher than average)
+    if "delivery_pct" in last and "deliv_avg20" in last and "vol_avg20" in last:
+        margin = config.BTST_DELIVERY_MARGIN
+        today_deliv_vol = last["delivery_pct"] * last["Volume"]
+        avg_deliv_vol = last["deliv_avg20"] * last["vol_avg20"]
+        delivery_ok = today_deliv_vol >= margin * avg_deliv_vol
+        if not delivery_ok:
+            return None
+
+    # 7. Circuit safety check
+    if last["Close"] > 0:
+        close_near_high = (last["High"] - last["Close"]) / last["Close"] <= 0.0005
+        narrow_range = (last["High"] - last["Low"]) / last["Close"] < 0.005
+        if close_near_high and narrow_range:
+            logger.info("Excluding %s due to circuit lock: Close ₹%s, High ₹%s, Low ₹%s", symbol, last["Close"], last["High"], last["Low"])
+            return None
+
+    # 8. Liquidity safety check (20d avg turnover >= 1 Crore)
+    if "turnover_avg20" in last:
+        if last["turnover_avg20"] < 10000000:
+            logger.info("Excluding %s due to low turnover: 20d Avg Turnover ₹%s < 1 Crore", symbol, round(last["turnover_avg20"], 2))
+            return None
+
+    # 9. Corporate events / board meeting exclusion (next 24h)
+    try:
+        risk_res = check_event_risk(symbol, safety_days=1)
+        if risk_res["has_event_risk"]:
+            logger.info("Excluding %s due to earnings/event risk: %s", symbol, risk_res["reason"])
+            return None
+    except Exception as e:
+        logger.warning("Event check failed for %s: %s", symbol, e)
+
     # Optional Index and Relative Strength Filter
     reasons = [
         "Uptrend (above SMA20 & SMA50)",
@@ -135,6 +193,9 @@ def evaluate_btst(symbol, df, index_df=None) -> BTSTCandidate:
         f"Strong green candle (return {round(today_ret, 2)}%, limit {min_ret}%)",
         f"RSI in momentum zone ({round(last['rsi14'], 1)}, range {rsi_min}-{rsi_max})"
     ]
+    if "delivery_pct" in last and "deliv_avg20" in last:
+        reasons.append(f"Delivery spike ({round(last['delivery_pct'], 1)}% vs 20-day average {round(last['deliv_avg20'], 1)}%)")
+
     if symbol in CUSTOM_WEIGHTS:
         reasons.append("Matched custom stock-specific parameters")
 
@@ -142,31 +203,48 @@ def evaluate_btst(symbol, df, index_df=None) -> BTSTCandidate:
     
     # Index trend filter
     index_ok = True
-    if idx_filter == "sma50" and index_df is not None and not index_df.empty:
+    if index_df is not None and not index_df.empty:
         idx_slice = index_df.loc[index_df.index <= last_date]
-        if not idx_slice.empty and len(idx_slice) >= 50:
+        if not idx_slice.empty:
             idx_close = idx_slice["Close"]
-            idx_sma50 = ta.trend.sma_indicator(idx_close, window=50)
-            if not idx_sma50.empty and last_date in idx_sma50.index:
-                index_ok = idx_close.loc[last_date] > idx_sma50.loc[last_date]
-                if index_ok:
-                    reasons.append("Broader market Nifty 50 in uptrend")
-                    
-            # Relative Strength outperforming Nifty
+            if idx_filter == "sma20" and len(idx_slice) >= 20:
+                idx_sma20 = ta.trend.sma_indicator(idx_close, window=20)
+                if not idx_sma20.empty and last_date in idx_sma20.index:
+                    index_ok = idx_close.loc[last_date] > idx_sma20.loc[last_date]
+                    if index_ok:
+                        reasons.append("Broader market Nifty 50 in short-term uptrend (above SMA20)")
+            elif idx_filter == "sma50" and len(idx_slice) >= 50:
+                idx_sma50 = ta.trend.sma_indicator(idx_close, window=50)
+                if not idx_sma50.empty and last_date in idx_sma50.index:
+                    index_ok = idx_close.loc[last_date] > idx_sma50.loc[last_date]
+                    if index_ok:
+                        reasons.append("Broader market Nifty 50 in medium-term uptrend (above SMA50)")
+                        
+            # Enforce 20-day relative strength outperformance comparison
             if len(df) >= 20 and len(idx_slice) >= 20:
                 stock_perf = (last["Close"] - df.iloc[-20]["Close"]) / df.iloc[-20]["Close"]
                 index_perf = (idx_close.loc[last_date] - idx_slice.iloc[-20]["Close"]) / idx_slice.iloc[-20]["Close"]
-                if stock_perf > index_perf:
-                    reasons.append("Outperforming index (20-day relative strength)")
+                if stock_perf <= index_perf:
+                    return None
+                reasons.append("Outperforming index (20-day relative strength)")
 
     if not index_ok:
         return None
 
     last_close = float(last["Close"])
+    atr_val = float(last["atr"])
     
-    # BTST parameters: Target +1.5%, Stop Loss -1.5%
-    target = round(last_close * 1.015, 2)
-    stop_loss = round(last_close * 0.985, 2)
+    # BTST parameters: Target and Stop Loss based on normalized ATR%
+    atr_pct = atr_val / last_close
+    target_pct = atr_pct * config.BTST_ATR_MULTIPLIER
+    stop_loss_pct = atr_pct * config.BTST_ATR_MULTIPLIER
+    
+    target = round(last_close * (1.0 + target_pct), 2)
+    stop_loss = round(last_close * (1.0 - stop_loss_pct), 2)
+
+    win_rate = 0.0
+    if symbol in CUSTOM_WEIGHTS:
+        win_rate = CUSTOM_WEIGHTS[symbol].get("win_rate", 0.0)
 
     return BTSTCandidate(
         symbol=symbol,
@@ -176,7 +254,8 @@ def evaluate_btst(symbol, df, index_df=None) -> BTSTCandidate:
         rsi=float(last["rsi14"]),
         stop_loss=stop_loss,
         target=target,
-        reasons=reasons
+        reasons=reasons,
+        win_rate=win_rate
     )
 
 def run_btst_screener(send_alerts=False):
