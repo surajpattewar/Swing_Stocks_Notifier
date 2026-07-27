@@ -16,6 +16,9 @@ import numpy as np
 import pandas as pd
 import ta
 from sklearn.linear_model import LogisticRegression
+import warnings
+warnings.filterwarnings("ignore", category=FutureWarning)
+warnings.filterwarnings("ignore", category=UserWarning)
 
 
 
@@ -30,6 +33,7 @@ logging.basicConfig(
 logger = logging.getLogger("train_swing_model")
 
 DB_PATH = config.DUCKDB_PATH
+workspace_dir = _parent_dir
 MODEL_DIR = os.path.join(workspace_dir, "models")
 MODEL_FILE = os.path.join(MODEL_DIR, "swing_stock_weights.json")
 
@@ -113,6 +117,7 @@ def main():
                 index_raw["Date"] = pd.to_datetime(index_raw["Date"])
                 index_df = index_raw.set_index("Date")
                 index_df["sma20"] = ta.trend.sma_indicator(index_df["Close"], window=20)
+                index_df["sma50"] = ta.trend.sma_indicator(index_df["Close"], window=50)
     except Exception as e:
         logger.warning(f"Could not load Nifty benchmark: {e}")
 
@@ -128,13 +133,14 @@ def main():
     TREND_FEATURES = ["uptrend_sma50", "uptrend_sma200", "adx_strong_trend", "ema_cross", "volume_spike", "bullish_engulfing"]
     PULLBACK_FEATURES = ["bb_pullback", "rsi2_pullback", "rsi14_oversold", "stoch_d_turn"]
 
-    sl_atr_options = [1.0, 1.2, 1.5]
-    target_atr_options = [1.8, 2.0, 2.5, 3.0]
+    sl_atr_options = [1.2, 1.5, 1.8, 2.0]
+    target_atr_options = [1.2, 1.5, 1.8, 2.0]
 
     optimized_configs = {}
     total_trained = 0
     total_test_trades = 0
     total_test_wins = 0
+    total_test_return_sum = 0.0
 
     for idx, symbol in enumerate(symbols, 1):
         try:
@@ -148,12 +154,14 @@ def main():
 
             # Merge Index trend
             if index_df is not None and not index_df.empty:
-                df = df.join(index_df.rename(columns={"Close": "index_close", "sma20": "index_sma20"}), how="left")
+                df = df.join(index_df.rename(columns={"Close": "index_close", "sma20": "index_sma20", "sma50": "index_sma50"}), how="left")
                 df["index_close"] = df["index_close"].ffill()
                 df["index_sma20"] = df["index_sma20"].ffill()
+                df["index_sma50"] = df["index_sma50"].ffill()
             else:
                 df["index_close"] = df["Close"]
                 df["index_sma20"] = df["Close"]
+                df["index_sma50"] = df["Close"]
 
             # Vectorized setup class indicator calculations
             df["uptrend_sma50"] = (df["Close"] > df["sma50"]) & (df["sma50"] > df["sma50"].shift(5))
@@ -184,8 +192,8 @@ def main():
                 candidates = []
                 for signal_date in train_df.index:
                     row = df.loc[signal_date]
-                    if row["index_close"] <= row["index_sma20"]:
-                        continue # Skip weak market entries in training
+                    if row["index_close"] <= row["index_sma50"]:
+                        continue # Skip weak market entries in training (using sma50 is more lenient)
                         
                     future_bars = df_raw.loc[df_raw.index > signal_date]
                     if future_bars.empty:
@@ -218,7 +226,7 @@ def main():
                             sl_pct = atr_pct * sl_atr
                             
                             sl_pct = max(sl_pct, 0.5 * atr_pct)
-                            target_pct = min(target_pct, 0.06)
+                            target_pct = min(target_pct, 0.08)
                             
                             target_price = round(c["entry_price"] * (1.0 + target_pct), 2)
                             stop_loss_price = round(c["entry_price"] * (1.0 - sl_pct), 2)
@@ -289,10 +297,11 @@ def main():
                     eval_dates_test = df.index[(df.index >= pd.Timestamp(test_start_date)) & (df.index <= pd.Timestamp(latest_date))]
                     test_trades = 0
                     test_wins = 0
+                    test_return_sum = 0.0
                     
                     for signal_date in eval_dates_test:
                         row = df.loc[signal_date]
-                        if row["index_close"] <= row["index_sma20"]:
+                        if row["index_close"] <= row["index_sma50"]:
                             continue
                             
                         # Evaluate score
@@ -310,7 +319,7 @@ def main():
                             sl_pct = atr_pct * best_cfg["stop_loss_atr"]
                             
                             sl_pct = max(sl_pct, 0.5 * atr_pct)
-                            target_pct = min(target_pct, 0.06)
+                            target_pct = min(target_pct, 0.08)
                             
                             target_price = round(next_open * (1.0 + target_pct), 2)
                             stop_loss_price = round(next_open * (1.0 - sl_pct), 2)
@@ -322,13 +331,16 @@ def main():
                             test_trades += 1
                             if ret > 0:
                                 test_wins += 1
+                            test_return_sum += ret
 
                     best_cfg["test_trades"] = test_trades
                     best_cfg["test_wins"] = test_wins
+                    best_cfg["test_return_sum"] = round(test_return_sum, 2)
                     best_cfg["test_win_rate"] = round((test_wins / test_trades * 100), 1) if test_trades > 0 else 0.0
                     
                     total_test_trades += test_trades
                     total_test_wins += test_wins
+                    total_test_return_sum += test_return_sum
                     stock_config[sc] = best_cfg
 
             if stock_config:
@@ -348,10 +360,12 @@ def main():
     logger.info(f"Completed! Custom weights targeting >={args.target_accuracy}% win rate saved for {total_trained}/{len(symbols)} stocks to: {MODEL_FILE}")
     
     overall_test_win_rate = (total_test_wins / total_test_trades * 100) if total_test_trades > 0 else 0.0
+    overall_test_avg_return = (total_test_return_sum / total_test_trades) if total_test_trades > 0 else 0.0
     logger.info(f"=== OVERALL SWING TEST PERFORMANCE (2025-06-16 to 2026-01-22) ===")
     logger.info(f"Total Test Trades Triggered: {total_test_trades}")
     logger.info(f"Total Test Wins            : {total_test_wins}")
     logger.info(f"Overall Test Accuracy (WR) : {overall_test_win_rate:.2f}%")
+    logger.info(f"Overall Test Return %      : {total_test_return_sum:.2f}% (Average: {overall_test_avg_return:+.2f}% per trade)")
     return 0
 
 if __name__ == "__main__":
