@@ -126,8 +126,8 @@ def evaluate_btst(symbol, df, index_df=None, skip_event_risk=False) -> BTSTCandi
     rsi_max = params.get("rsi_max", 78)
     idx_filter = params.get("index_filter", "sma50")
     
-    # 1. Price is above 20 & 50 SMAs (uptrend)
-    uptrend = last["Close"] > last["sma20"] and last["Close"] > last["sma50"]
+    # 1. Price is above 20 or 50 SMA (uptrend support)
+    uptrend = last["Close"] > last["sma20"] or last["Close"] > last["sma50"]
     if not uptrend:
         return None
 
@@ -137,7 +137,7 @@ def evaluate_btst(symbol, df, index_df=None, skip_event_risk=False) -> BTSTCandi
         return None
 
     # 3. Volume spike (at least vr_limit of 20-day average)
-    vol_ratio = last["Volume"] / last["vol_avg20"]
+    vol_ratio = last["Volume"] / last["vol_avg20"] if last["vol_avg20"] > 0 else 1.0
     vol_spike = vol_ratio >= vr_limit
     if not vol_spike:
         return None
@@ -153,10 +153,10 @@ def evaluate_btst(symbol, df, index_df=None, skip_event_risk=False) -> BTSTCandi
     if not rsi_momentum:
         return None
 
-    # 6. Delivery volume check (ensure absolute delivery volume is higher than average)
+    # 6. Delivery volume check
     if "delivery_pct" in last and "deliv_avg20" in last and "vol_avg20" in last:
-        margin = config.BTST_DELIVERY_MARGIN
-        if margin > 0 and last["deliv_avg20"] > 0:
+        margin = params.get("delivery_margin", config.BTST_DELIVERY_MARGIN)
+        if margin > 0 and last["deliv_avg20"] > 0 and last["vol_avg20"] > 0:
             today_deliv_vol = last["delivery_pct"] * last["Volume"]
             avg_deliv_vol = last["deliv_avg20"] * last["vol_avg20"]
             delivery_ok = today_deliv_vol >= margin * avg_deliv_vol
