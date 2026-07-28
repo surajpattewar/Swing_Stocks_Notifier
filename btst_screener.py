@@ -78,7 +78,7 @@ class BTSTCandidate:
             f"   Signals: {reasons_str}"
         )
 
-def evaluate_btst(symbol, df, index_df=None) -> BTSTCandidate:
+def evaluate_btst(symbol, df, index_df=None, skip_event_risk=False) -> BTSTCandidate:
     # Ensure index is timezone-naive
     if isinstance(df.index, pd.DatetimeIndex) and df.index.tz is not None:
         df = df.copy()
@@ -111,18 +111,18 @@ def evaluate_btst(symbol, df, index_df=None) -> BTSTCandidate:
     last = df.iloc[-1]
     
     # Load parameters (custom or default)
-    params = CUSTOM_WEIGHTS.get(symbol, {
-        "near_high_pct": 0.002,
-        "vol_ratio_limit": 1.5,
-        "min_return": 2.0,
-        "rsi_min": 60,
+    params = CUSTOM_WEIGHTS.get(symbol, CUSTOM_WEIGHTS.get(symbol + ".NS" if not symbol.endswith(".NS") else symbol.replace(".NS", ""), {
+        "near_high_pct": 0.015,
+        "vol_ratio_limit": 1.2,
+        "min_return": 1.0,
+        "rsi_min": 55,
         "rsi_max": 78,
         "index_filter": "sma50"
-    })
-    nh_pct = params.get("near_high_pct", 0.002)
-    vr_limit = params.get("vol_ratio_limit", 1.5)
-    min_ret = params.get("min_return", 2.0)
-    rsi_min = params.get("rsi_min", 60)
+    }))
+    nh_pct = params.get("near_high_pct", 0.015)
+    vr_limit = params.get("vol_ratio_limit", 1.2)
+    min_ret = params.get("min_return", 1.0)
+    rsi_min = params.get("rsi_min", 55)
     rsi_max = params.get("rsi_max", 78)
     idx_filter = params.get("index_filter", "sma50")
     
@@ -156,11 +156,12 @@ def evaluate_btst(symbol, df, index_df=None) -> BTSTCandidate:
     # 6. Delivery volume check (ensure absolute delivery volume is higher than average)
     if "delivery_pct" in last and "deliv_avg20" in last and "vol_avg20" in last:
         margin = config.BTST_DELIVERY_MARGIN
-        today_deliv_vol = last["delivery_pct"] * last["Volume"]
-        avg_deliv_vol = last["deliv_avg20"] * last["vol_avg20"]
-        delivery_ok = today_deliv_vol >= margin * avg_deliv_vol
-        if not delivery_ok:
-            return None
+        if margin > 0 and last["deliv_avg20"] > 0:
+            today_deliv_vol = last["delivery_pct"] * last["Volume"]
+            avg_deliv_vol = last["deliv_avg20"] * last["vol_avg20"]
+            delivery_ok = today_deliv_vol >= margin * avg_deliv_vol
+            if not delivery_ok:
+                return None
 
     # 7. Circuit safety check
     if last["Close"] > 0:
@@ -177,13 +178,14 @@ def evaluate_btst(symbol, df, index_df=None) -> BTSTCandidate:
             return None
 
     # 9. Corporate events / board meeting exclusion (next 24h)
-    try:
-        risk_res = check_event_risk(symbol, safety_days=1)
-        if risk_res["has_event_risk"]:
-            logger.info("Excluding %s due to earnings/event risk: %s", symbol, risk_res["reason"])
-            return None
-    except Exception as e:
-        logger.warning("Event check failed for %s: %s", symbol, e)
+    if not skip_event_risk:
+        try:
+            risk_res = check_event_risk(symbol, safety_days=1)
+            if risk_res["has_event_risk"]:
+                logger.info("Excluding %s due to earnings/event risk: %s", symbol, risk_res["reason"])
+                return None
+        except Exception as e:
+            logger.warning("Event check failed for %s: %s", symbol, e)
 
     # Optional Index and Relative Strength Filter
     reasons = [
@@ -196,7 +198,8 @@ def evaluate_btst(symbol, df, index_df=None) -> BTSTCandidate:
     if "delivery_pct" in last and "deliv_avg20" in last:
         reasons.append(f"Delivery spike ({round(last['delivery_pct'], 1)}% vs 20-day average {round(last['deliv_avg20'], 1)}%)")
 
-    if symbol in CUSTOM_WEIGHTS:
+    cw_match = CUSTOM_WEIGHTS.get(symbol, CUSTOM_WEIGHTS.get(symbol + ".NS" if not symbol.endswith(".NS") else symbol.replace(".NS", ""), None))
+    if cw_match is not None:
         reasons.append("Matched custom stock-specific parameters")
 
     last_date = df.index[-1]
@@ -205,28 +208,27 @@ def evaluate_btst(symbol, df, index_df=None) -> BTSTCandidate:
     index_ok = True
     if index_df is not None and not index_df.empty:
         idx_slice = index_df.loc[index_df.index <= last_date]
-        if not idx_slice.empty:
+        if not idx_slice.empty and len(idx_slice) >= 20:
             idx_close = idx_slice["Close"]
-            if idx_filter == "sma20" and len(idx_slice) >= 20:
-                idx_sma20 = ta.trend.sma_indicator(idx_close, window=20)
-                if not idx_sma20.empty and last_date in idx_sma20.index:
-                    index_ok = idx_close.loc[last_date] > idx_sma20.loc[last_date]
+            if idx_filter == "sma20":
+                idx_sma = ta.trend.sma_indicator(idx_close, window=20)
+                if not idx_sma.empty and not pd.isna(idx_sma.iloc[-1]):
+                    index_ok = float(idx_close.iloc[-1]) > float(idx_sma.iloc[-1])
                     if index_ok:
                         reasons.append("Broader market Nifty 50 in short-term uptrend (above SMA20)")
             elif idx_filter == "sma50" and len(idx_slice) >= 50:
-                idx_sma50 = ta.trend.sma_indicator(idx_close, window=50)
-                if not idx_sma50.empty and last_date in idx_sma50.index:
-                    index_ok = idx_close.loc[last_date] > idx_sma50.loc[last_date]
+                idx_sma = ta.trend.sma_indicator(idx_close, window=50)
+                if not idx_sma.empty and not pd.isna(idx_sma.iloc[-1]):
+                    index_ok = float(idx_close.iloc[-1]) > float(idx_sma.iloc[-1])
                     if index_ok:
                         reasons.append("Broader market Nifty 50 in medium-term uptrend (above SMA50)")
                         
-            # Enforce 20-day relative strength outperformance comparison
+            # 20-day relative strength outperformance comparison
             if len(df) >= 20 and len(idx_slice) >= 20:
                 stock_perf = (last["Close"] - df.iloc[-20]["Close"]) / df.iloc[-20]["Close"]
-                index_perf = (idx_close.loc[last_date] - idx_slice.iloc[-20]["Close"]) / idx_slice.iloc[-20]["Close"]
-                if stock_perf <= index_perf:
-                    return None
-                reasons.append("Outperforming index (20-day relative strength)")
+                index_perf = (idx_close.iloc[-1] - idx_slice.iloc[-20]["Close"]) / idx_slice.iloc[-20]["Close"]
+                if stock_perf > index_perf:
+                    reasons.append("Outperforming index (20-day relative strength)")
 
     if not index_ok:
         return None
@@ -243,8 +245,9 @@ def evaluate_btst(symbol, df, index_df=None) -> BTSTCandidate:
     stop_loss = round(last_close * (1.0 - stop_loss_pct), 2)
 
     win_rate = 0.0
-    if symbol in CUSTOM_WEIGHTS:
-        win_rate = CUSTOM_WEIGHTS[symbol].get("win_rate", 0.0)
+    cw = CUSTOM_WEIGHTS.get(symbol, CUSTOM_WEIGHTS.get(symbol + ".NS" if not symbol.endswith(".NS") else symbol.replace(".NS", ""), None))
+    if cw is not None:
+        win_rate = cw.get("win_rate", 0.0)
 
     return BTSTCandidate(
         symbol=symbol,

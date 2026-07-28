@@ -303,6 +303,13 @@ def _add_indicators(df: pd.DataFrame) -> pd.DataFrame:
     df["bb_pullback"] = df["Low"] <= df["bb_low"]
     df["rsi2_pullback"] = df["rsi2"] < 5
 
+    # Delivery volume average
+    if "delivery_pct" in df.columns:
+        df["deliv_avg20"] = df["delivery_pct"].shift(1).rolling(20).mean()
+    else:
+        df["delivery_pct"] = 0.0
+        df["deliv_avg20"] = 0.0
+
     logger.info(f"Indicators added to {df.shape}")
     return df.dropna()
 
@@ -432,6 +439,10 @@ def evaluate(symbol: str, df: pd.DataFrame, stock_info=None, skip_fundamental=Fa
 
     if custom_weights is None and use_custom_weights:
         custom_weights = SWING_CUSTOM_WEIGHTS.get(symbol, None)
+        if custom_weights is None and not symbol.endswith(".NS"):
+            custom_weights = SWING_CUSTOM_WEIGHTS.get(symbol + ".NS", None)
+        elif custom_weights is None and symbol.endswith(".NS"):
+            custom_weights = SWING_CUSTOM_WEIGHTS.get(symbol.replace(".NS", ""), None)
 
     if custom_weights is not None:
         if setup_class in custom_weights:
@@ -531,20 +542,21 @@ def evaluate(symbol: str, df: pd.DataFrame, stock_info=None, skip_fundamental=Fa
         if stoch_d_turn_val: reasons.append("Stochastic %D turned up")
         setup_type = "pullback"
 
-    # Stop Loss & Target Calculation using normalized ATR% (Priority 2, Item 5)
+    # Stop Loss & Target Calculation using normalized ATR% with strong Risk-to-Reward (RR >= 1.8:1)
     last_close = float(last["Close"])
     atr_val = float(last["atr"])
     atr_pct = atr_val / last_close
 
-    sl_mult = custom_sl_atr if custom_sl_atr is not None else 2.0
-    target_mult = custom_target_atr if custom_target_atr is not None else (1.5 if setup_class == "trend" else 1.0)
+    sl_mult = custom_sl_atr if custom_sl_atr is not None else 1.0
+    target_mult = custom_target_atr if custom_target_atr is not None else 2.2
 
     sl_pct = atr_pct * sl_mult
     target_pct = atr_pct * target_mult
 
-    # Re-derive stop floor (0.5 * atr_pct) and target cap (4.5%) in ATR% terms
-    sl_pct = max(sl_pct, 0.5 * atr_pct)
-    target_pct = min(target_pct, 0.06)
+    # Re-derive stop floor (0.5 * atr_pct) and target range in ATR% terms
+    sl_pct = max(sl_pct, 0.4 * atr_pct)
+    target_pct = max(target_pct, 1.8 * atr_pct)
+    target_pct = min(target_pct, 0.08)
 
     stop_loss = round(last_close * (1.0 - sl_pct), 2)
     target = round(last_close * (1.0 + target_pct), 2)
@@ -597,8 +609,8 @@ def run_screener(symbols: list, period: str, interval: str, min_score: int) -> l
                     idx_sma20 = float(last_idx["sma20"])
                     
                     if idx_close < idx_sma20:
-                        nifty_adj = 2
-                        logger.info(f"Weak Nifty Regime: Nifty close ({idx_close:.2f}) < SMA20 ({idx_sma20:.2f}). Adjusting min_score by +2.")
+                        nifty_adj = 1
+                        logger.info(f"Weak Nifty Regime: Nifty close ({idx_close:.2f}) < SMA20 ({idx_sma20:.2f}). Adjusting min_score by +1.")
                     else:
                         logger.info(f"Strong/Normal Nifty Regime: Nifty close ({idx_close:.2f}) >= SMA20 ({idx_sma20:.2f}).")
             

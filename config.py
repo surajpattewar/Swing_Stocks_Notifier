@@ -29,7 +29,7 @@ class Config:
 
     # Screener tuning
     NIFTY_N_STOCKS = int(os.getenv("NIFTY_N_STOCKS", "200"))
-    MIN_SCORE = int(os.getenv("MIN_SCORE", "8"))               # 0-5, higher = stricter
+    MIN_SCORE = int(os.getenv("MIN_SCORE", "3"))               # 0-5, higher = stricter
     RISK_REWARD_RATIO = float(os.getenv("RISK_REWARD_RATIO", "1.5"))
     ATR_MULTIPLIER = float(os.getenv("ATR_MULTIPLIER", "2.0"))
     BTST_ATR_MULTIPLIER = float(os.getenv("BTST_ATR_MULTIPLIER", "0.75"))
@@ -57,8 +57,12 @@ class Config:
     BACKTEST_MAX_STOCKS = int(os.getenv("BACKTEST_MAX_STOCKS", "250"))
     BACKTEST_MAX_WORKERS = int(os.getenv("BACKTEST_MAX_WORKERS", "6"))
     BACKTEST_TRANSACTION_COST_PCT = float(os.getenv("BACKTEST_TRANSACTION_COST_PCT", "0.25"))
-    BTST_DELIVERY_MARGIN = float(os.getenv("BTST_DELIVERY_MARGIN", "1.25"))
-    WEIGHTS_MIN_SAMPLE_SIZE = int(os.getenv("WEIGHTS_MIN_SAMPLE_SIZE", "30"))
+    BTST_DELIVERY_MARGIN = float(os.getenv("BTST_DELIVERY_MARGIN", "1.0"))
+    WEIGHTS_MIN_SAMPLE_SIZE = int(os.getenv("WEIGHTS_MIN_SAMPLE_SIZE", "5"))
+
+    # Conviction thresholds %
+    BTST_MIN_CONVICTION_PCT = float(os.getenv("BTST_MIN_CONVICTION_PCT", "87.0"))
+    SWING_MIN_CONVICTION_PCT = float(os.getenv("SWING_MIN_CONVICTION_PCT", "90.0"))
 
     ADDITIONAL_SYMBOLS = (os.getenv("ADDITIONAL_SYMBOLS","")).split("|")
 

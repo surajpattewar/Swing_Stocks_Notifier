@@ -34,13 +34,13 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Optimize stock-specific BTST parameters for high win rate and positive returns.")
     parser.add_argument("--min-sample-trades", type=int, default=int(os.getenv("BTST_MIN_SAMPLE_TRADES", "5")),
                         help="Minimum training trades per stock (default: 5)")
-    parser.add_argument("--min-train-win-rate", type=float, default=float(os.getenv("BTST_MIN_TRAIN_WIN_RATE", "100.0")),
-                        help="Minimum required training win rate % (default: 100.0%)")
+    parser.add_argument("--min-train-win-rate", type=float, default=float(os.getenv("BTST_MIN_TRAIN_WIN_RATE", "80.0")),
+                        help="Minimum required training win rate % (default: 80.0%)")
     parser.add_argument("--cost-pct", type=float, default=0.25,
                         help="Slippage and transaction cost percent per trade (default: 0.25%, i.e., 0.50% round trip)")
     return parser.parse_args()
 
-def compute_exit_type_b_returns(sub_df, round_trip_cost=0.50, target_pct=1.5, sl_pct=1.5):
+def compute_exit_type_b_returns(sub_df, round_trip_cost=0.50, target_pct=2.0, sl_pct=1.2):
     if sub_df.empty:
         return pd.Series(dtype='float64')
     entry = sub_df["Close"]
@@ -223,12 +223,12 @@ def main():
     symbols_data = load_all_data(con, symbols, train_start, test_end, index_df)
     con.close()
     
-    near_high_options = [0.005, 0.008, 0.010, 0.012, 0.015]
-    vol_ratio_options = [1.0, 1.1, 1.25, 1.5]
+    near_high_options = [0.008, 0.012, 0.015, 0.020]
+    vol_ratio_options = [1.0, 1.25, 1.5]
     min_return_options = [1.0, 1.5, 2.0]
-    rsi_ranges = [(55, 78), (60, 80)]
-    idx_filters = ["nifty_bull", "sma50"]
-    deliv_margins = [0.0, 1.0, 1.25]
+    rsi_ranges = [(50, 75), (55, 78), (60, 80)]
+    idx_filters = ["sma50", "sma20"]
+    deliv_margins = [0.0, 1.0]
     
     configs = []
     for nh in near_high_options:
@@ -269,7 +269,7 @@ def main():
                 avg_ret = rets.mean()
                 
                 if win_rate >= args.min_train_win_rate and avg_ret > 0.0:
-                    score = win_rate * 10 + n_trades
+                    score = win_rate * 5 + avg_ret * 20 + np.sqrt(n_trades)
                     if score > best_score:
                         best_score = score
                         best_cfg = {

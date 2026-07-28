@@ -133,8 +133,8 @@ def main():
     TREND_FEATURES = ["uptrend_sma50", "uptrend_sma200", "adx_strong_trend", "ema_cross", "volume_spike", "bullish_engulfing"]
     PULLBACK_FEATURES = ["bb_pullback", "rsi2_pullback", "rsi14_oversold", "stoch_d_turn"]
 
-    sl_atr_options = [1.2, 1.5, 1.8, 2.0]
-    target_atr_options = [1.2, 1.5, 1.8, 2.0]
+    sl_atr_options = [1.0, 1.2, 1.5, 1.8]
+    target_atr_options = [1.5, 1.8, 2.0, 2.5, 3.0]
 
     optimized_configs = {}
     total_trained = 0
@@ -226,7 +226,7 @@ def main():
                             sl_pct = atr_pct * sl_atr
                             
                             sl_pct = max(sl_pct, 0.5 * atr_pct)
-                            target_pct = min(target_pct, 0.08)
+                            target_pct = min(target_pct, 0.12)
                             
                             target_price = round(c["entry_price"] * (1.0 + target_pct), 2)
                             stop_loss_price = round(c["entry_price"] * (1.0 - sl_pct), 2)
@@ -275,12 +275,13 @@ def main():
                                     logit_thresh = np.log(thresh / (1 - thresh))
                                     raw_threshold = logit_thresh - clf.intercept_[0]
                                     scaled_threshold = round(scale_factor * raw_threshold, 1)
-                                    scaled_threshold = max(min(scaled_threshold, max_thresh), 1.5)
+                                    min_bound = 2.5 if sc == "trend" else 1.8
+                                    scaled_threshold = max(min(scaled_threshold, max_thresh), min_bound)
                                     
                                     scaled_weights = {k: round(v * scale_factor, 1) for k, v in weights_map.items()}
                                     
-                                    # Score: net profit expectancy priority
-                                    score = expectancy * 5000 + win_rate * 100 - triggered * 0.2
+                                    # Score: net profit expectancy & trade volume priority
+                                    score = expectancy * 1000 + win_rate * 10 + triggered * 0.5
                                     if score > best_score:
                                         best_score = score
                                         best_cfg = {
@@ -319,7 +320,7 @@ def main():
                             sl_pct = atr_pct * best_cfg["stop_loss_atr"]
                             
                             sl_pct = max(sl_pct, 0.5 * atr_pct)
-                            target_pct = min(target_pct, 0.08)
+                            target_pct = min(target_pct, 0.12)
                             
                             target_price = round(next_open * (1.0 + target_pct), 2)
                             stop_loss_price = round(next_open * (1.0 - sl_pct), 2)
